@@ -22,8 +22,8 @@ with pkgs.vimPlugins; [
   neorg-telescope
 
   # AI
-  copilot-lua
-  copilot-cmp
+  # copilot-lua
+  # copilot-cmp
 
   # Cmp
   nvim-cmp

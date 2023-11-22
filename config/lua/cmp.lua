@@ -1,10 +1,10 @@
 local cmp = require('cmp')
 
-require("copilot").setup {
-  suggestion = { enabled = false },
-  panel = { enabled = false },
-}
-require("copilot_cmp").setup {}
+-- require("copilot").setup {
+--   suggestion = { enabled = false },
+--   panel = { enabled = false },
+-- }
+-- require("copilot_cmp").setup {}
 
 local kind_icons = {
     Class = "",
@@ -66,7 +66,7 @@ cmp.setup {
       end, { 'i', 's' }),
   },
   sources = cmp.config.sources {
-    { name = 'copilot' },
+    -- { name = 'copilot' },
     { name = 'treesitter' },
     { name = 'latex_symbols' },
     { name = 'nvim_lsp' },
