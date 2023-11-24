@@ -13,26 +13,26 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, neovim, ... }:
-    let
-      system = "x86_64-linux";
-      overlayFlakeInputs = prev: final: {
-        neovim = neovim.packages.${system}.neovim.override {
-          inherit (import nixpkgs { inherit system; }) libvterm-neovim;
+  outputs = { self, nixpkgs, neovim, flake-utils, ... }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        overlayFlakeInputs = prev: final: {
+          neovim = neovim.packages.${system}.neovim.override {
+            inherit (import nixpkgs { inherit system; }) libvterm-neovim;
+          };
         };
-      };
-      overlayMyNeovim = prev: final: {
-        myNeovim = (import ./packages/myNeovim.nix { pkgs = final; });
-      };
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [ overlayFlakeInputs overlayMyNeovim ];
-      };
-    in {
-      packages.${system}.default = pkgs.myNeovim;
-      apps.${system}.default = {
-        type = "app";
-        program = "${pkgs.myNeovim}/bin/nvim";
-      };
-    };
+        overlayMyNeovim = prev: final: {
+          myNeovim = (import ./packages/myNeovim.nix { pkgs = final; });
+        };
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ overlayFlakeInputs overlayMyNeovim ];
+        };
+      in {
+        packages.default = pkgs.myNeovim;
+        apps.default = {
+          type = "app";
+          program = "${pkgs.myNeovim}/bin/nvim";
+        };
+      });
 }
