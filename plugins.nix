@@ -7,6 +7,7 @@ with pkgs.vimPlugins; [
       p.lua
       p.nix
       p.norg
+      p.bash
       ]))
   # UI
   material-nvim
