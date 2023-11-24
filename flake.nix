@@ -5,7 +5,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-staging.url = "github:NixOS/nixpkgs/staging";
     neovim = {
       url = "github:neovim/neovim?dir=contrib";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,12 +13,12 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-staging, neovim, ... }:
+  outputs = { self, nixpkgs, neovim, ... }:
     let
       system = "x86_64-linux";
       overlayFlakeInputs = prev: final: {
         neovim = neovim.packages.${system}.neovim.override {
-          inherit (import nixpkgs-staging { inherit system; }) libvterm-neovim;
+          inherit (import nixpkgs { inherit system; }) libvterm-neovim;
         };
       };
       overlayMyNeovim = prev: final: {
