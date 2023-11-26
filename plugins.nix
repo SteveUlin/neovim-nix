@@ -13,6 +13,7 @@ with pkgs.vimPlugins; [
   # UI
   material-nvim
   nvim-web-devicons
+  which-key-nvim
 
   # Neorg
   neorg
@@ -24,8 +25,8 @@ with pkgs.vimPlugins; [
   neorg-telescope
 
   # AI
-  copilot-lua
-  copilot-cmp
+  # copilot-lua
+  # copilot-cmp
 
   # Cmp
   nvim-cmp
