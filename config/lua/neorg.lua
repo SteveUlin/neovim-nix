@@ -5,6 +5,11 @@ require('neorg').setup {
     ['core.integrations.telescope'] = {},
     -- Install a zen mode
     -- ['core.presenter'] = {},
+    ['core.esupports.metagen'] = {
+      config = {
+        type = "auto",
+      },
+    },
     ['core.dirman'] = {
       config = {
         workspaces = {

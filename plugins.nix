@@ -11,6 +11,7 @@ with pkgs.vimPlugins; [
       ]))
 
   # UI
+  highlight-undo-nvim
   material-nvim
   nvim-web-devicons
   which-key-nvim
