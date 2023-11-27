@@ -22,6 +22,7 @@ with pkgs.vimPlugins; [
   # Neorg
   neorg
   zen-mode-nvim
+  sniprun
 
   # Telescope
   telescope-nvim
