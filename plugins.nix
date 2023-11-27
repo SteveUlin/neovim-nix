@@ -15,6 +15,9 @@ with pkgs.vimPlugins; [
   nvim-web-devicons
   which-key-nvim
 
+  # Git
+  gitsigns-nvim
+
   # Neorg
   neorg
   zen-mode-nvim
