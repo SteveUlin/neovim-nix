@@ -42,5 +42,9 @@ with pkgs.vimPlugins; [
   cmp-nvim-lsp
   cmp-path
 
+  # Image
+  image-nvim
+
+  # LSP
   nvim-lspconfig
 ]

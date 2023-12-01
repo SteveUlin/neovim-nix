@@ -8,6 +8,11 @@ with pkgs; [
   # Treesitter Install
   clang_16
 
-  # copilot
+  # Copilot
   nodejs_21
+
+  # Image
+  imagemagick
+  luajitPackages.magick
+  curl
 ]

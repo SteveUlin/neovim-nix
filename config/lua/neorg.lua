@@ -2,6 +2,7 @@ require('neorg').setup {
   load = {
     ['core.defaults'] = {},
     ['core.concealer'] = {},
+    ['core.integrations.image'] = {},
     ['core.integrations.telescope'] = {},
     -- Install a zen mode
     -- ['core.presenter'] = {},
@@ -19,6 +20,6 @@ require('neorg').setup {
         default_workspace = 'notes',
       },
     },
-  }
+  },
 }
 
