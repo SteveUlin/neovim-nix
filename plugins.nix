@@ -7,17 +7,23 @@ with pkgs.vimPlugins; [
       p.lua
       p.nix
       p.norg
+      p.latex
       p.bash
       ]))
+
+  vimtex
 
   # UI
   highlight-undo-nvim
   material-nvim
   nvim-web-devicons
   which-key-nvim
+  nabla-nvim
+  nvim-gdb
 
   # Git
   gitsigns-nvim
+  diffview-nvim
 
   # Neorg
   neorg

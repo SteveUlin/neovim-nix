@@ -17,18 +17,18 @@ vim.api.nvim_set_keymap('n', '<Leader>ws', ':split<CR>',
 
 vim.api.nvim_set_keymap(
   "n",
-  "<space>fs",
-  ":write<CR>",
-  { noremap = true, silent = true, desc = "File Save" }
-)
-vim.api.nvim_set_keymap(
-  "n",
   "<space>q",
   ":quit<CR>",
   { noremap = true, silent = true, desc = "File Quit" }
 )
 
--- Navigation
+-- File 
+vim.api.nvim_set_keymap(
+  "n",
+  "<space>fs",
+  ":write<CR>",
+  { noremap = true, silent = true, desc = "File Save" }
+)
 vim.api.nvim_set_keymap(
   "n",
   "<space>fe",
@@ -53,6 +53,38 @@ vim.api.nvim_set_keymap(
   ":Telescope oldfiles<CR>",
   { noremap = true, silent = true, desc = "File Recent" }
 )
+vim.api.nvim_set_keymap(
+  "n",
+  "<space>fyp",
+  ':let @" = expand("%")<CR>',
+  { noremap = true, silent = true, desc = "File Yank Path" }
+)
+
+-- LSP
+vim.api.nvim_set_keymap(
+  "n",
+  "<space>cd",
+  ":Telescope lsp_definitions<CR>",
+  { noremap = true, silent = true, desc = "LSP Definitions" }
+)
+vim.api.nvim_set_keymap(
+  "n",
+  "<space>cD",
+  ":Telescope lsp_references<CR>",
+  { noremap = true, silent = true, desc = "LSP References" }
+)
+vim.api.nvim_set_keymap(
+  "n",
+  "<space>ch",
+  ":lua vim.lsp.buf.hover()<CR>",
+  { noremap = true, silent = true, desc = "LSP Hover" }
+)
+vim.api.nvim_set_keymap(
+  "n",
+  "<space>ck",
+  ":lua vim.diagnostic.open_float()<CR>",
+  { noremap = true, silent = true, desc = "LSP Hover" }
+)
 
 -- Notes
 vim.api.nvim_set_keymap(
@@ -67,3 +99,11 @@ vim.api.nvim_set_keymap(
   ":Neorg workspace notes<CR>",
   { noremap = true, silent = true, desc = "Notes Explorer" }
 )
+
+vim.api.nvim_set_keymap(
+  "n",
+  "<space>p",
+  ':lua require("nabla").popup()<CR>',
+  { noremap = true, silent = true, desc = "Show Math" }
+)
+
