@@ -53,5 +53,6 @@ with pkgs.vimPlugins; [
   material-nvim
   nabla-nvim
   nvim-web-devicons
+  rainbow-delimiters-nvim
   which-key-nvim
 ]
