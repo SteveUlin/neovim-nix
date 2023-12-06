@@ -50,6 +50,12 @@ vim.api.nvim_set_keymap(
 vim.api.nvim_set_keymap(
   "n",
   "<space>fr",
+  ":Telescope frecency<CR>",
+  { noremap = true, silent = true, desc = "File Frencency" }
+)
+vim.api.nvim_set_keymap(
+  "n",
+  "<space>fh",
   ":Telescope oldfiles<CR>",
   { noremap = true, silent = true, desc = "File Recent" }
 )

@@ -2,55 +2,56 @@
 with pkgs.vimPlugins; [
   (nvim-treesitter.withPlugins (
     p: [
+      p.bash
       p.cmake
       p.cpp
+      p.fish
+      p.latex
       p.lua
       p.nix
       p.norg
-      p.latex
-      p.bash
       ]))
-
-  vimtex
-
-  # UI
-  highlight-undo-nvim
-  material-nvim
-  nvim-web-devicons
-  which-key-nvim
-  nabla-nvim
-  nvim-gdb
-
-  # Git
-  gitsigns-nvim
-  diffview-nvim
-
-  # Neorg
-  neorg
-  zen-mode-nvim
-  sniprun
-
-  # Telescope
-  telescope-nvim
-  telescope-file-browser-nvim
-  neorg-telescope
 
   # AI
   # copilot-lua
   # copilot-cmp
 
   # Cmp
-  nvim-cmp
   cmp-buffer
   cmp-cmdline
   cmp-emoji
   cmp-latex-symbols
   cmp-nvim-lsp
   cmp-path
+  nvim-cmp
 
-  # Image
-  image-nvim
+  # Debugging
+  nvim-gdb
+
+  # Git
+  diffview-nvim
+  gitsigns-nvim
 
   # LSP
   nvim-lspconfig
+
+  # Neorg
+  image-nvim
+  neorg
+  sniprun
+  zen-mode-nvim
+
+  # Telescope
+  neorg-telescope
+  telescope-file-browser-nvim
+  telescope-nvim
+  telescope-frecency-nvim
+
+  # UI
+  alpha-nvim
+  highlight-undo-nvim
+  material-nvim
+  nabla-nvim
+  nvim-web-devicons
+  which-key-nvim
 ]
