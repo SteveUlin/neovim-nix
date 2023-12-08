@@ -11,6 +11,11 @@ require('neorg').setup {
         type = "auto",
       },
     },
+    ['core.presenter'] = {
+      config = {
+        zen_mode = "zen-mode",
+      },
+    },
     ['core.dirman'] = {
       config = {
         workspaces = {
@@ -22,4 +27,13 @@ require('neorg').setup {
     },
   },
 }
+
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*.norg",
+  callback = function()
+    vim.opt_local.conceallevel = 2
+    vim.opt_local.concealcusor = "nc"
+    vim.opt_local.wrap = false
+  end,
+})
 

@@ -52,6 +52,7 @@ with pkgs.vimPlugins; [
   highlight-undo-nvim
   material-nvim
   nabla-nvim
+  nvim-notify
   nvim-web-devicons
   rainbow-delimiters-nvim
   which-key-nvim
