@@ -28,11 +28,11 @@ require('neorg').setup {
   },
 }
 
-vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = "*.norg",
+vim.api.nvim_create_autocmd({"FileType"}, {
+  pattern = "norg",
   callback = function()
     vim.opt_local.conceallevel = 2
-    vim.opt_local.concealcusor = "nc"
+    vim.opt_local.concealcursor = "nc"
     vim.opt_local.wrap = false
   end,
 })

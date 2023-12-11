@@ -41,3 +41,11 @@ vim.opt.incsearch = true
 vim.opt.autowriteall = true
 vim.opt.autoread = true
 vim.opt.swapfile = false
+
+-- Folding
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
+-- Start with all folds open
+vim.opt.foldlevelstart = 99
+

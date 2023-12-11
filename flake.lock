@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "everforest-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1699460426,
+        "narHash": "sha256-cwHSoEJj4AziHOD4/B+qPsfAIttZfLmOFaVTgIRsdzQ=",
+        "owner": "neanias",
+        "repo": "everforest-nvim",
+        "rev": "6e06de0a08afc09c7e63acc4ace8c748fe48d8b9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "neanias",
+        "repo": "everforest-nvim",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -77,6 +93,7 @@
     },
     "root": {
       "inputs": {
+        "everforest-src": "everforest-src",
         "flake-utils": "flake-utils",
         "neovim": "neovim",
         "nixpkgs": "nixpkgs"

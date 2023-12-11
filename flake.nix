@@ -11,14 +11,26 @@
     };
 
     flake-utils.url = "github:numtide/flake-utils";
+
+    everforest-src = {
+      url = "github:neanias/everforest-nvim";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, neovim, flake-utils, ... }:
+  outputs = { self, nixpkgs, neovim, flake-utils, everforest-src, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         overlayFlakeInputs = prev: final: {
           neovim = neovim.packages.${system}.neovim.override {
             inherit (import nixpkgs { inherit system; }) libvterm-neovim;
+          };
+
+          vimPlugins = final.vimPlugins // {
+            everforest-nvim = pkgs.vimUtils.buildVimPlugin {
+              name = "everforest-nvim";
+              src = everforest-src;
+            };
           };
         };
         overlayMyNeovim = prev: final: {

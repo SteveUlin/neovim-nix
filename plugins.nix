@@ -50,10 +50,14 @@ with pkgs.vimPlugins; [
   # UI
   alpha-nvim
   highlight-undo-nvim
-  material-nvim
   nabla-nvim
   nvim-notify
   nvim-web-devicons
   rainbow-delimiters-nvim
   which-key-nvim
+
+  # Themes
+  material-nvim
+  gruvbox-nvim
+  everforest-nvim
 ]
