@@ -42,10 +42,11 @@ with pkgs.vimPlugins; [
   zen-mode-nvim
 
   # Telescope
+  telescope-nvim
   neorg-telescope
   telescope-file-browser-nvim
-  telescope-nvim
   telescope-frecency-nvim
+  telescope-live-grep-args-nvim
 
   # UI
   alpha-nvim
