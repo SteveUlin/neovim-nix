@@ -1,8 +1,7 @@
-{ pkgs }:
-let
-  lua-file-names = builtins.attrNames (builtins.readDir ./lua);
-  lua-paths = map (name: ./lua + "/${name}") lua-file-names;
-in
-builtins.concatStringsSep "\n"
-  (builtins.map (path: "luafile ${path}") lua-paths)
-
+{
+  imports = [
+    ./options.nix
+    ./plugins.nix
+    ./keybindings.nix
+  ];
+}

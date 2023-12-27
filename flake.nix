@@ -1,7 +1,5 @@
 {
   description = "sulin's Neovim Flake";
-  # See the great blogpost below for more details
-  # https://primamateria.github.io/blog/neovim-nix/
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -10,41 +8,32 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixvim.url = "github:nix-community/nixvim";
     flake-utils.url = "github:numtide/flake-utils";
-
-    everforest-src = {
-      url = "github:neanias/everforest-nvim";
-      flake = false;
-    };
   };
 
-  outputs = { self, nixpkgs, neovim, flake-utils, everforest-src, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        overlayFlakeInputs = prev: final: {
-          neovim = neovim.packages.${system}.neovim.override {
-            inherit (import nixpkgs { inherit system; }) libvterm-neovim;
-          };
-
-          vimPlugins = final.vimPlugins // {
-            everforest-nvim = pkgs.vimUtils.buildVimPlugin {
-              name = "everforest-nvim";
-              src = everforest-src;
-            };
-          };
-        };
-        overlayMyNeovim = prev: final: {
-          myNeovim = (import ./packages/myNeovim.nix { pkgs = final; });
-        };
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [ overlayFlakeInputs overlayMyNeovim ];
-        };
-      in {
-        packages.default = pkgs.myNeovim;
-        apps.default = {
-          type = "app";
-          program = "${pkgs.myNeovim}/bin/nvim";
-        };
-      });
+  outputs = {
+    self,
+    nixpkgs,
+    neovim,
+    nixvim,
+    flake-utils,
+  }:
+    flake-utils.lib.eachDefaultSystem (system: let
+    nixvim' = nixvim.legacyPackages."${system}";
+    nvim = nixvim'.makeNixvimWithModule {
+      module = {
+        imports = [ ./plugins ./config ];
+        package = neovim.packages."${system}".neovim;
+      };
+      pkgs = import nixpkgs {
+        inherit system;
+      };
+    };
+    in {
+      packages = {
+        inherit nvim;
+        default = nvim;
+      };
+    });
 }
