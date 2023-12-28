@@ -134,6 +134,8 @@
         nixvimInjections = true;
       };
 
+      venn-nvim.enable = true;
+
       which-key = {
         enable = true;
         registrations = {
