@@ -25,9 +25,9 @@ in
 
     # Notes
     {
-      key = "<Leader>nn";
+      key = "<Leader>ne";
       action = ":Telescope file_browser path=~/notes select_buffer=true<CR>";
-      options.desc = "Open Notes";
+      options.desc = "Explore Notes";
     }
     {
       key = "<Leader>nt";
@@ -62,12 +62,12 @@ in
       options.desc = "Live Grep";
     }
     {
-      key = "<leader>fw";
+      key = "<Leader>fw";
       action = ":lua require('telescope-live-grep-args.shortcuts').grep_word_under_cursor()<CR>";
       options.desc = "Grep Word Under Cursor";
     }
     {
-      key = "Leader>fh";
+      key = "<Leader>fh";
       action = ":Telescope oldfiles<CR>";
       options.desc = "Open Recent File";
     }

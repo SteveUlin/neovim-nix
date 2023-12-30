@@ -26,17 +26,30 @@
 
       gitsigns.enable = true;
 
+      neorg-exec.enable = true;
+
       neorg = {
         enable = true;
         modules = {
-          "core.defaults" = { __empty = null; };
           "core.concealer" = { __empty = null; };
-          "core.integrations.telescope" = { __empty = null; };
+          "core.defaults" = { __empty = null; };
+          "core.dirman" = {
+            config = {
+              workspaces = {
+                notes = "~/notes";
+              };
+              index = "index.norg";
+              default_workspace = "notes";
+            };
+          };
           "core.esupports.metagen" = {
             config = {
               type = "auto";
             };
           };
+          "core.integrations.telescope" = { __empty = null; };
+          "core.integrations.treesitter" = { __empty = null; };
+          "core.queries.native" = { __empty = null; };
         };
       };
 
@@ -123,6 +136,18 @@
           file_browser.enable = true;
           frecency.enable = true;
           live_grep_args.enable = true;
+        };
+      };
+
+      sniprun = {
+        enable = true;
+        display = [
+          "Terminal"
+        ];
+        interpreterOptions = {
+          Neorg_original = {
+            use_on_filetypes = [ "norg" ];
+          };
         };
       };
 
