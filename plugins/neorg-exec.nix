@@ -18,7 +18,17 @@ in {
   config = mkIf cfg.enable {
     extraPlugins = [ cfg.package ];
     plugins.neorg.modules = {
-      "external.exec" = { __empty = null; };
+      "external.exec" = {
+        config = {
+          lang_cmds = {
+            julia = {
+              cmd = ''julia ''${0}'';
+              type = "interpreted";
+              repl = "julia";
+            };
+          };
+        };
+      };
     };
   };
 }
