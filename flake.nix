@@ -7,7 +7,6 @@
       url = "github:neovim/neovim?dir=contrib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     nixvim.url = "github:nix-community/nixvim";
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -52,6 +51,7 @@
         imports = [ ./plugins ./config ];
         package = neovim.packages."${system}".neovim;
         extraPackages = with pkgs; [
+          delta
           julia
         ];
       };

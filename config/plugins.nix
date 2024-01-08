@@ -31,8 +31,6 @@
         fromVscode = [{paths = "${pkgs.vimPlugins.friendly-snippets}";}];
       };
 
-      neorg-exec.enable = true;
-
       neorg = {
         enable = true;
         modules = {
@@ -57,6 +55,8 @@
           "core.queries.native" = { __empty = null; };
         };
       };
+
+      neorg-exec.enable = true;
 
       notify.enable = true;
 
@@ -124,6 +124,7 @@
             enable = true;
             package = pkgs.clang-tools_17;
           };
+          pylsp.enable = true;
           nil_ls.enable = true;
         };
       };
@@ -150,6 +151,7 @@
           file_browser.enable = true;
           frecency.enable = true;
           live_grep_args.enable = true;
+          undo.enable = true;
         };
       };
 
