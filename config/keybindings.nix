@@ -8,6 +8,16 @@ in
   keymaps = map (keymap: defaultKeymap // keymap) [
     # LSP
     {
+      key = "<Leader>ca";
+      action = ":lua vim.lsp.buf.code_action()<CR>";
+      options.desc = "Code Action";
+    }
+    {
+      key = "<Leader>ce";
+      action = "lua vim.lsp.diagnostic.show_line_diagnostics()<CR>";
+      options.desc = "Show Line Diagnostics";
+    }
+    {
       key = "<Leader>cd";
       action = ":Telescope lsp_definitions<CR>";
       options.desc = "LSP Definition";
