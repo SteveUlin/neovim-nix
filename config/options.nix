@@ -57,5 +57,7 @@
       foldlevelstart = 99;
     };
 
+    filetype.extension.webc = "html";
+
   };
 }

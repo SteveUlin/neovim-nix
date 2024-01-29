@@ -111,6 +111,9 @@
           { name = "luasnip"; }
           { name = "copilot"; }
           { name = "nvim_lsp"; }
+          { name = "latex_symbols"; }
+          { name = "emoji"; }
+          { name = "spell"; }
           { name = "path"; }
           { name = "buffer"; }
           { name = "calc"; }
