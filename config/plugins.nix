@@ -18,6 +18,7 @@
         enable = true;
         panel.enabled = false;
         suggestion.enabled = false;
+        filetypes.markdown = true;
       };
 
       copilot-cmp.enable = true;
@@ -58,7 +59,10 @@
 
       neorg-exec.enable = true;
 
-      notify.enable = true;
+      noice = {
+        enable = true;
+        popupmenu.backend = "cmp";
+      };
 
       nvim-cmp = {
         enable = true;
@@ -129,6 +133,16 @@
           };
           pylsp.enable = true;
           nil_ls.enable = true;
+        };
+      };
+
+      # Automatically adds efm to the list of lsp servers
+      efmls-configs = {
+        enable = true;
+        setup = {
+          markdown = {
+            linter = [ "markdownlint" ];
+          };
         };
       };
 

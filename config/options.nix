@@ -12,6 +12,8 @@
       number = true;
       relativenumber = true;
 
+      colorcolumn = "81";
+
       # Default indentation
       shiftwidth = 2;
       tabstop = 2;

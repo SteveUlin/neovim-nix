@@ -14,7 +14,7 @@ in
     }
     {
       key = "<Leader>ce";
-      action = "lua vim.lsp.diagnostic.show_line_diagnostics()<CR>";
+      action = ":lua vim.lsp.diagnostic.show_line_diagnostics()<CR>";
       options.desc = "Show Line Diagnostics";
     }
     {
