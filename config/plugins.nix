@@ -14,6 +14,8 @@
         clearEmptyLines = true;
       };
 
+      bufsurf.enable = true;
+
       copilot-lua = {
         enable = true;
         panel.enabled = false;
@@ -26,6 +28,8 @@
       diffview.enable = true;
 
       gitsigns.enable = true;
+
+      log-highlight.enable = true;
 
       luasnip = {
         enable = true;
@@ -59,10 +63,7 @@
 
       neorg-exec.enable = true;
 
-      noice = {
-        enable = true;
-        popupmenu.backend = "cmp";
-      };
+      notify.enable = true;
 
       nvim-cmp = {
         enable = true;
@@ -115,6 +116,7 @@
           { name = "luasnip"; }
           { name = "copilot"; }
           { name = "nvim_lsp"; }
+          { name = "cmdline"; }
           { name = "latex_symbols"; }
           { name = "emoji"; }
           { name = "spell"; }
@@ -137,14 +139,14 @@
       };
 
       # Automatically adds efm to the list of lsp servers
-      efmls-configs = {
-        enable = true;
-        setup = {
-          markdown = {
-            linter = [ "markdownlint" ];
-          };
-        };
-      };
+      # efmls-configs = {
+      #   enable = true;
+      #   setup = {
+      #     markdown = {
+      #       linter = [ "markdownlint" ];
+      #     };
+      #   };
+      # };
 
       rainbow-delimiters = {
         enable = true;

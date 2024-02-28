@@ -33,6 +33,18 @@ in
       options.desc = "LSP Hover";
     }
 
+    # Bufsurf
+    {
+      key = "]b";
+      action = ":BufSurfForward<CR>";
+      options.desc = "Next Buffer";
+    }
+    {
+      key = "[b";
+      action = ":BufSurfBack<CR>";
+      options.desc = "Previous Buffer";
+    }
+
     # Notes
     {
       key = "<Leader>ne";

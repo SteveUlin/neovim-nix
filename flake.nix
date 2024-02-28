@@ -2,18 +2,29 @@
   description = "sulin's Neovim Flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/d8e0944e6d2ce0f326040e654c07a410e2617d47";
     neovim = {
       url = "github:neovim/neovim?dir=contrib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixvim.url = "github:nix-community/nixvim";
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-utils.url = "github:numtide/flake-utils";
 
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
 
     neorg-exec-src = {
       url = "github:laher/neorg-exec";
+      flake = false;
+    };
+    bufsurf-src = {
+      url = "github:ton/vim-bufsurf";
+      flake = false;
+    };
+    log-highlight = {
+      url = "github:fei6409/log-highlight.nvim";
       flake = false;
     };
   };
@@ -25,8 +36,8 @@
     nixvim,
     flake-utils,
     neorg-overlay,
-    neorg-exec-src,
-  }:
+    ...
+  }@inputs:
     flake-utils.lib.eachDefaultSystem (system: let
     pkgs = import nixpkgs {
       inherit system;
@@ -37,7 +48,15 @@
           {
             neorg-exec = final.vimUtils.buildVimPlugin {
               name = "neorg-exec";
-              src = neorg-exec-src;
+              src = inputs.neorg-exec-src;
+            };
+            bufsurf = final.vimUtils.buildVimPlugin {
+              name = "bufsurf";
+              src = inputs.bufsurf-src;
+            };
+            log-highlight = final.vimUtils.buildVimPlugin {
+              name = "log-highlight";
+              src = inputs.log-highlight;
             };
           };
         })
