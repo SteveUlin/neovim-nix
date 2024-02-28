@@ -165,6 +165,16 @@
         enable = true;
         defaults = {
           initial_mode = "normal";
+          mappings = {
+            n = {
+              "<leader>q" = {
+                __raw = ''
+                  function(...)
+                    return require("telescope.actions").close(...)
+                  end'';
+              };
+            };
+          };
         };
         extensions = {
           file_browser.enable = true;

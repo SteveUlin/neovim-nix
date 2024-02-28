@@ -79,7 +79,7 @@ in
       options.desc = "Find File";
     }
     {
-      key = "<Leader>fg";
+      key = "<Leader>f/";
       action = ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>";
       options.desc = "Live Grep";
     }
