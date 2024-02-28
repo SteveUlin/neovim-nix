@@ -1,6 +1,6 @@
 { 
   config = {
-    colorschemes.gruvbox.enable = true;
+    colorschemes.everforest.enable = true;
 
     globals = {
       mapleader = " ";

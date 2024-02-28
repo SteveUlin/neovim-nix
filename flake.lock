@@ -16,6 +16,22 @@
         "type": "github"
       }
     },
+    "everforest": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1708531806,
+        "narHash": "sha256-/k6VBzXuap8FTqMij7EQCh32TWaDPR9vAvEHw20fMCo=",
+        "owner": "neanias",
+        "repo": "everforest-nvim",
+        "rev": "eedb19079c6bf9d162f74a5c48a6d2759f38cc76",
+        "type": "github"
+      },
+      "original": {
+        "owner": "neanias",
+        "repo": "everforest-nvim",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -536,6 +552,7 @@
     "root": {
       "inputs": {
         "bufsurf-src": "bufsurf-src",
+        "everforest": "everforest",
         "flake-utils": "flake-utils",
         "log-highlight": "log-highlight",
         "neorg-exec-src": "neorg-exec-src",
