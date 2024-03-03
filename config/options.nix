@@ -12,6 +12,9 @@
       number = true;
       relativenumber = true;
 
+      # Always use decimal when incrementing and decrementing numbers
+      nrformats = "";
+
       colorcolumn = "81";
 
       # Default indentation
