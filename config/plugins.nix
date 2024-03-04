@@ -29,6 +29,8 @@
 
       gitsigns.enable = true;
 
+      illuminate.enable = true;
+
       log-highlight.enable = true;
 
       luasnip = {
