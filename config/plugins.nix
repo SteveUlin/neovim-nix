@@ -29,6 +29,17 @@
 
       gitsigns.enable = true;
 
+      harpoon = {
+        enable = true;
+        enableTelescope = true;
+        keymaps = {
+          addFile = "<leader>ha";
+          toggleQuickMenu = "<leader>ht";
+          navNext = "<leader>hn";
+          navPrev = "<leader>hp";
+        };
+      };
+
       illuminate.enable = true;
 
       log-highlight.enable = true;
