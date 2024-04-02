@@ -2,8 +2,6 @@
   description = "sulin's Neovim Flake";
 
   inputs = {
-    # https://github.com/nix-community/nixvim/pull/1168
-    # nixpkgs.url = "github:NixOS/nixpkgs/d8e0944e6d2ce0f326040e654c07a410e2617d47";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     neovim = {
       url = "github:neovim/neovim?dir=contrib";
