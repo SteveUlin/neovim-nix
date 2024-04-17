@@ -24,7 +24,7 @@ in {
     };
   in mkIf cfg.enable {
     colorscheme = "everforest";
-    options = {
+    opts = {
       termguicolors = mkDefault true;
     };
     extraPlugins = [cfg.package];

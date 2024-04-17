@@ -15,8 +15,17 @@ in {
       pkgs.vimPlugins.telescope-live-grep-args-nvim;
   };
 
-  config = mkIf cfg.enable {
-    extraPlugins = [ cfg.package ];
-    plugins.telescope.enabledExtensions = [ "live_grep_args" ];
-  };
+  config = mkIf cfg.enable
+      (
+        mkMerge [
+          {
+            extraPlugins = [cfg.package];
+
+            plugins.telescope = {
+              enabledExtensions = [ "live_grep_args" ];
+              settings.extensions.live_grep_args = {};
+            };
+          }
+        ]
+     );
 }

@@ -49,33 +49,6 @@
         fromVscode = [{paths = "${pkgs.vimPlugins.friendly-snippets}";}];
       };
 
-      neorg = {
-        enable = true;
-        modules = {
-          "core.concealer" = { __empty = null; };
-          "core.defaults" = { __empty = null; };
-          "core.dirman" = {
-            config = {
-              workspaces = {
-                notes = "~/notes";
-              };
-              index = "index.norg";
-              default_workspace = "notes";
-            };
-          };
-          "core.esupports.metagen" = {
-            config = {
-              type = "auto";
-            };
-          };
-          "core.integrations.telescope" = { __empty = null; };
-          "core.integrations.treesitter" = { __empty = null; };
-          "core.queries.native" = { __empty = null; };
-        };
-      };
-
-      neorg-exec.enable = true;
-
       notify.enable = true;
 
       cmp = {
@@ -141,15 +114,32 @@
 
       lsp = {
         enable = true;
+        preConfig =
+          ''
+            local __clangdCaps = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+            __clangdCaps.offsetEncoding = { "utf-16" }
+          '';
         servers = {
           clangd = {
             enable = true;
-            package = pkgs.clang-tools_17;
+            package = pkgs.clang-tools_18;
+            extraOptions = {
+              capabilities = {__raw = "__clangdCaps";};
+            };
           };
-          pylsp.enable = true;
+          pyright.enable = true;
           nil_ls.enable = true;
         };
       };
+
+      # clangd-extensions = {
+      #   enable = true;
+      #   enableOffsetEncodingWorkaround = true;
+      #   inlayHints = {
+      #     onlyCurrentLine = true;
+      #   };
+      # };
+
 
       # Automatically adds efm to the list of lsp servers
       # efmls-configs = {
@@ -176,7 +166,7 @@
 
       telescope = {
         enable = true;
-        defaults = {
+        settings.defaults = {
           initial_mode = "normal";
           mappings = {
             n = {
@@ -190,7 +180,7 @@
           };
         };
         extensions = {
-          file_browser.enable = true;
+          file-browser.enable = true;
           frecency.enable = true;
           live_grep_args.enable = true;
           undo.enable = true;

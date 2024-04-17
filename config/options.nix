@@ -1,13 +1,15 @@
 { 
   config = {
     colorschemes.everforest.enable = true;
+    # colorschemes.catppuccin.enable = true;
+    # colorschemes.kanagawa.enable = true;
 
     globals = {
       mapleader = " ";
       maplocalleader = " ";
     };
 
-    options = {
+    opts = {
       # Line numbers
       number = true;
       relativenumber = true;
