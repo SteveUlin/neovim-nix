@@ -14,7 +14,7 @@
         clearEmptyLines = true;
       };
 
-      bufsurf.enable = true;
+      # bufsurf.enable = true;
 
       copilot-lua = {
         enable = true;
@@ -29,20 +29,20 @@
 
       gitsigns.enable = true;
 
-      harpoon = {
-        enable = true;
-        enableTelescope = true;
-        keymaps = {
-          addFile = "<leader>ha";
-          toggleQuickMenu = "<leader>ht";
-          navNext = "<leader>hn";
-          navPrev = "<leader>hp";
-        };
-      };
+      # harpoon = {
+      #   enable = true;
+      #   enableTelescope = true;
+      #   keymaps = {
+      #     addFile = "<leader>ha";
+      #     toggleQuickMenu = "<leader>ht";
+      #     navNext = "<leader>hn";
+      #     navPrev = "<leader>hp";
+      #   };
+      # };
 
       illuminate.enable = true;
 
-      log-highlight.enable = true;
+      # log-highlight.enable = true;
 
       luasnip = {
         enable = true;
@@ -112,44 +112,44 @@
         };
       };
 
-      lsp = {
-        enable = true;
-        preConfig =
-          ''
-            local __clangdCaps = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-            __clangdCaps.offsetEncoding = { "utf-16" }
-          '';
-        servers = {
-          clangd = {
-            enable = true;
-            package = pkgs.clang-tools_18;
-            extraOptions = {
-              capabilities = {__raw = "__clangdCaps";};
-            };
-          };
-          pyright.enable = true;
-          nil_ls.enable = true;
-        };
-      };
+      # # lsp = {
+      # #   enable = true;
+      # #   preConfig =
+      # #     ''
+      # #       local __clangdCaps = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+      # #       __clangdCaps.offsetEncoding = { "utf-16" }
+      # #     '';
+      # #   servers = {
+      # #     clangd = {
+      # #       enable = true;
+      # #       package = pkgs.clang-tools_18;
+      # #       extraOptions = {
+      # #         capabilities = {__raw = "__clangdCaps";};
+      # #       };
+      # #     };
+      # #     pyright.enable = true;
+      # #     nil_ls.enable = true;
+      # #   };
+      # # };
 
-      # clangd-extensions = {
-      #   enable = true;
-      #   enableOffsetEncodingWorkaround = true;
-      #   inlayHints = {
-      #     onlyCurrentLine = true;
-      #   };
-      # };
+      # # clangd-extensions = {
+      # #   enable = true;
+      # #   enableOffsetEncodingWorkaround = true;
+      # #   inlayHints = {
+      # #     onlyCurrentLine = true;
+      # #   };
+      # # };
 
 
-      # Automatically adds efm to the list of lsp servers
-      # efmls-configs = {
-      #   enable = true;
-      #   setup = {
-      #     markdown = {
-      #       linter = [ "markdownlint" ];
-      #     };
-      #   };
-      # };
+      # # Automatically adds efm to the list of lsp servers
+      # # efmls-configs = {
+      # #   enable = true;
+      # #   setup = {
+      # #     markdown = {
+      # #       linter = [ "markdownlint" ];
+      # #     };
+      # #   };
+      # # };
 
       rainbow-delimiters = {
         enable = true;
@@ -166,15 +166,17 @@
 
       telescope = {
         enable = true;
-        settings.defaults = {
-          initial_mode = "normal";
-          mappings = {
-            n = {
-              "<leader>q" = {
-                __raw = ''
-                  function(...)
-                    return require("telescope.actions").close(...)
-                  end'';
+        settings = {
+          defaults = {
+            initial_mode = "normal";
+            mappings = {
+              n = {
+                "<leader>q" = {
+                  __raw = ''
+                    function(...)
+                      return require("telescope.actions").close(...)
+                    end'';
+                };
               };
             };
           };
@@ -187,17 +189,17 @@
         };
       };
 
-      sniprun = {
-        enable = true;
-        display = [
-          "Terminal"
-        ];
-        interpreterOptions = {
-          Neorg_original = {
-            use_on_filetypes = [ "norg" ];
-          };
-        };
-      };
+      # sniprun = {
+      #   enable = true;
+      #   display = [
+      #     "Terminal"
+      #   ];
+      #   interpreterOptions = {
+      #     Neorg_original = {
+      #       use_on_filetypes = [ "norg" ];
+      #     };
+      #   };
+      # };
 
       treesitter = {
         enable = true;
@@ -220,7 +222,7 @@
         };
       };
 
-      venn-nvim.enable = true;
+      # venn-nvim.enable = true;
 
       which-key = {
         enable = true;

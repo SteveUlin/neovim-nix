@@ -1,8 +1,8 @@
 { 
   config = {
     colorschemes.everforest.enable = true;
-    # colorschemes.catppuccin.enable = true;
-    # colorschemes.kanagawa.enable = true;
+    # # colorschemes.catppuccin.enable = true;
+    # # colorschemes.kanagawa.enable = true;
 
     globals = {
       mapleader = " ";
@@ -63,8 +63,6 @@
       # Start with all folds open
       foldlevelstart = 99;
     };
-
-    filetype.extension.webc = "html";
 
   };
 }
