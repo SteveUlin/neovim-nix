@@ -112,33 +112,33 @@
         };
       };
 
-      # # lsp = {
-      # #   enable = true;
-      # #   preConfig =
-      # #     ''
-      # #       local __clangdCaps = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-      # #       __clangdCaps.offsetEncoding = { "utf-16" }
-      # #     '';
-      # #   servers = {
-      # #     clangd = {
-      # #       enable = true;
-      # #       package = pkgs.clang-tools_18;
-      # #       extraOptions = {
-      # #         capabilities = {__raw = "__clangdCaps";};
-      # #       };
-      # #     };
-      # #     pyright.enable = true;
-      # #     nil_ls.enable = true;
-      # #   };
-      # # };
+      lsp = {
+        enable = true;
+        preConfig =
+          ''
+            local __clangdCaps = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+            __clangdCaps.offsetEncoding = { "utf-16" }
+          '';
+        servers = {
+          clangd = {
+            enable = true;
+            package = pkgs.clang-tools_18;
+            extraOptions = {
+              capabilities = {__raw = "__clangdCaps";};
+            };
+          };
+          pyright.enable = true;
+          nil-ls.enable = true;
+        };
+      };
 
-      # # clangd-extensions = {
-      # #   enable = true;
-      # #   enableOffsetEncodingWorkaround = true;
-      # #   inlayHints = {
-      # #     onlyCurrentLine = true;
-      # #   };
-      # # };
+      clangd-extensions = {
+        enable = true;
+        enableOffsetEncodingWorkaround = true;
+        inlayHints = {
+          onlyCurrentLine = true;
+        };
+      };
 
 
       # # Automatically adds efm to the list of lsp servers
