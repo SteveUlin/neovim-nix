@@ -23,10 +23,6 @@
       url = "github:fei6409/log-highlight.nvim";
       flake = false;
     };
-    everforest = {
-      url = "github:neanias/everforest-nvim";
-      flake = false;
-    };
   };
 
   outputs = {
@@ -51,10 +47,6 @@
             log-highlight = final.vimUtils.buildVimPlugin {
               name = "log-highlight";
               src = inputs.log-highlight;
-            };
-            everforest = final.vimUtils.buildVimPlugin {
-              name = "everforest";
-              src = inputs.everforest;
             };
           };
         })
