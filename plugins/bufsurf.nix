@@ -5,17 +5,9 @@
   pkgs,
   ...
 }:
-with lib; let
-  cfg = config.plugins.bufsurf;
-in {
-  options.plugins.bufsurf = {
-    enable = mkEnableOption "Bufsurf";
-
-    package = helpers.mkPackageOption "Bufsurf"
-      pkgs.vimPlugins.bufsurf;
-  };
-
-  config = mkIf cfg.enable {
-    extraPlugins = [ cfg.package ];
-  };
+with lib;
+helpers.vim-plugin.mkVimPlugin config {
+  name = "bufsurf";
+  defaultPackage = pkgs.vimPlugins.bufsurf;
+  maintainers = [];
 }
