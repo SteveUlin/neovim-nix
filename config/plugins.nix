@@ -8,10 +8,7 @@
         layout = import ./alpha_layout.nix;
       };
 
-      better-escape = {
-        enable = true;
-        settings.mapping = [ "jk" ];
-      };
+      better-escape.enable = true;
 
       bufsurf.enable = true;
 
@@ -223,12 +220,7 @@
 
       # venn-nvim.enable = true;
 
-      which-key = {
-        enable = true;
-        registrations = {
-          "<Leader>f" = "+File";
-        };
-      };
+      which-key.enable = true;
 
     };
   };
