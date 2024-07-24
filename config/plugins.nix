@@ -136,6 +136,7 @@
         };
       };
 
+      lualine.enable = true;
 
       # # Automatically adds efm to the list of lsp servers
       # # efmls-configs = {
