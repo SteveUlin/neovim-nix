@@ -10,8 +10,7 @@
 
       better-escape = {
         enable = true;
-        mapping = [ "jk" ];
-        clearEmptyLines = true;
+        settings.mapping = [ "jk" ];
       };
 
       bufsurf.enable = true;
@@ -203,7 +202,7 @@
 
       treesitter = {
         enable = true;
-        indent = true;
+        settings.indent.enable = true;
         folding = true;
         nixGrammars = true;
         nixvimInjections = true;
