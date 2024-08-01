@@ -143,7 +143,12 @@
         enable = true;
         globalstatus = true;
         sections = {
-          lualine_a =  [ "filename" ];
+          lualine_a =  [ 
+            {
+              name = "filename";
+              extraConfig.path = 1;
+            }
+          ];
           lualine_b =  [ "branch" "diff" "diagnostics" ];
           lualine_c = [ "" ];
           lualine_x = [ "" ];
