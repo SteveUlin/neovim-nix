@@ -59,8 +59,9 @@
       module = {
         imports = [ ./plugins ./config ];
         extraPackages = with pkgs; [
-          delta
-          julia
+            clang_18
+            delta
+            julia
         ];
       };
     };

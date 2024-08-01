@@ -32,6 +32,11 @@ in
       action = ":lua vim.lsp.buf.hover()<CR>";
       options.desc = "LSP Hover";
     }
+    {
+      key = "<Leader>cf";
+      action = ":lua vim.lsp.buf.format()<CR>";
+      options.desc = "LSP Format";
+    }
 
     # Bufsurf
     {

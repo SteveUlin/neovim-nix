@@ -121,6 +121,9 @@
             package = pkgs.clang-tools_18;
             extraOptions = {
               capabilities = {__raw = "__clangdCaps";};
+              init_options = {
+                semanticHighlighting = true;
+              };
             };
           };
           pyright.enable = true;
@@ -128,15 +131,26 @@
         };
       };
 
-      clangd-extensions = {
+      # clangd-extensions = {
+      #   enable = true;
+      #   enableOffsetEncodingWorkaround = true;
+      #   inlayHints = {
+      #     onlyCurrentLine = true;
+      #   };
+      # };
+
+      lualine = {
         enable = true;
-        enableOffsetEncodingWorkaround = true;
-        inlayHints = {
-          onlyCurrentLine = true;
+        globalstatus = true;
+        sections = {
+          lualine_a =  [ "filename" ];
+          lualine_b =  [ "branch" "diff" "diagnostics" ];
+          lualine_c = [ "" ];
+          lualine_x = [ "" ];
+          lualine_y = [ "" ];
+          lualine_z = [ "" ];
         };
       };
-
-      lualine.enable = true;
 
       # # Automatically adds efm to the list of lsp servers
       # # efmls-configs = {
