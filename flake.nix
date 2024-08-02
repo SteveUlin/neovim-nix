@@ -23,6 +23,10 @@
       url = "github:fei6409/log-highlight.nvim";
       flake = false;
     };
+    everforest-src = {
+      url = "github:neanias/everforest-nvim";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -48,6 +52,10 @@
               name = "log-highlight";
               src = inputs.log-highlight;
             };
+            everforest-nvim = final.vimUtils.buildVimPlugin {
+              name = "everforest-nvim";
+              src = inputs.everforest-src;
+            };
           };
         })
       ];
@@ -61,7 +69,6 @@
         extraPackages = with pkgs; [
             clang_18
             delta
-            julia
         ];
       };
     };

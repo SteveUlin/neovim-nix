@@ -1,6 +1,11 @@
 { 
   config = {
-    colorschemes.everforest.enable = true;
+    colorschemes.everforest-nvim = {
+      enable = true;
+      settings = {
+        italics = true;
+      };
+    };
     # # colorschemes.catppuccin.enable = true;
     # # colorschemes.kanagawa.enable = true;
 
