@@ -178,6 +178,12 @@
             "RainbowDelimiterCyan"
             "RainbowDelimiterRed"
           ];
+        # Fix <<< >>> highlighting
+        extraOptions = {
+          priority = {
+            cuda = 200;
+          };
+        };
       };
 
       telescope = {
@@ -219,7 +225,10 @@
 
       treesitter = {
         enable = true;
-        settings.indent.enable = true;
+        settings = {
+          indent.enable = true;
+          highlight.enable = true;
+        };
         folding = true;
         nixGrammars = true;
         nixvimInjections = true;
