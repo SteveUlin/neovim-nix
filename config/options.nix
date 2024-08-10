@@ -23,6 +23,7 @@
       nrformats = "";
 
       colorcolumn = "81";
+      cursorline = true;
 
       # Default indentation
       shiftwidth = 2;
@@ -67,6 +68,8 @@
 
       # Start with all folds open
       foldlevelstart = 99;
+      
+      conceallevel = 2;
     };
 
   };

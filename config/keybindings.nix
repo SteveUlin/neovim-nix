@@ -6,6 +6,18 @@ let
 in
 {
   keymaps = map (keymap: defaultKeymap // keymap) [
+    {
+      key = "k";
+      mode = ["n" "v"];
+      action = "v:count == 0 ? 'gk' : 'k'";
+      options.expr = true;
+    }
+    {
+      key = "j";
+      mode = ["n" "v"];
+      action = "v:count == 0 ? 'gj' : 'j'";
+      options.expr = true;
+    }
     # LSP
     {
       key = "<Leader>ca";

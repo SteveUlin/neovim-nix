@@ -139,6 +139,14 @@
       #   };
       # };
 
+      # markview-nvim = {
+      #   enable = true;
+      #   settings = {
+      #     modes = [ "i" "n" "no" "c" ];
+      #     hybrid_modes = [ "i" ];
+      #   };
+      # };
+
       lualine = {
         enable = true;
         globalstatus = true;
@@ -244,6 +252,15 @@
             "ac" = "@class.outer";
             "ic" = "@class.inner";
           };
+        };
+      };
+
+      obsidian = {
+        enable = true;
+        settings = {
+          workspaces = [ 
+            { name = "Obsidian"; path = "~/Obsidian"; }
+          ];
         };
       };
 

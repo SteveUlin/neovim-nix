@@ -19,12 +19,19 @@
       url = "github:ton/vim-bufsurf";
       flake = false;
     };
+    
     log-highlight = {
       url = "github:fei6409/log-highlight.nvim";
       flake = false;
     };
+    
     everforest-src = {
       url = "github:neanias/everforest-nvim";
+      flake = false;
+    };
+
+    markview-src = {
+      url = "github:OXY2DEV/markview.nvim";
       flake = false;
     };
   };
@@ -55,6 +62,10 @@
             everforest-nvim = final.vimUtils.buildVimPlugin {
               name = "everforest-nvim";
               src = inputs.everforest-src;
+            };
+            markview-nvim = final.vimUtils.buildVimPlugin {
+              name = "markview-nvim";
+              src = inputs.markview-src;
             };
           };
         })
