@@ -18,6 +18,7 @@
       # Line numbers
       number = true;
       relativenumber = true;
+      scrolloff = 8;
 
       # Always use decimal when incrementing and decrementing numbers
       nrformats = "";

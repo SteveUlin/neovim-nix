@@ -2,7 +2,7 @@
   description = "sulin's Neovim Flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/master";
 
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
@@ -10,6 +10,10 @@
     };
     nixvim = {
       url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    neorg-overlay = {
+      url = "github:nvim-neorg/nixpkgs-neorg-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -42,12 +46,15 @@
     neovim-nightly-overlay,
     nixvim,
     flake-utils,
+    neorg-overlay,
     ...
   }@inputs:
     flake-utils.lib.eachDefaultSystem (system: let
     pkgs = import nixpkgs {
       inherit system;
       overlays = [
+        neovim-nightly-overlay.overlays.default
+        neorg-overlay.overlays.default
         (final: prev: {
           vimPlugins = prev.vimPlugins //
           {

@@ -6,9 +6,8 @@
   ...
 }:
 helpers.neovim-plugin.mkNeovimPlugin config {
-  name = "markview-nvim";
-  defaultPackage = pkgs.vimPlugins.markview-nvim;
-  luaName = "markview";
+  name = "eyeliner-nvim";
+  defaultPackage = pkgs.vimPlugins.eyeliner-nvim;
+  luaName = "eyeliner";
   maintainers = [];
 }
-

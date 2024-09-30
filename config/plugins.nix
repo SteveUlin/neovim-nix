@@ -3,6 +3,8 @@
   config = {
     plugins = {
 
+      # eyeliner-nvim.enable = true;
+
       alpha = {
         enable = true;
         layout = import ./alpha_layout.nix;
@@ -24,6 +26,10 @@
       diffview.enable = true;
 
       gitsigns.enable = true;
+
+      neorg.enable = true;
+
+      hardtime.enable = true;
 
       # harpoon = {
       #   enable = true;
@@ -151,17 +157,28 @@
         enable = true;
         globalstatus = true;
         sections = {
+          lualine_a = [ "branch" "diff" "diagnostics" ];
+          lualine_b = [ "" ];
+          lualine_c = [ "" ];
+          lualine_x = [ "" ];
+          lualine_y = [ "" ];
+          lualine_z = [ "" ];
+        };
+        winbar = {
           lualine_a =  [ 
             {
               name = "filename";
               extraConfig.path = 1;
             }
           ];
-          lualine_b =  [ "branch" "diff" "diagnostics" ];
-          lualine_c = [ "" ];
-          lualine_x = [ "" ];
-          lualine_y = [ "" ];
-          lualine_z = [ "" ];
+        };
+        inactiveWinbar = {
+          lualine_a =  [ 
+            {
+              name = "filename";
+              extraConfig.path = 1;
+            }
+          ];
         };
       };
 
@@ -244,6 +261,21 @@
 
       treesitter-textobjects = {
         enable = true;
+        move = {
+          enable = true;
+          gotoNextStart = {
+              "]f" = "@function.outer";
+          };
+          gotoNextEnd = {
+              "]F" = "@function.outer";
+          };
+          gotoPreviousStart = {
+                "[f" = "@function.outer";
+          };
+          gotoPreviousEnd = {
+              "[F" = "@function.outer";
+          };
+        };
         select = {
           enable = true;
           keymaps = {
