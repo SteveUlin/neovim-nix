@@ -1,13 +1,10 @@
 {
-  config,
-  helpers,
   lib,
   pkgs,
   ...
 }:
-with lib;
-helpers.vim-plugin.mkVimPlugin config {
+lib.nixvim.vim-plugin.mkVimPlugin {
   name = "bufsurf";
-  defaultPackage = pkgs.vimPlugins.bufsurf;
+  package = pkgs.vimPlugins.bufsurf;
   maintainers = [];
 }

@@ -83,7 +83,7 @@
     nvim = nixvim'.makeNixvimWithModule {
       inherit pkgs;
       module = {
-        imports = [ ./plugins ./config ];
+        imports = [ ./config ];
         extraPackages = with pkgs; [
             clang_18
             delta

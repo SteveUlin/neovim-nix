@@ -12,7 +12,7 @@
 
       better-escape.enable = true;
 
-      bufsurf.enable = true;
+      # bufsurf.enable = true;
 
       copilot-lua = {
         enable = true;
@@ -155,30 +155,32 @@
 
       lualine = {
         enable = true;
-        globalstatus = true;
-        sections = {
-          lualine_a = [ "branch" "diff" "diagnostics" ];
-          lualine_b = [ "" ];
-          lualine_c = [ "" ];
-          lualine_x = [ "" ];
-          lualine_y = [ "" ];
-          lualine_z = [ "" ];
-        };
-        winbar = {
-          lualine_a =  [ 
-            {
-              name = "filename";
-              extraConfig.path = 1;
-            }
-          ];
-        };
-        inactiveWinbar = {
-          lualine_a =  [ 
-            {
-              name = "filename";
-              extraConfig.path = 1;
-            }
-          ];
+        settings = {
+          globalstatus = true;
+          sections = {
+            lualine_a = [ "branch" "diff" "diagnostics" ];
+            lualine_b = [ "" ];
+            lualine_c = [ "" ];
+            lualine_x = [ "" ];
+            lualine_y = [ "" ];
+            lualine_z = [ "" ];
+          };
+          winbar = {
+            lualine_a =  [ 
+              {
+                name = "filename";
+                extraConfig.path = 1;
+              }
+            ];
+          };
+          inactiveWinbar = {
+            lualine_a =  [ 
+              {
+                name = "filename";
+                extraConfig.path = 1;
+              }
+            ];
+          };
         };
       };
 
@@ -231,7 +233,7 @@
         extensions = {
           file-browser.enable = true;
           frecency.enable = true;
-          live_grep_args.enable = true;
+          live-grep-args.enable = true;
           undo.enable = true;
         };
       };
@@ -297,6 +299,8 @@
       };
 
       # venn-nvim.enable = true;
+
+      web-devicons.enable = true;
 
       which-key.enable = true;
 

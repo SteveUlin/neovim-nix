@@ -1,14 +1,12 @@
 {
-  config,
-  helpers,
   lib,
   pkgs,
   ...
 }:
-helpers.neovim-plugin.mkNeovimPlugin config {
+lib.nixvim.neovim-plugin.mkNeovimPlugin {
   name = "everforest-nvim";
   isColorscheme = true;
-  defaultPackage = pkgs.vimPlugins.everforest-nvim;
+  package = pkgs.vimPlugins.everforest-nvim;
   luaName = "everforest";
   colorscheme = "everforest";
   maintainers = [];

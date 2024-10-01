@@ -1,11 +1,17 @@
 { 
   config = {
-    colorschemes.everforest-nvim = {
+    colorschemes.gruvbox = {
       enable = true;
       settings = {
-        italics = true;
+        contrast = "hard";
       };
     };
+    # colorschemes.everforest-nvim = {
+    #   enable = true;
+    #   settings = {
+    #     italics = true;
+    #   };
+    # };
     # # colorschemes.catppuccin.enable = true;
     # # colorschemes.kanagawa.enable = true;
 
