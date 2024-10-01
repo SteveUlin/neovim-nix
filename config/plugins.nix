@@ -167,18 +167,12 @@
           };
           winbar = {
             lualine_a =  [ 
-              {
-                name = "filename";
-                extraConfig.path = 1;
-              }
+              "filename"
             ];
           };
           inactiveWinbar = {
             lualine_a =  [ 
-              {
-                name = "filename";
-                extraConfig.path = 1;
-              }
+              "filename"
             ];
           };
         };
