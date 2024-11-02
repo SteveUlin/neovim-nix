@@ -1,19 +1,8 @@
 { 
   config = {
-    colorschemes.gruvbox = {
+    colorschemes.everforest-nvim = {
       enable = true;
-      settings = {
-        contrast = "hard";
-      };
     };
-    # colorschemes.everforest-nvim = {
-    #   enable = true;
-    #   settings = {
-    #     italics = true;
-    #   };
-    # };
-    # # colorschemes.catppuccin.enable = true;
-    # # colorschemes.kanagawa.enable = true;
 
     globals = {
       mapleader = " ";

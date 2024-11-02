@@ -6,7 +6,7 @@
 lib.nixvim.neovim-plugin.mkNeovimPlugin {
   name = "everforest-nvim";
   isColorscheme = true;
-  package = pkgs.vimPlugins.everforest-nvim;
+  package = "everforest-nvim";
   luaName = "everforest";
   colorscheme = "everforest";
   maintainers = [];

@@ -27,8 +27,6 @@
 
       gitsigns.enable = true;
 
-      neorg.enable = true;
-
       hardtime.enable = true;
 
       # harpoon = {
@@ -53,9 +51,83 @@
 
       notify.enable = true;
 
+      mdx.enable = true;
+
       cmp = {
         enable = true;
+        
         settings = {
+          experimental = { ghost_text = true; };
+          window = {
+            completion = {
+              winhighlight =
+                "FloatBorder:CmpBorder,Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel";
+              scrollbar = false;
+              sidePadding = 0;
+              border = [ "╭" "─" "╮" "│" "╯" "─" "╰" "│" ];
+            };
+
+            settings.documentation = {
+              border = [ "╭" "─" "╮" "│" "╯" "─" "╰" "│" ];
+              winhighlight =
+                "FloatBorder:CmpBorder,Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel";
+            };
+          };
+          formatting = {
+            fields = [ "kind" "abbr" "menu" ];
+            format = 
+              # lua
+              ''
+                function(_, item)
+                  local icons = {
+                    Namespace = "󰌗",
+                    Text = "󰉿",
+                    Method = "󰆧",
+                    Function = "󰆧",
+                    Constructor = "",
+                    Field = "󰜢",
+                    Variable = "󰀫",
+                    Class = "󰠱",
+                    Interface = "",
+                    Module = "",
+                    Property = "󰜢",
+                    Unit = "󰑭",
+                    Value = "󰎠",
+                    Enum = "",
+                    Keyword = "󰌋",
+                    Snippet = "",
+                    Color = "󰏘",
+                    File = "󰈚",
+                    Reference = "󰈇",
+                    Folder = "󰉋",
+                    EnumMember = "",
+                    Constant = "󰏿",
+                    Struct = "󰙅",
+                    Event = "",
+                    Operator = "󰆕",
+                    TypeParameter = "󰊄",
+                    Table = "",
+                    Object = "󰅩",
+                    Tag = "",
+                    Array = "[]",
+                    Boolean = "",
+                    Number = "",
+                    Null = "󰟢",
+                    String = "󰉿",
+                    Calendar = "",
+                    Watch = "󰥔",
+                    Package = "",
+                    Copilot = "",
+                    Codeium = "",
+                    TabNine = "",
+                  }
+
+                  local icon = icons[item.kind] or ""
+                  item.kind = string.format("%s %s", icon, item.kind or "")
+                  return item
+                end
+            '';
+          };
           mapping = {
             "<CR>" = "cmp.mapping.confirm({select = true })";
             "<C-d>" = "cmp.mapping.scroll_docs(-4)";
@@ -124,7 +196,7 @@
         servers = {
           clangd = {
             enable = true;
-            package = pkgs.clang-tools_18;
+            package = pkgs.llvmPackages_19.clang-tools;
             extraOptions = {
               capabilities = {__raw = "__clangdCaps";};
               init_options = {

@@ -38,6 +38,11 @@
       url = "github:OXY2DEV/markview.nvim";
       flake = false;
     };
+
+    mdx = {
+      url = "github:davidmh/mdx.nvim";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -58,6 +63,10 @@
         (final: prev: {
           vimPlugins = prev.vimPlugins //
           {
+            mdx = final.vimUtils.buildVimPlugin {
+              name = "mdx";
+              src = inputs.mdx;
+            };
             bufsurf = final.vimUtils.buildVimPlugin {
               name = "bufsurf";
               src = inputs.bufsurf-src;
@@ -83,9 +92,9 @@
     nvim = nixvim'.makeNixvimWithModule {
       inherit pkgs;
       module = {
-        imports = [ ./config ];
+        imports = [ ./plugins ./config ];
         extraPackages = with pkgs; [
-            clang_18
+            clang_19
             delta
         ];
       };
