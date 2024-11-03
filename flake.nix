@@ -34,6 +34,11 @@
       flake = false;
     };
 
+    eyeliner-src = {
+      url = "github:jinh0/eyeliner.nvim";
+      flake = false;
+    };
+
     markview-src = {
       url = "github:OXY2DEV/markview.nvim";
       flake = false;
@@ -70,6 +75,10 @@
             bufsurf = final.vimUtils.buildVimPlugin {
               name = "bufsurf";
               src = inputs.bufsurf-src;
+            };
+            eyeliner = final.vimUtils.buildVimPlugin {
+              name = "eyeliner";
+              src = inputs.eyeliner-src;
             };
             log-highlight = final.vimUtils.buildVimPlugin {
               name = "log-highlight";

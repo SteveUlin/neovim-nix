@@ -2,9 +2,6 @@
 {
   config = {
     plugins = {
-
-      # eyeliner-nvim.enable = true;
-
       alpha = {
         enable = true;
         layout = import ./alpha_layout.nix;
@@ -24,21 +21,17 @@
       copilot-cmp.enable = true;
 
       diffview.enable = true;
+      
+      eyeliner-nvim = {
+        enable = true;
+        settings = {
+          highlight_on_key = true;
+        };
+      };
 
       gitsigns.enable = true;
 
       hardtime.enable = true;
-
-      # harpoon = {
-      #   enable = true;
-      #   enableTelescope = true;
-      #   keymaps = {
-      #     addFile = "<leader>ha";
-      #     toggleQuickMenu = "<leader>ht";
-      #     navNext = "<leader>hn";
-      #     navPrev = "<leader>hp";
-      #   };
-      # };
 
       illuminate.enable = true;
 

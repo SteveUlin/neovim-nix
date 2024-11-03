@@ -53,6 +53,22 @@
         "type": "github"
       }
     },
+    "eyeliner-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1727476631,
+        "narHash": "sha256-qOMToZtBd39mdFZEr5WfIkHj+7TWeCPy2GJdIN+qOic=",
+        "owner": "jinh0",
+        "repo": "eyeliner.nvim",
+        "rev": "8f197eb30cecdf4c2cc9988a5eecc6bc34c0c7d6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jinh0",
+        "repo": "eyeliner.nvim",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -651,11 +667,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1730586541,
-        "narHash": "sha256-zLyfno2M6qRYk89mhAsRWJ6ddTZMd+lmQVAfamxHCfI=",
+        "lastModified": 1730671215,
+        "narHash": "sha256-bCt0uxoFfD8aXjnwz98DZegnEyrH0tBWO/9H+pt8+k4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "08ee597a5ffd59e6f3ff63a11a3254fd6f0bcde2",
+        "rev": "ab272732b148a5f208a2a49612d67695e7fa8abb",
         "type": "github"
       },
       "original": {
@@ -761,6 +777,7 @@
       "inputs": {
         "bufsurf-src": "bufsurf-src",
         "everforest-src": "everforest-src",
+        "eyeliner-src": "eyeliner-src",
         "flake-utils": "flake-utils",
         "log-highlight": "log-highlight",
         "markview-src": "markview-src",

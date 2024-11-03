@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   ...
 }:
 lib.nixvim.neovim-plugin.mkNeovimPlugin {

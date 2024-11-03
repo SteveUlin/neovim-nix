@@ -1,13 +1,10 @@
 {
-  config,
-  helpers,
   lib,
-  pkgs,
   ...
 }:
-helpers.neovim-plugin.mkNeovimPlugin config {
+lib.nixvim.neovim-plugin.mkNeovimPlugin {
   name = "eyeliner-nvim";
-  defaultPackage = pkgs.vimPlugins.eyeliner-nvim;
+  package = "eyeliner";
   luaName = "eyeliner";
   maintainers = [];
 }
