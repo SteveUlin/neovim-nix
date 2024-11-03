@@ -12,7 +12,7 @@
 
       better-escape.enable = true;
 
-      # bufsurf.enable = true;
+      bufsurf.enable = true;
 
       copilot-lua = {
         enable = true;
