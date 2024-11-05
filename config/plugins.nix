@@ -54,7 +54,7 @@
           window = {
             completion = {
               winhighlight =
-                "FloatBorder:CmpBorder,Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel";
+                "FloatBorder:CmpBorder,Normal:CmpPmenu";
               scrollbar = false;
               sidePadding = 0;
               border = [ "╭" "─" "╮" "│" "╯" "─" "╰" "│" ];
@@ -165,8 +165,8 @@
           };
           expand = "luasnip";
           sources = [
-            { name = "luasnip"; }
             { name = "copilot"; }
+            { name = "luasnip"; }
             { name = "nvim_lsp"; }
             { name = "cmdline"; }
             { name = "latex_symbols"; }
@@ -199,6 +199,11 @@
           };
           pyright.enable = true;
           nil-ls.enable = true;
+          rust_analyzer = {
+            enable = true;
+            installCargo = true;
+            installRustc = true;
+          };
         };
       };
 
