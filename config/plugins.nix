@@ -356,15 +356,6 @@
         };
       };
 
-      obsidian = {
-        enable = true;
-        settings = {
-          workspaces = [ 
-            { name = "Obsidian"; path = "~/Obsidian"; }
-          ];
-        };
-      };
-
       # venn-nvim.enable = true;
 
       web-devicons.enable = true;
