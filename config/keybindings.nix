@@ -118,7 +118,7 @@ in
 
     {
       key = "<Leader>q";
-      action = ":quit<CR>";
+      action = ":close<CR>";
       options.desc = "Quit";
     }
 

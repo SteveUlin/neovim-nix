@@ -105,6 +105,7 @@
         extraPackages = with pkgs; [
             clang_19
             delta
+            rustfmt
         ];
       };
     };

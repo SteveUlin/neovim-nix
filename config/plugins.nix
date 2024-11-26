@@ -165,8 +165,8 @@
           };
           expand = "luasnip";
           sources = [
-            { name = "copilot"; }
             { name = "luasnip"; }
+            { name = "copilot"; }
             { name = "nvim_lsp"; }
             { name = "cmdline"; }
             { name = "latex_symbols"; }
@@ -203,6 +203,9 @@
             enable = true;
             installCargo = true;
             installRustc = true;
+            settings = {
+              cargo.features = "all";
+            };
           };
         };
       };
