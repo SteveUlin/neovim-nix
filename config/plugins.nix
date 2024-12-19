@@ -22,7 +22,7 @@
 
       diffview.enable = true;
       
-      eyeliner-nvim = {
+      eyeliner = {
         enable = true;
         settings = {
           highlight_on_key = true;

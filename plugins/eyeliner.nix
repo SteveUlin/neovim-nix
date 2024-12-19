@@ -3,8 +3,7 @@
   ...
 }:
 lib.nixvim.neovim-plugin.mkNeovimPlugin {
-  name = "eyeliner-nvim";
+  name = "eyeliner";
   package = "eyeliner";
-  luaName = "eyeliner";
   maintainers = [];
 }
