@@ -46,6 +46,14 @@
 
       mdx.enable = true;
 
+      mini = {
+        enable = true;
+
+        modules = {
+          pairs = {};
+        };
+      };
+
       cmp = {
         enable = true;
         
