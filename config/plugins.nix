@@ -20,6 +20,8 @@
 
       copilot-cmp.enable = true;
 
+      copilot-chat.enable = true;
+
       diffview.enable = true;
       
       eyeliner = {
@@ -324,6 +326,8 @@
       #     };
       #   };
       # };
+
+      tiny-inline-diagnostic.enable = true;
 
       treesitter = {
         enable = true;

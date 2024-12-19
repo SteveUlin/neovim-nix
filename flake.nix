@@ -48,6 +48,11 @@
       url = "github:davidmh/mdx.nvim";
       flake = false;
     };
+
+    tiny-inline-diagnostic = {
+      url = "github:rachartier/tiny-inline-diagnostic.nvim";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -92,6 +97,10 @@
               name = "markview-nvim";
               src = inputs.markview-src;
             };
+            tiny-inline-diagnostic = final.vimUtils.buildVimPlugin {
+              name = "tiny-inline-diagnostic";
+              src = inputs.tiny-inline-diagnostic;
+            };
           };
         })
       ];
@@ -106,6 +115,8 @@
             clang_19
             delta
             rustfmt
+            lynx
+            lua51Packages.tiktoken_core
         ];
       };
     };

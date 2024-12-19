@@ -786,7 +786,8 @@
         "neorg-overlay": "neorg-overlay",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixpkgs": "nixpkgs_3",
-        "nixvim": "nixvim"
+        "nixvim": "nixvim",
+        "tiny-inline-diagnostic": "tiny-inline-diagnostic"
       }
     },
     "systems": {
@@ -831,6 +832,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tiny-inline-diagnostic": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1734541807,
+        "narHash": "sha256-aKR5ytY3YSYLoMnte/eEFSdyhJwOIQHC8yQj2XZzpyU=",
+        "owner": "rachartier",
+        "repo": "tiny-inline-diagnostic.nvim",
+        "rev": "66d9166520a0cb3392a5ef68946fd3980d57383f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rachartier",
+        "repo": "tiny-inline-diagnostic.nvim",
         "type": "github"
       }
     },
