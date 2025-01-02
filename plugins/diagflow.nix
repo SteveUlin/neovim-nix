@@ -1,11 +1,9 @@
-
 {
   lib,
   ...
 }:
 lib.nixvim.neovim-plugin.mkNeovimPlugin {
-  name = "tiny-inline-diagnostic";
-  package = "tiny-inline-diagnostic";
+  name = "diagflow";
+  package = "diagflow";
   maintainers = [];
 }
-

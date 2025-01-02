@@ -2,59 +2,9 @@
 {
   config = {
     plugins = {
-      alpha = {
-        enable = true;
-        layout = import ./alpha_layout.nix;
-      };
-
       better-escape.enable = true;
 
       bufsurf.enable = true;
-
-      copilot-lua = {
-        enable = true;
-        panel.enabled = false;
-        suggestion.enabled = false;
-        filetypes.markdown = true;
-      };
-
-      copilot-cmp.enable = true;
-
-      copilot-chat.enable = true;
-
-      diffview.enable = true;
-      
-      eyeliner = {
-        enable = true;
-        settings = {
-          highlight_on_key = true;
-        };
-      };
-
-      gitsigns.enable = true;
-
-      hardtime.enable = true;
-
-      illuminate.enable = true;
-
-      # log-highlight.enable = true;
-
-      luasnip = {
-        enable = true;
-        fromVscode = [{paths = "${pkgs.vimPlugins.friendly-snippets}";}];
-      };
-
-      notify.enable = true;
-
-      mdx.enable = true;
-
-      mini = {
-        enable = true;
-
-        modules = {
-          pairs = {};
-        };
-      };
 
       cmp = {
         enable = true;
@@ -79,7 +29,6 @@
           formatting = {
             fields = [ "kind" "abbr" "menu" ];
             format = 
-              # lua
               ''
                 function(_, item)
                   local icons = {
@@ -146,8 +95,6 @@
                 end
                 if cmp.visible() then
                   cmp.select_next_item()
-                -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-                -- they way you will only jump inside the snippet region
                 elseif luasnip.expand_or_locally_jumpable() then
                   luasnip.expand_or_jump()
                 elseif has_words_before() then
@@ -189,6 +136,46 @@
         };
       };
 
+      copilot-chat.enable = true;
+
+      copilot-cmp.enable = true;
+
+      copilot-lua = {
+        enable = true;
+        panel.enabled = false;
+        suggestion.enabled = false;
+        filetypes.markdown = true;
+      };
+
+      diagflow = {
+        enable = true;
+        settings = {
+          show_borders = true;
+          scope = "line";
+          border_chars = {
+            top_left = "╭";
+            top_right = "╮";
+            botttom_left = "╰";
+            bottom_right = "╯";
+            horizontal = "─";
+            vertical = "│";
+          };
+        };
+      };
+
+      diffview.enable = true;
+
+      eyeliner = {
+        enable = true;
+        settings = {
+          highlight_on_key = true;
+        };
+      };
+
+      gitsigns.enable = true;
+
+      illuminate.enable = true;
+
       lsp = {
         enable = true;
         preConfig =
@@ -220,22 +207,6 @@
         };
       };
 
-      # clangd-extensions = {
-      #   enable = true;
-      #   enableOffsetEncodingWorkaround = true;
-      #   inlayHints = {
-      #     onlyCurrentLine = true;
-      #   };
-      # };
-
-      # markview-nvim = {
-      #   enable = true;
-      #   settings = {
-      #     modes = [ "i" "n" "no" "c" ];
-      #     hybrid_modes = [ "i" ];
-      #   };
-      # };
-
       lualine = {
         enable = true;
         settings = {
@@ -261,15 +232,20 @@
         };
       };
 
-      # # Automatically adds efm to the list of lsp servers
-      # # efmls-configs = {
-      # #   enable = true;
-      # #   setup = {
-      # #     markdown = {
-      # #       linter = [ "markdownlint" ];
-      # #     };
-      # #   };
-      # # };
+      luasnip = {
+        enable = true;
+        fromVscode = [{paths = "${pkgs.vimPlugins.friendly-snippets}";}];
+      };
+
+      mdx.enable = true;
+
+      mini = {
+        enable = true;
+
+        modules = {
+          pairs = {};
+        };
+      };
 
       rainbow-delimiters = {
         enable = true;
@@ -282,11 +258,20 @@
             "RainbowDelimiterCyan"
             "RainbowDelimiterRed"
           ];
-        # Fix <<< >>> highlighting
         extraOptions = {
           priority = {
             cuda = 200;
           };
+        };
+      };
+
+      snacks = {
+        enable = true;
+        settings = {
+          bigfile.enabled = true;
+          scroll.enabled = true;
+          notifier.enabled = true;
+          # statuscolumn.enabled = true;
         };
       };
 
@@ -314,20 +299,6 @@
           undo.enable = true;
         };
       };
-
-      # sniprun = {
-      #   enable = true;
-      #   display = [
-      #     "Terminal"
-      #   ];
-      #   interpreterOptions = {
-      #     Neorg_original = {
-      #       use_on_filetypes = [ "norg" ];
-      #     };
-      #   };
-      # };
-
-      tiny-inline-diagnostic.enable = true;
 
       treesitter = {
         enable = true;
@@ -367,8 +338,6 @@
           };
         };
       };
-
-      # venn-nvim.enable = true;
 
       web-devicons.enable = true;
 

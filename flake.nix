@@ -49,10 +49,16 @@
       flake = false;
     };
 
-    tiny-inline-diagnostic = {
+    tiny-inline-diagnostic-src = {
       url = "github:rachartier/tiny-inline-diagnostic.nvim";
       flake = false;
     };
+
+    diagflow-src = {
+      url = "github:dgagn/diagflow.nvim";
+      flake = false;
+    };
+      
   };
 
   outputs = {
@@ -99,7 +105,11 @@
             };
             tiny-inline-diagnostic = final.vimUtils.buildVimPlugin {
               name = "tiny-inline-diagnostic";
-              src = inputs.tiny-inline-diagnostic;
+              src = inputs.tiny-inline-diagnostic-src;
+            };
+            diagflow = final.vimUtils.buildVimPlugin {
+              name = "diagflow";
+              src = inputs.diagflow-src;
             };
           };
         })

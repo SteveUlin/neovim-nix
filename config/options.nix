@@ -9,6 +9,10 @@
       maplocalleader = " ";
     };
 
+    diagnostics = {
+      virtual_text = false;
+    };
+
     opts = {
       # Line numbers
       number = true;
