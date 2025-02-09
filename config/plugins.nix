@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, helpers, ... }:
 {
   config = {
     plugins = {
@@ -172,6 +172,10 @@
         };
       };
 
+      fzf-lua = {
+        enable = true;
+      };
+
       gitsigns.enable = true;
 
       illuminate.enable = true;
@@ -265,13 +269,24 @@
         };
       };
 
-      snacks = {
+      snacks-nvim = {
         enable = true;
         settings = {
           bigfile.enabled = true;
-          scroll.enabled = true;
+          explorer = {
+            enabled = true;
+            replace_netrw = true;
+          };
+          input.enabled = true;
           notifier.enabled = true;
           # statuscolumn.enabled = true;
+          picker = {
+            enabled = true;
+            sources.explorer = {
+              layout.layout.position = "right";
+            };
+          };
+          scroll.enabled = true;
         };
       };
 
@@ -306,7 +321,7 @@
           indent.enable = true;
           highlight.enable = true;
         };
-        folding = true;
+        # folding = true;
         nixGrammars = true;
         nixvimInjections = true;
       };

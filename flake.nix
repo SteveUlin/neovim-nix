@@ -58,6 +58,11 @@
       url = "github:dgagn/diagflow.nvim";
       flake = false;
     };
+
+    snacks-src = {
+      url = "github:folke/snacks.nvim";
+      flake = false;
+    };
       
   };
 
@@ -110,6 +115,11 @@
             diagflow = final.vimUtils.buildVimPlugin {
               name = "diagflow";
               src = inputs.diagflow-src;
+            };
+            snacks-head = final.vimUtils.buildVimPlugin {
+              name = "snacks-head";
+              src = inputs.snacks-src;
+              doCheck = false;
             };
           };
         })

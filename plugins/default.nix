@@ -6,6 +6,7 @@
     ./tiny-inline-diagnostic.nix
     ./everforest.nix
     ./diagflow.nix
+    ./snacks.nix
     # ./markview.nix
   ];
 }

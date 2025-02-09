@@ -82,12 +82,12 @@ in
     }
     {
       key = "<Leader>fe";
-      action = ":Telescope file_browser path=%:p:h select_buffer=true<CR>";
+      action = ":lua Snacks.explorer()<CR>";
       options.desc = "File Explorer";
     }
     {
       key = "<Leader>fE";
-      action = ":Telescope file_browser<CR>";
+      action = ":lua require('neo-tree.command').execute({ toggle = true, dir = vim.uv.cwd() })<CR>";
       options.desc = "File Explorer -- Current Directory";
     }
     {
@@ -97,7 +97,7 @@ in
     }
     {
       key = "<Leader>f/";
-      action = ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>";
+      action = ":lua Snacks.picker.grep()<CR>";
       options.desc = "Live Grep";
     }
     {
@@ -112,7 +112,7 @@ in
     }
     {
       key = "<Leader>fr";
-      action = ":Telescope frecency<CR>";
+      action = ":lua Snacks.picker.smart()<CR>";
       options.desc = "Frecency";
     }
 

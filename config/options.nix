@@ -2,6 +2,33 @@
   config = {
     colorschemes.everforest-nvim = {
       enable = true;
+      settings = {
+        on_highlights = ''
+          function(hl, palette)
+            hl["StorageClass"] = { fg = palette.red, italic = true}
+            hl["Statement"] = { fg = palette.red, italic = true}
+            hl["Structure"] = { fg = palette.red, italic = true}
+            hl["Constant"] = { fg = palette.red, italic = true}
+            hl["Type"] = { fg = palette.aqua }
+            hl["@lsp.type.type"] = { fg = palette.aqua }
+            hl["@lsp.type.typeParameter"] = { fg = palette.aqua }
+            hl["@lsp.type.class"] = { fg = palette.aqua }
+            hl["@lsp.type.function"] = { fg = palette.yellow }
+            hl["@lsp.type.method"] = { fg = palette.green }
+            hl["@lsp.type.parameter"] = { fg = palette.purple }
+            hl["@lsp.type.variable"] = { fg = palette.none }
+            hl["@lsp.type.property"] = { fg = palette.blue }
+            hl["@lsp.type.concept"] = { fg = palette.aqua, italic = true }
+            
+            hl["@lsp.typemod.function.classScope"] = { fg = palette.orange }
+            hl["@lsp.typemod.variable.classScope"] = { fg = palette.orange }
+            hl["@lsp.typemod.variable.fileScope"] = { fg = palette.orange }
+            hl["@lsp.typemod.variable.globalScope"] = { fg = palette.red }
+            
+            hl["@lsp.typemod.variable.static"] = { fg = palette.none }
+          end
+        '';
+      };
     };
 
     globals = {
