@@ -275,7 +275,6 @@
           bigfile.enabled = true;
           explorer = {
             enabled = true;
-            replace_netrw = true;
           };
           input.enabled = true;
           notifier.enabled = true;
