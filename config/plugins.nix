@@ -125,7 +125,6 @@
             { name = "luasnip"; }
             { name = "copilot"; }
             { name = "nvim_lsp"; }
-            { name = "cmdline"; }
             { name = "latex_symbols"; }
             { name = "emoji"; }
             { name = "spell"; }
@@ -249,6 +248,12 @@
         modules = {
           pairs = {};
         };
+      };
+      
+      neo-tree = {
+        enable = true;
+        window.position = "right";
+        closeIfLastWindow = true;
       };
 
       rainbow-delimiters = {

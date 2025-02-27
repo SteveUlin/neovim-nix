@@ -82,7 +82,17 @@ in
     }
     {
       key = "<Leader>fe";
-      action = ":lua require('neo-tree.command').execute({ toggle = true })<CR>";
+      action.__raw = ''
+        function ()
+          local res = Snacks.picker.get({source = "explorer"})
+          if #res > 0
+          then
+            res[1].input.win:focus()
+          else
+            Snacks.explorer()
+          end
+        end
+      '';
       options.desc = "File Explorer";
     }
     {
