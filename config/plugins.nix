@@ -2,8 +2,6 @@
 {
   config = {
     plugins = {
-      better-escape.enable = true;
-
       bufsurf.enable = true;
 
       cmp = {
@@ -177,8 +175,6 @@
 
       gitsigns.enable = true;
 
-      illuminate.enable = true;
-
       lsp = {
         enable = true;
         preConfig =
@@ -291,6 +287,7 @@
             };
           };
           scroll.enabled = true;
+          words.enabled = true;
         };
       };
 

@@ -132,7 +132,7 @@
       module = {
         imports = [ ./plugins ./config ];
         extraPackages = with pkgs; [
-            clang_19
+            clang_20
             delta
             rustfmt
             lynx
