@@ -19,6 +19,7 @@ in
       action = "v:count == 0 ? 'gj' : 'j'";
       options.expr = true;
     }
+
     # LSP
     {
       key = "<leader>ca";
@@ -29,16 +30,6 @@ in
       key = "<leader>ce";
       action = ":lua vim.lsp.diagnostic.show_line_diagnostics()<CR>";
       options.desc = "Show Line Diagnostics";
-    }
-    {
-      key = "<leader>cd";
-      action = ":Telescope lsp_definitions<CR>";
-      options.desc = "LSP Definition";
-    }
-    {
-      key = "<leader>cD";
-      action = ":Telescope lsp_references<CR>";
-      options.desc = "LSP References";
     }
     {
       key = "<leader>ck";
@@ -180,10 +171,15 @@ in
           then
             res[1]:focus("list")
           else
-            Snacks.explorer({cwd = true})
+            Snacks.explorer({cwd = vim.fn.expand('%:p:h')})
           end
         end
       '';
+    }
+    {
+      options.desc = "Resume";
+      key = "<leader>;";
+      action.__raw = "function() Snacks.picker.resume() end";
     }
 
     # Find
@@ -236,6 +232,44 @@ in
     {
       options.desc = "Undo History";
       key = "<leader>su";
+      action.__raw = "function() Snacks.picker.undo_history() end";
+    }
+
+    # LSP
+    {
+      options.desc = "GoTo Definition";
+      key = "gd";
+      action.__raw = "function() Snacks.picker.lsp_definitions() end";
+    }
+    {
+      options.desc = "GoTo Declaration";
+      key = "gD";
+      action.__raw = "function() Snacks.picker.lsp_declarations() end";
+    }
+    {
+      options.desc = "GoTo References";
+      key = "gr";
+      action.__raw = "function() Snacks.picker.lsp_references() end";
+    }
+    {
+      options.desc = "GoTo Implementation";
+      key = "gI";
+      action.__raw = "function() Snacks.picker.lsp_implementations() end";
+    }
+    {
+      options.desc = "GoTo Type Definition";
+      key = "gy";
+      action.__raw = "function() Snacks.picker.lsp_type_definitions() end";
+    }
+    {
+      options.desc = "LSP Symbols";
+      key = "<leader>ss";
+      action.__raw = "function() Snacks.picker.lsp_symbols() end";
+    }
+    {
+      options.desc = "LSP Workspace Symbols";
+      key = "<leader>sS";
+      action.__raw = "function() Snacks.picker.lsp_workspace_symbols() end";
     }
   ];
 }
