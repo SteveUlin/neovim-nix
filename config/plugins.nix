@@ -4,144 +4,82 @@
     plugins = {
       bufsurf.enable = true;
 
-      cmp = {
+      cmp-latex-symbols.enable = true;
+      blink-compat.enable = true;
+      blink-copilot.enable = true;
+      blink-cmp = {
         enable = true;
-        
         settings = {
-          experimental = { ghost_text = true; };
-          window = {
-            completion = {
-              winhighlight =
-                "FloatBorder:CmpBorder,Normal:CmpPmenu";
-              scrollbar = false;
-              sidePadding = 0;
-              border = [ "╭" "─" "╮" "│" "╯" "─" "╰" "│" ];
+          keymap = {
+            "<C-j>" = [ "select_next" "fallback" ];
+            "<C-k>" = [ "select_prev" "fallback" ];
+            "<CR>" = [ "accept" "fallback" ];
+          };
+          sources = {
+            default = [
+              "lsp"
+              "copilot"
+              "latex_symbols"
+              "path"
+              "buffer"
+            ];
+            providers = {
+              copilot = {
+                name = "copilot";
+                module = "blink-copilot";
+                score_offset = 100;
+                async = true;
+                opts = {
+                  max_completions = 5;
+                  max_attempts = 10;
+                };
+              };
+              latex_symbols = {
+                name = "latex_symbols";
+                module = "blink.compat.source";
+                score_offset = 100;
+              };
             };
-
-            settings.documentation = {
-              border = [ "╭" "─" "╮" "│" "╯" "─" "╰" "│" ];
-              winhighlight =
-                "FloatBorder:CmpBorder,Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel";
-            };
           };
-          formatting = {
-            fields = [ "kind" "abbr" "menu" ];
-            format = 
-              ''
-                function(_, item)
-                  local icons = {
-                    Namespace = "󰌗",
-                    Text = "󰉿",
-                    Method = "󰆧",
-                    Function = "󰆧",
-                    Constructor = "",
-                    Field = "󰜢",
-                    Variable = "󰀫",
-                    Class = "󰠱",
-                    Interface = "",
-                    Module = "",
-                    Property = "󰜢",
-                    Unit = "󰑭",
-                    Value = "󰎠",
-                    Enum = "",
-                    Keyword = "󰌋",
-                    Snippet = "",
-                    Color = "󰏘",
-                    File = "󰈚",
-                    Reference = "󰈇",
-                    Folder = "󰉋",
-                    EnumMember = "",
-                    Constant = "󰏿",
-                    Struct = "󰙅",
-                    Event = "",
-                    Operator = "󰆕",
-                    TypeParameter = "󰊄",
-                    Table = "",
-                    Object = "󰅩",
-                    Tag = "",
-                    Array = "[]",
-                    Boolean = "",
-                    Number = "",
-                    Null = "󰟢",
-                    String = "󰉿",
-                    Calendar = "",
-                    Watch = "󰥔",
-                    Package = "",
-                    Copilot = "",
-                    Codeium = "",
-                    TabNine = "",
-                  }
-
-                  local icon = icons[item.kind] or ""
-                  item.kind = string.format("%s %s", icon, item.kind or "")
-                  return item
-                end
-            '';
-          };
-          mapping = {
-            "<CR>" = "cmp.mapping.confirm({select = true })";
-            "<C-d>" = "cmp.mapping.scroll_docs(-4)";
-            "<C-f>" = "cmp.mapping.scroll_docs(4)";
-            "<C-Space>" = "cmp.mapping.complete()";
-            "<Tab>" = ''
-              cmp.mapping(function(fallback)
-                local luasnip = require("luasnip")
-                local has_words_before = function()
-                  unpack = unpack or table.unpack
-                  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-                  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-                end
-                if cmp.visible() then
-                  cmp.select_next_item()
-                elseif luasnip.expand_or_locally_jumpable() then
-                  luasnip.expand_or_jump()
-                elseif has_words_before() then
-                  cmp.complete()
-                else
-                  fallback()
-                end
-              end, { "i", "s" })
-            '';
-            "<S-Tab>" = ''
-              cmp.mapping(function(fallback)
-                local luasnip = require("luasnip")
-                if cmp.visible() then
-                  cmp.select_prev_item()
-                elseif luasnip.jumpable(-1) then
-                  luasnip.jump(-1)
-                else
-                  fallback()
-                end
-              end, { "i", "s" })
-            '';
-            "<C-j>" = "cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i'})";
-            "<C-k>" = "cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), {'i'})";
-            "<C-e>" = "cmp.mapping.close()";
-          };
-          expand = "luasnip";
-          sources = [
-            { name = "luasnip"; }
-            { name = "copilot"; }
-            { name = "nvim_lsp"; }
-            { name = "latex_symbols"; }
-            { name = "emoji"; }
-            { name = "spell"; }
-            { name = "path"; }
-            { name = "buffer"; }
-            { name = "calc"; }
-          ];
         };
       };
 
-      copilot-chat.enable = true;
-
-      copilot-cmp.enable = true;
+      codecompanion = {
+        enable = true;
+        settings = {
+          chat = {
+            adapter = "copilot";
+          };
+          inline = {
+            adapter = "copilot";
+          };
+          agent = {
+            adapter = "copilot";
+          };
+          display = {
+            diff = {
+              provider = "mini_diff";
+            };
+          };
+        };
+      };
 
       copilot-lua = {
         enable = true;
-        panel.enabled = false;
-        suggestion.enabled = false;
-        filetypes.markdown = true;
+        settings = {
+          panel.enabled = false;
+          suggestion.false = true;
+          filetypes.markdown = true;
+          copilot_model = "gpt-4o-copilot";
+
+          server_opts_overrides = {
+            settings = {
+              advanced = {
+                inlineSuggestCount = 10;
+              };
+            };
+          };
+        };
       };
 
       diagflow = {
@@ -160,8 +98,6 @@
         };
       };
 
-      diffview.enable = true;
-
       eyeliner = {
         enable = true;
         settings = {
@@ -173,13 +109,11 @@
         enable = true;
       };
 
-      gitsigns.enable = true;
-
       lsp = {
         enable = true;
         preConfig =
           ''
-            local __clangdCaps = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+            local __clangdCaps = require('blink.cmp').get_lsp_capabilities()
             __clangdCaps.offsetEncoding = { "utf-16" }
           '';
         servers = {
@@ -231,11 +165,6 @@
         };
       };
 
-      luasnip = {
-        enable = true;
-        fromVscode = [{paths = "${pkgs.vimPlugins.friendly-snippets}";}];
-      };
-
       mdx.enable = true;
 
       mini = {
@@ -243,6 +172,16 @@
 
         modules = {
           pairs = {};
+          diff = {
+            view = {
+              style = "sign";
+              signs = {
+                add = "▎";
+                change = "▎";
+                delete = "🭹" ;
+              };
+            };
+          };
         };
       };
       

@@ -238,37 +238,37 @@ in
     # LSP
     {
       options.desc = "GoTo Definition";
-      key = "gd";
+      key = "<leader>cd";
       action.__raw = "function() Snacks.picker.lsp_definitions() end";
     }
     {
       options.desc = "GoTo Declaration";
-      key = "gD";
+      key = "<leader>cD";
       action.__raw = "function() Snacks.picker.lsp_declarations() end";
     }
     {
       options.desc = "GoTo References";
-      key = "gr";
+      key = "<leader>cR";
       action.__raw = "function() Snacks.picker.lsp_references() end";
     }
     {
       options.desc = "GoTo Implementation";
-      key = "gI";
+      key = "<leader>cI";
       action.__raw = "function() Snacks.picker.lsp_implementations() end";
     }
     {
       options.desc = "GoTo Type Definition";
-      key = "gy";
+      key = "<leader>cy";
       action.__raw = "function() Snacks.picker.lsp_type_definitions() end";
     }
     {
       options.desc = "LSP Symbols";
-      key = "<leader>ss";
+      key = "<leader>cs";
       action.__raw = "function() Snacks.picker.lsp_symbols() end";
     }
     {
       options.desc = "LSP Workspace Symbols";
-      key = "<leader>sS";
+      key = "<leader>cS";
       action.__raw = "function() Snacks.picker.lsp_workspace_symbols() end";
     }
   ];

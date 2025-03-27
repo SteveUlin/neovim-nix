@@ -63,7 +63,11 @@
       url = "github:folke/snacks.nvim";
       flake = false;
     };
-      
+
+    copilot-lua-src = {
+      url = "github:zbirenbaum/copilot.lua";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -77,6 +81,7 @@
   }@inputs:
     flake-utils.lib.eachDefaultSystem (system: let
     pkgs = import nixpkgs {
+      config.allowUnfree = true;
       inherit system;
       overlays = [
         neovim-nightly-overlay.overlays.default
@@ -121,6 +126,10 @@
               src = inputs.snacks-src;
               doCheck = false;
             };
+            copilot-lua = final.vimUtils.buildVimPlugin {
+              name = "copilot-lua";
+              src = inputs.copilot-lua-src;
+            };
           };
         })
       ];
@@ -147,3 +156,4 @@
       };
     });
 }
+

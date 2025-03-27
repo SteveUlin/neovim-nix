@@ -31,6 +31,26 @@
       };
     };
 
+    colorschemes.kanagawa = { 
+      enable = false; 
+    };
+
+    colorschemes.tokyonight = { 
+      enable = false; 
+    };
+
+    colorschemes.catppuccin = { 
+      enable = false; 
+      settings = {
+        styles = {
+          comments = [ "italic" ];
+          functions = [ "italic" ];
+          keywords = [ "italic" ];
+          types = [ "italic" ];
+        };
+      };
+    };
+
     globals = {
       mapleader = " ";
       maplocalleader = " ";
@@ -97,6 +117,7 @@
       foldlevelstart = 99;
       
       conceallevel = 2;
+
     };
 
   };
