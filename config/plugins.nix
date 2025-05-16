@@ -222,7 +222,7 @@
           picker = {
             enabled = true;
             sources.explorer = {
-              layout.layout.position = "right";
+              layout.preset = "default";
               auto_close = true;
             };
           };
