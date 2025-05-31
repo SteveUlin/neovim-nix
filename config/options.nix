@@ -56,7 +56,7 @@
       maplocalleader = " ";
     };
 
-    diagnostics = {
+    diagnostics.settings = {
       virtual_text = false;
     };
 

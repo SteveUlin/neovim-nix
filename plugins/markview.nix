@@ -5,7 +5,7 @@
   pkgs,
   ...
 }:
-helpers.plugins.neovim.mkNeovimPlugin config {
+lib.nixvim.plugins.neovim.mkNeovimPlugin {
   name = "markview";
   defaultPackage = pkgs.vimPlugins.markview-nvim;
   maintainers = [];
