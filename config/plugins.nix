@@ -155,7 +155,10 @@
           };
           winbar = {
             lualine_a =  [ 
-              "filename"
+              {
+                __unkeyed-1 = "filename";
+                path = 1;
+              }
             ];
           };
           inactiveWinbar = {
