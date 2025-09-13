@@ -44,25 +44,30 @@
         };
       };
 
-      codecompanion = {
+      avante = {
         enable = true;
-        settings = {
-          chat = {
-            adapter = "copilot";
-          };
-          inline = {
-            adapter = "copilot";
-          };
-          agent = {
-            adapter = "copilot";
-          };
-          display = {
-            diff = {
-              provider = "mini_diff";
-            };
-          };
-        };
+        # settings = {};
       };
+
+      # codecompanion = {
+      #   enable = true;
+      #   settings = {
+      #     chat = {
+      #       adapter = "copilot";
+      #     };
+      #     inline = {
+      #       adapter = "copilot";
+      #     };
+      #     agent = {
+      #       adapter = "copilot";
+      #     };
+      #     display = {
+      #       diff = {
+      #         provider = "mini_diff";
+      #       };
+      #     };
+      #   };
+      # };
 
       copilot-lua = {
         enable = true;
