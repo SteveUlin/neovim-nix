@@ -110,10 +110,6 @@
         };
       };
 
-      fzf-lua = {
-        enable = true;
-      };
-
       lsp = {
         enable = true;
         preConfig =
@@ -159,7 +155,7 @@
             lualine_z = [ "" ];
           };
           winbar = {
-            lualine_a =  [ 
+            lualine_a =  [
               {
                 __unkeyed-1 = "filename";
                 path = 1;
@@ -167,7 +163,7 @@
             ];
           };
           inactiveWinbar = {
-            lualine_a =  [ 
+            lualine_a =  [
               "filename"
             ];
           };
@@ -193,7 +189,7 @@
           };
         };
       };
-      
+
       neo-tree = {
         enable = true;
         window.position = "right";
