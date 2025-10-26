@@ -132,6 +132,18 @@ in
       options.desc = "Copy File Path";
     }
 
+    # Dashboard & Help
+    {
+      key = "<leader>h";
+      action.__raw = "function() require('alpha').start(false) end";
+      options.desc = "Open Dashboard";
+    }
+    {
+      key = "<leader>?";
+      action = ":e ~/neovim-nix/CHEATSHEET.md<CR>";
+      options.desc = "Open Cheat Sheet";
+    }
+
     # --- Snack Pickers ---
 
     # Top Pickers
@@ -210,6 +222,51 @@ in
       key = "<leader>gl";
       action.__raw = "function() Snacks.picker.git_log() end";
     }
+    {
+      options.desc = "Git Blame Line";
+      key = "<leader>gb";
+      action.__raw = "function() require('gitsigns').blame_line({full=true}) end";
+    }
+    {
+      options.desc = "Stage Hunk";
+      key = "<leader>gh";
+      action.__raw = "function() require('gitsigns').stage_hunk() end";
+    }
+    {
+      options.desc = "Undo Stage Hunk";
+      key = "<leader>gu";
+      action.__raw = "function() require('gitsigns').undo_stage_hunk() end";
+    }
+    {
+      options.desc = "Preview Hunk";
+      key = "<leader>gp";
+      action.__raw = "function() require('gitsigns').preview_hunk() end";
+    }
+    {
+      options.desc = "Next Hunk";
+      key = "]h";
+      action.__raw = "function() require('gitsigns').nav_hunk('next') end";
+    }
+    {
+      options.desc = "Previous Hunk";
+      key = "[h";
+      action.__raw = "function() require('gitsigns').nav_hunk('prev') end";
+    }
+    {
+      options.desc = "Open Diffview";
+      key = "<leader>gv";
+      action = ":DiffviewOpen<CR>";
+    }
+    {
+      options.desc = "Close Diffview";
+      key = "<leader>gc";
+      action = ":DiffviewClose<CR>";
+    }
+    {
+      options.desc = "Diffview File History";
+      key = "<leader>gf";
+      action = ":DiffviewFileHistory %<CR>";
+    }
 
     # Grep
     {
@@ -225,7 +282,7 @@ in
     {
       options.desc = "Grep Word Under Cursor";
       key = "<leader>sw";
-      action.__raw = "function() Snacks.picker.grep_word() end";
+      action.__raw = "function() Snacks.picker.grep({ search = vim.fn.expand('<cword>') }) end";
     }
 
     # Search

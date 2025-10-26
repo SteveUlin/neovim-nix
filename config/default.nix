@@ -4,5 +4,6 @@
     ./options.nix
     ./plugins.nix
     ./keybindings.nix
+    ./dashboard.nix
   ];
 }
