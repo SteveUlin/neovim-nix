@@ -1,6 +1,25 @@
 { pkgs, helpers, ... }:
 {
   config = {
+    extraPlugins = with pkgs.vimPlugins; [
+      nvim-lint
+    ];
+
+    extraConfigLua = ''
+      -- Setup nvim-lint
+      require('lint').linters_by_ft = {
+        python = {'pylint'},
+        markdown = {'markdownlint'},
+      }
+
+      -- Auto-lint on save and text changed
+      vim.api.nvim_create_autocmd({ "BufWritePost", "TextChanged" }, {
+        callback = function()
+          require("lint").try_lint()
+        end,
+      })
+    '';
+
     plugins = {
       bufsurf.enable = true;
 
@@ -73,7 +92,7 @@
         enable = true;
         settings = {
           panel.enabled = false;
-          suggestion.false = true;
+          suggestion.enabled = false;
           filetypes.markdown = true;
           copilot_model = "gpt-4o-copilot";
 
@@ -85,6 +104,49 @@
             };
           };
         };
+      };
+
+      conform-nvim = {
+        enable = true;
+        settings = {
+          format_on_save = {
+            lsp_format = "fallback";
+            timeout_ms = 500;
+          };
+          formatters_by_ft = {
+            lua = [ "stylua" ];
+            python = [ "black" ];
+            rust = [ "rustfmt" ];
+            nix = [ "alejandra" ];
+            c = [ "clang-format" ];
+            cpp = [ "clang-format" ];
+            markdown = [ "prettier" ];
+            json = [ "prettier" ];
+            yaml = [ "prettier" ];
+          };
+        };
+      };
+
+      gitsigns = {
+        enable = true;
+        settings = {
+          signs = {
+            add.text = "▎";
+            change.text = "▎";
+            delete.text = "";
+            topdelete.text = "";
+            changedelete.text = "▎";
+            untracked.text = "▎";
+          };
+          current_line_blame = false;
+          current_line_blame_opts = {
+            delay = 300;
+          };
+        };
+      };
+
+      diffview = {
+        enable = true;
       };
 
       diagflow = {
@@ -120,7 +182,6 @@
         servers = {
           clangd = {
             enable = true;
-            package = pkgs.llvmPackages_19.clang-tools;
             extraOptions = {
               capabilities = {__raw = "__clangdCaps";};
               init_options = {
@@ -186,19 +247,27 @@
                 delete = "🭹" ;
               };
             };
+            # Mappings for applying/resetting hunks in overlay
+            # gh  - apply hunks (accept changes)
+            # gH  - reset hunks (undo changes)
+            # Use gitsigns for hunk navigation (]h, [h already mapped)
+            mappings = {
+              apply = "gh";
+              reset = "gH";
+              textobject = "gh";
+              goto_first = "";
+              goto_prev = "";
+              goto_next = "";
+              goto_last = "";
+            };
           };
         };
       };
 
-      neo-tree = {
-        enable = true;
-        window.position = "right";
-        closeIfLastWindow = true;
-      };
-
       rainbow-delimiters = {
         enable = true;
-        highlight = [
+        settings = {
+          highlight = [
             "RainbowDelimiterYellow"
             "RainbowDelimiterBlue"
             "RainbowDelimiterOrange"
@@ -207,7 +276,6 @@
             "RainbowDelimiterCyan"
             "RainbowDelimiterRed"
           ];
-        extraOptions = {
           priority = {
             cuda = 200;
           };

@@ -267,6 +267,11 @@ in
       key = "<leader>gf";
       action = ":DiffviewFileHistory %<CR>";
     }
+    {
+      options.desc = "Toggle Inline Diff Overlay";
+      key = "<leader>go";
+      action.__raw = "function() require('mini.diff').toggle_overlay(0) end";
+    }
 
     # Grep
     {

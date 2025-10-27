@@ -220,6 +220,9 @@ N                 previous match
 ]h                next git hunk
 [h                previous git hunk
 
+<space>go         toggle inline diff overlay  ⭐ SELECTIVE UNDO
+                  (shows all changes inline, use gH to undo hunks)
+
 <space>gp         preview hunk (see change in popup)
 <space>gh         stage hunk
 <space>gu         undo stage hunk
@@ -231,6 +234,20 @@ N                 previous match
 <space>gv         open diffview
 <space>gc         close diffview
 <space>gf         diffview file history
+```
+
+### Inline Diff Overlay Commands (when overlay is active)
+```
+gH                undo hunk under cursor (selective undo!)
+gh                stage hunk to git (like git add)
+gHip              undo hunks in paragraph
+vip then gH       undo hunks in visual selection
+]h / [h           navigate between hunks
+<space>go         close overlay
+
+Safety:
+  Typed gH by mistake?     →  u (vim undo)
+  Typed gh by mistake?     →  <space>gu (unstage), then gH
 ```
 
 ### Buffer Navigation

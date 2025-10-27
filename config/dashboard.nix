@@ -11,6 +11,7 @@
     "<space>su opens undo history picker"
     "* searches forward, # searches backward for word under cursor"
     "gd jumps to definition, Ctrl-o jumps back"
+    "<space>go shows inline diff overlay for selective undo (gH to undo hunks)"
     "zz centers cursor line on screen"
     "ciw changes word even when cursor is in middle"
     "<space>cs shows all symbols in file"
