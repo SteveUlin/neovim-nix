@@ -3,9 +3,13 @@
   config = {
     extraPlugins = with pkgs.vimPlugins; [
       nvim-lint
+      sqlite-lua  # Required for snacks.nvim frecency
     ];
 
     extraConfigLua = ''
+      -- Configure SQLite path for sqlite.lua (required for snacks.nvim frecency)
+      vim.g.sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.so'
+
       -- Setup nvim-lint
       require('lint').linters_by_ft = {
         python = {'pylint'},
@@ -65,28 +69,7 @@
 
       avante = {
         enable = true;
-        # settings = {};
       };
-
-      # codecompanion = {
-      #   enable = true;
-      #   settings = {
-      #     chat = {
-      #       adapter = "copilot";
-      #     };
-      #     inline = {
-      #       adapter = "copilot";
-      #     };
-      #     agent = {
-      #       adapter = "copilot";
-      #     };
-      #     display = {
-      #       diff = {
-      #         provider = "mini_diff";
-      #       };
-      #     };
-      #   };
-      # };
 
       copilot-lua = {
         enable = true;
@@ -291,9 +274,16 @@
           };
           input.enabled = true;
           notifier.enabled = true;
-          # statuscolumn.enabled = true;
           picker = {
             enabled = true;
+            matcher = {
+              frecency = true;  # Enable frecency tracking
+              sort_empty = true;
+              cwd_bonus = true;  # Boost files in current directory
+            };
+            db = {
+              sqlite3_path.__raw = "'${pkgs.sqlite.out}/lib/libsqlite3.so'";
+            };
             sources.explorer = {
               layout.preset = "default";
               auto_close = true;
@@ -301,31 +291,6 @@
           };
           scroll.enabled = true;
           words.enabled = true;
-        };
-      };
-
-      telescope = {
-        enable = true;
-        settings = {
-          defaults = {
-            initial_mode = "normal";
-            mappings = {
-              n = {
-                "<leader>q" = {
-                  __raw = ''
-                    function(...)
-                      return require("telescope.actions").close(...)
-                    end'';
-                };
-              };
-            };
-          };
-        };
-        extensions = {
-          file-browser.enable = true;
-          frecency.enable = true;
-          live-grep-args.enable = true;
-          undo.enable = true;
         };
       };
 

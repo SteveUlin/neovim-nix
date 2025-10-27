@@ -67,7 +67,7 @@ in
     # Notes
     {
       key = "<leader>ne";
-      action = ":Telescope file_browser path=~/notes select_buffer=true<CR>";
+      action.__raw = "function() Snacks.explorer({cwd = '~/notes'}) end";
       options.desc = "Explore Notes";
     }
     {

@@ -141,11 +141,20 @@
       module = {
         imports = [ ./plugins ./config ];
         extraPackages = with pkgs; [
-            clang_20
+            clang-tools
             delta
             rustfmt
             lynx
             lua51Packages.tiktoken_core
+            sqlite  # Required for sqlite.lua and snacks.nvim frecency
+            # Formatters for conform-nvim
+            stylua
+            black
+            alejandra
+            nodePackages.prettier
+            # Linters for nvim-lint
+            pylint
+            markdownlint-cli
         ];
       };
     };
