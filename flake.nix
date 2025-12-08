@@ -63,6 +63,16 @@
       url = "github:zbirenbaum/copilot.lua";
       flake = false;
     };
+
+    vcsigns-src = {
+      url = "github:algmyr/vcsigns.nvim";
+      flake = false;
+    };
+
+    vclib-src = {
+      url = "github:algmyr/vclib.nvim";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -120,6 +130,16 @@
             copilot-lua = final.vimUtils.buildVimPlugin {
               name = "copilot-lua";
               src = inputs.copilot-lua-src;
+            };
+            vcsigns = final.vimUtils.buildVimPlugin {
+              name = "vcsigns";
+              src = inputs.vcsigns-src;
+              doCheck = false;
+            };
+            vclib = final.vimUtils.buildVimPlugin {
+              name = "vclib";
+              src = inputs.vclib-src;
+              doCheck = false;
             };
           };
         })

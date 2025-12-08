@@ -543,7 +543,9 @@
         "nixpkgs": "nixpkgs_3",
         "nixvim": "nixvim",
         "snacks-src": "snacks-src",
-        "tiny-inline-diagnostic-src": "tiny-inline-diagnostic-src"
+        "tiny-inline-diagnostic-src": "tiny-inline-diagnostic-src",
+        "vclib-src": "vclib-src",
+        "vcsigns-src": "vcsigns-src"
       }
     },
     "snacks-src": {
@@ -635,6 +637,38 @@
       "original": {
         "owner": "rachartier",
         "repo": "tiny-inline-diagnostic.nvim",
+        "type": "github"
+      }
+    },
+    "vclib-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1754392717,
+        "narHash": "sha256-0Vhd+zyrDnXhM0q0HAbQWjlG7TP9RHIoOJP6FBedJCE=",
+        "owner": "algmyr",
+        "repo": "vclib.nvim",
+        "rev": "429bc13051b604c5f750913c57c0a07b11ddf94d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "algmyr",
+        "repo": "vclib.nvim",
+        "type": "github"
+      }
+    },
+    "vcsigns-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1764193668,
+        "narHash": "sha256-487oTJFpcrJP8LyW19AaitIUNqn6lLp2XrhGaG9l3L0=",
+        "owner": "algmyr",
+        "repo": "vcsigns.nvim",
+        "rev": "5202b4461b0e61ac2056c89ac361a0cef0299010",
+        "type": "github"
+      },
+      "original": {
+        "owner": "algmyr",
+        "repo": "vcsigns.nvim",
         "type": "github"
       }
     }

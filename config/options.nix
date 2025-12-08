@@ -19,13 +19,31 @@
             hl["@lsp.type.variable"] = { fg = palette.none }
             hl["@lsp.type.property"] = { fg = palette.blue }
             hl["@lsp.type.concept"] = { fg = palette.aqua, italic = true }
-            
+
             hl["@lsp.typemod.function.classScope"] = { fg = palette.orange }
             hl["@lsp.typemod.variable.classScope"] = { fg = palette.orange }
             hl["@lsp.typemod.variable.fileScope"] = { fg = palette.orange }
             hl["@lsp.typemod.variable.globalScope"] = { fg = palette.red }
-            
+
             hl["@lsp.typemod.variable.static"] = { fg = palette.none }
+
+            -- Diff highlights (more visible than defaults)
+            hl["DiffAdd"] = { bg = "#3a5249" }
+            hl["DiffDelete"] = { bg = "#614248" }
+            hl["DiffChange"] = { bg = "#3a515d" }
+            hl["DiffText"] = { bg = "#5a7a8a", fg = palette.bg0 }
+
+            -- VCSigns inline diff
+            hl["VcsignsDiffAdd"] = { bg = "#3a5249" }
+            hl["VcsignsDiffDelete"] = { bg = "#4a3038" }
+            hl["VcsignsDiffTextAdd"] = { bg = "#4a6a59", bold = true }
+            hl["VcsignsDiffTextDelete"] = { bg = "#6a3a42", bold = true }
+
+            -- VCSigns gutter signs
+            hl["SignAdd"] = { fg = palette.green }
+            hl["SignChange"] = { fg = palette.blue }
+            hl["SignDelete"] = { fg = palette.red }
+            hl["SignChangeDelete"] = { fg = palette.purple }
           end
         '';
       };

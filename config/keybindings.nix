@@ -223,54 +223,24 @@ in
       action.__raw = "function() Snacks.picker.git_log() end";
     }
     {
-      options.desc = "Git Blame Line";
-      key = "<leader>gb";
-      action.__raw = "function() require('gitsigns').blame_line({full=true}) end";
-    }
-    {
-      options.desc = "Stage Hunk";
-      key = "<leader>gh";
-      action.__raw = "function() require('gitsigns').stage_hunk() end";
-    }
-    {
-      options.desc = "Undo Stage Hunk";
-      key = "<leader>gu";
-      action.__raw = "function() require('gitsigns').undo_stage_hunk() end";
-    }
-    {
-      options.desc = "Preview Hunk";
-      key = "<leader>gp";
-      action.__raw = "function() require('gitsigns').preview_hunk() end";
-    }
-    {
       options.desc = "Next Hunk";
       key = "]h";
-      action.__raw = "function() require('gitsigns').nav_hunk('next') end";
+      action.__raw = "function() require('vcsigns.actions').hunk_next(0, vim.v.count1) end";
     }
     {
       options.desc = "Previous Hunk";
       key = "[h";
-      action.__raw = "function() require('gitsigns').nav_hunk('prev') end";
+      action.__raw = "function() require('vcsigns.actions').hunk_prev(0, vim.v.count1) end";
     }
     {
-      options.desc = "Open Diffview";
-      key = "<leader>gv";
-      action = ":DiffviewOpen<CR>";
+      options.desc = "Undo Hunk";
+      key = "<leader>gu";
+      action.__raw = "function() require('vcsigns.actions').hunk_undo(0) end";
     }
     {
-      options.desc = "Close Diffview";
-      key = "<leader>gc";
-      action = ":DiffviewClose<CR>";
-    }
-    {
-      options.desc = "Diffview File History";
-      key = "<leader>gf";
-      action = ":DiffviewFileHistory %<CR>";
-    }
-    {
-      options.desc = "Toggle Inline Diff Overlay";
+      options.desc = "Toggle Inline Diff";
       key = "<leader>go";
-      action.__raw = "function() require('mini.diff').toggle_overlay(0) end";
+      action.__raw = "function() require('vcsigns.actions').toggle_hunk_diff(0) end";
     }
 
     # Grep

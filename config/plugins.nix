@@ -1,26 +1,25 @@
-{ pkgs, helpers, ... }:
 {
+  pkgs,
+  helpers,
+  ...
+}: {
   config = {
     extraPlugins = with pkgs.vimPlugins; [
-      nvim-lint
-      sqlite-lua  # Required for snacks.nvim frecency
+      vclib
+      vcsigns
     ];
 
     extraConfigLua = ''
-      -- Configure SQLite path for sqlite.lua (required for snacks.nvim frecency)
-      vim.g.sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.so'
-
-      -- Setup nvim-lint
-      require('lint').linters_by_ft = {
-        python = {'pylint'},
-        markdown = {'markdownlint'},
-      }
-
-      -- Auto-lint on save and text changed
-      vim.api.nvim_create_autocmd({ "BufWritePost", "TextChanged" }, {
-        callback = function()
-          require("lint").try_lint()
-        end,
+      require('vcsigns').setup({
+        target_commit = 0,  -- Compare against immediate parent (@-)
+        signs = {
+          text = {
+            add = '▎',
+            change = '▎',
+            delete_below = '▁',
+            delete_above = '▔',
+          },
+        },
       })
     '';
 
@@ -34,9 +33,9 @@
         enable = true;
         settings = {
           keymap = {
-            "<C-j>" = [ "select_next" "fallback" ];
-            "<C-k>" = [ "select_prev" "fallback" ];
-            "<CR>" = [ "accept" "fallback" ];
+            "<C-j>" = ["select_next" "fallback"];
+            "<C-k>" = ["select_prev" "fallback"];
+            "<CR>" = ["accept" "fallback"];
           };
           sources = {
             default = [
@@ -60,15 +59,10 @@
               latex_symbols = {
                 name = "latex_symbols";
                 module = "blink.compat.source";
-                score_offset = 100;
               };
             };
           };
         };
-      };
-
-      avante = {
-        enable = true;
       };
 
       copilot-lua = {
@@ -87,49 +81,6 @@
             };
           };
         };
-      };
-
-      conform-nvim = {
-        enable = true;
-        settings = {
-          format_on_save = {
-            lsp_format = "fallback";
-            timeout_ms = 500;
-          };
-          formatters_by_ft = {
-            lua = [ "stylua" ];
-            python = [ "black" ];
-            rust = [ "rustfmt" ];
-            nix = [ "alejandra" ];
-            c = [ "clang-format" ];
-            cpp = [ "clang-format" ];
-            markdown = [ "prettier" ];
-            json = [ "prettier" ];
-            yaml = [ "prettier" ];
-          };
-        };
-      };
-
-      gitsigns = {
-        enable = true;
-        settings = {
-          signs = {
-            add.text = "▎";
-            change.text = "▎";
-            delete.text = "";
-            topdelete.text = "";
-            changedelete.text = "▎";
-            untracked.text = "▎";
-          };
-          current_line_blame = false;
-          current_line_blame_opts = {
-            delay = 300;
-          };
-        };
-      };
-
-      diffview = {
-        enable = true;
       };
 
       diagflow = {
@@ -157,14 +108,14 @@
 
       lsp = {
         enable = true;
-        preConfig =
-          ''
-            local __clangdCaps = require('blink.cmp').get_lsp_capabilities()
-            __clangdCaps.offsetEncoding = { "utf-16" }
-          '';
+        preConfig = ''
+          local __clangdCaps = require('blink.cmp').get_lsp_capabilities()
+          __clangdCaps.offsetEncoding = { "utf-16" }
+        '';
         servers = {
           clangd = {
             enable = true;
+            package = pkgs.llvmPackages_19.clang-tools;
             extraOptions = {
               capabilities = {__raw = "__clangdCaps";};
               init_options = {
@@ -191,15 +142,15 @@
         settings = {
           globalstatus = true;
           sections = {
-            lualine_a = [ "branch" "diff" "diagnostics" ];
-            lualine_b = [ "" ];
-            lualine_c = [ "" ];
-            lualine_x = [ "" ];
-            lualine_y = [ "" ];
-            lualine_z = [ "" ];
+            lualine_a = ["branch" "diff" "diagnostics"];
+            lualine_b = [""];
+            lualine_c = [""];
+            lualine_x = [""];
+            lualine_y = [""];
+            lualine_z = [""];
           };
           winbar = {
-            lualine_a =  [
+            lualine_a = [
               {
                 __unkeyed-1 = "filename";
                 path = 1;
@@ -207,7 +158,7 @@
             ];
           };
           inactiveWinbar = {
-            lualine_a =  [
+            lualine_a = [
               "filename"
             ];
           };
@@ -218,32 +169,8 @@
 
       mini = {
         enable = true;
-
         modules = {
           pairs = {};
-          diff = {
-            view = {
-              style = "sign";
-              signs = {
-                add = "▎";
-                change = "▎";
-                delete = "🭹" ;
-              };
-            };
-            # Mappings for applying/resetting hunks in overlay
-            # gh  - apply hunks (accept changes)
-            # gH  - reset hunks (undo changes)
-            # Use gitsigns for hunk navigation (]h, [h already mapped)
-            mappings = {
-              apply = "gh";
-              reset = "gH";
-              textobject = "gh";
-              goto_first = "";
-              goto_prev = "";
-              goto_next = "";
-              goto_last = "";
-            };
-          };
         };
       };
 
@@ -274,16 +201,9 @@
           };
           input.enabled = true;
           notifier.enabled = true;
+          # statuscolumn.enabled = true;
           picker = {
             enabled = true;
-            matcher = {
-              frecency = true;  # Enable frecency tracking
-              sort_empty = true;
-              cwd_bonus = true;  # Boost files in current directory
-            };
-            db = {
-              sqlite3_path.__raw = "'${pkgs.sqlite.out}/lib/libsqlite3.so'";
-            };
             sources.explorer = {
               layout.preset = "default";
               auto_close = true;
@@ -291,6 +211,31 @@
           };
           scroll.enabled = true;
           words.enabled = true;
+        };
+      };
+
+      telescope = {
+        enable = true;
+        settings = {
+          defaults = {
+            initial_mode = "normal";
+            mappings = {
+              n = {
+                "<leader>q" = {
+                  __raw = ''
+                    function(...)
+                      return require("telescope.actions").close(...)
+                    end'';
+                };
+              };
+            };
+          };
+        };
+        extensions = {
+          file-browser.enable = true;
+          frecency.enable = true;
+          live-grep-args.enable = true;
+          undo.enable = true;
         };
       };
 
@@ -338,7 +283,6 @@
       web-devicons.enable = true;
 
       which-key.enable = true;
-
     };
   };
 }
