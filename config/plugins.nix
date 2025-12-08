@@ -307,28 +307,30 @@
 
       treesitter-textobjects = {
         enable = true;
-        move = {
-          enable = true;
-          gotoNextStart = {
+        settings = {
+          move = {
+            enable = true;
+            goto_next_start = {
               "]f" = "@function.outer";
-          };
-          gotoNextEnd = {
+            };
+            goto_next_end = {
               "]F" = "@function.outer";
-          };
-          gotoPreviousStart = {
-                "[f" = "@function.outer";
-          };
-          gotoPreviousEnd = {
+            };
+            goto_previous_start = {
+              "[f" = "@function.outer";
+            };
+            goto_previous_end = {
               "[F" = "@function.outer";
+            };
           };
-        };
-        select = {
-          enable = true;
-          keymaps = {
-            "af" = "@function.outer";
-            "if" = "@function.inner";
-            "ac" = "@class.outer";
-            "ic" = "@class.inner";
+          select = {
+            enable = true;
+            keymaps = {
+              "af" = "@function.outer";
+              "if" = "@function.inner";
+              "ac" = "@class.outer";
+              "ic" = "@class.inner";
+            };
           };
         };
       };
