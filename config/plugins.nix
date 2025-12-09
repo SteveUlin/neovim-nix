@@ -167,12 +167,6 @@
 
       mdx.enable = true;
 
-      mini = {
-        enable = true;
-        modules = {
-          pairs = {};
-        };
-      };
 
       rainbow-delimiters = {
         enable = true;
