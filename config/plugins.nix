@@ -11,7 +11,7 @@
 
     extraConfigLua = ''
       require('vcsigns').setup({
-        target_commit = 0,  -- Compare against immediate parent (@-)
+        target_commit = 0,
         signs = {
           text = {
             add = '▎',
@@ -211,31 +211,6 @@
           };
           scroll.enabled = true;
           words.enabled = true;
-        };
-      };
-
-      telescope = {
-        enable = true;
-        settings = {
-          defaults = {
-            initial_mode = "normal";
-            mappings = {
-              n = {
-                "<leader>q" = {
-                  __raw = ''
-                    function(...)
-                      return require("telescope.actions").close(...)
-                    end'';
-                };
-              };
-            };
-          };
-        };
-        extensions = {
-          file-browser.enable = true;
-          frecency.enable = true;
-          live-grep-args.enable = true;
-          undo.enable = true;
         };
       };
 
