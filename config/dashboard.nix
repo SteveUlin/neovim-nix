@@ -31,7 +31,7 @@
     "<space>cR find all references"
     "<space>cs list all symbols in file"
     "<space>cS search symbols across workspace"
-    "]] [[ jump to next/prev LSP reference"
+    "]]/[[ jump to next/prev LSP reference"
 
     # Files & Buffers
     "<space>fs save file"
@@ -124,7 +124,7 @@ in {
     extraConfigLuaPre = ''
       -- Setup random tips
       local tips = {
-        ${builtins.concatStringsSep ",\n        " (map (tip: "[[${tip}]]") tips)}
+        ${builtins.concatStringsSep ",\n        " (map (tip: "[=[${tip}]=]") tips)}
       }
       math.randomseed(os.time())
       _G.random_tip = tips[math.random(#tips)]
