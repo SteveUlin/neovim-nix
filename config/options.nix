@@ -79,6 +79,9 @@
     };
 
     opts = {
+      # Sync with system clipboard
+      clipboard = "unnamedplus";
+
       # Line numbers
       number = true;
       relativenumber = true;
