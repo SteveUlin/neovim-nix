@@ -208,9 +208,43 @@ in
 
     # Git
     {
-      options.desc = "Git Status";
+      options.desc = "Jujutsu Status";
       key = "<leader>gs";
-      action.__raw = "function() Snacks.picker.git_status() end";
+      action.__raw = ''
+        function()
+          Snacks.picker({
+            title = "Jujutsu Status",
+            finder = function(opts, ctx)
+              return require("snacks.picker.source.proc").proc(ctx:opts({
+                cmd = "jj",
+                args = { "diff", "--summary" },
+                notify = true,
+                transform = function(item)
+                  local status, file = item.text:match("^(%a)%s+(.+)$")
+                  if not status then return false end
+                  item.status = status .. " "
+                  item.file = file
+                  return item
+                end,
+              }), ctx)
+            end,
+            format = "git_status",
+            preview = function(ctx)
+              if not ctx.item.file then return end
+              if ctx.item.status:find("^A") then
+                require("snacks.picker.preview").file(ctx)
+              else
+                require("snacks.picker.preview").cmd(
+                  { "jj", "diff", "--git", "--", ctx.item.file },
+                  ctx,
+                  { ft = "diff" }
+                )
+              end
+            end,
+            confirm = "jump",
+          })
+        end
+      '';
     }
     {
       options.desc = "Git Diff";

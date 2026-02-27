@@ -165,8 +165,6 @@
         };
       };
 
-      mdx.enable = true;
-
 
       rainbow-delimiters = {
         enable = true;

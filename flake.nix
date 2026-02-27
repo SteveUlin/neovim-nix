@@ -35,11 +35,6 @@
       flake = false;
     };
 
-    mdx = {
-      url = "github:davidmh/mdx.nvim";
-      flake = false;
-    };
-
     tiny-inline-diagnostic-src = {
       url = "github:rachartier/tiny-inline-diagnostic.nvim";
       flake = false;
@@ -88,10 +83,6 @@
         (final: prev: {
           vimPlugins = prev.vimPlugins //
           {
-            mdx = final.vimUtils.buildVimPlugin {
-              name = "mdx";
-              src = inputs.mdx;
-            };
             bufsurf = final.vimUtils.buildVimPlugin {
               name = "bufsurf";
               src = inputs.bufsurf-src;
