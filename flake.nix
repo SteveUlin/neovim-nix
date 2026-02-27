@@ -20,28 +20,13 @@
       flake = false;
     };
     
-    log-highlight = {
-      url = "github:fei6409/log-highlight.nvim";
-      flake = false;
-    };
-    
     everforest-src = {
       url = "github:neanias/everforest-nvim";
       flake = false;
     };
 
-    markview-src = {
-      url = "github:OXY2DEV/markview.nvim";
-      flake = false;
-    };
-
     tiny-inline-diagnostic-src = {
       url = "github:rachartier/tiny-inline-diagnostic.nvim";
-      flake = false;
-    };
-
-    diagflow-src = {
-      url = "github:dgagn/diagflow.nvim";
       flake = false;
     };
 
@@ -87,25 +72,13 @@
               name = "bufsurf";
               src = inputs.bufsurf-src;
             };
-            log-highlight = final.vimUtils.buildVimPlugin {
-              name = "log-highlight";
-              src = inputs.log-highlight;
-            };
             everforest-nvim = final.vimUtils.buildVimPlugin {
               name = "everforest-nvim";
               src = inputs.everforest-src;
             };
-            markview-nvim = final.vimUtils.buildVimPlugin {
-              name = "markview-nvim";
-              src = inputs.markview-src;
-            };
             tiny-inline-diagnostic = final.vimUtils.buildVimPlugin {
               name = "tiny-inline-diagnostic";
               src = inputs.tiny-inline-diagnostic-src;
-            };
-            diagflow = final.vimUtils.buildVimPlugin {
-              name = "diagflow";
-              src = inputs.diagflow-src;
             };
             snacks-head = final.vimUtils.buildVimPlugin {
               name = "snacks-head";

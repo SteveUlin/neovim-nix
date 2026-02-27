@@ -1,8 +1,7 @@
 {
   imports = [
-./bufsurf.nix
+    ./bufsurf.nix
     ./everforest.nix
-    ./diagflow.nix
     ./snacks.nix
   ];
 }

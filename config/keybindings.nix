@@ -28,7 +28,7 @@ in
     }
     {
       key = "<leader>ce";
-      action = ":lua vim.lsp.diagnostic.show_line_diagnostics()<CR>";
+      action = ":lua vim.diagnostic.open_float()<CR>";
       options.desc = "Show Line Diagnostics";
     }
     {
@@ -40,6 +40,11 @@ in
       key = "<leader>cf";
       action = ":lua vim.lsp.buf.format()<CR>";
       options.desc = "LSP Format";
+    }
+    {
+      key = "<leader>ct";
+      action.__raw = "function() require('tiny-inline-diagnostic').toggle() end";
+      options.desc = "Toggle Diagnostic Text";
     }
     {
       key = "]]";
@@ -245,16 +250,6 @@ in
           })
         end
       '';
-    }
-    {
-      options.desc = "Git Diff";
-      key = "<leader>gd";
-      action.__raw = "function() Snacks.picker.git_diff() end";
-    }
-    {
-      options.desc = "Git Log";
-      key = "<leader>gl";
-      action.__raw = "function() Snacks.picker.git_log() end";
     }
     {
       options.desc = "Next Hunk";
