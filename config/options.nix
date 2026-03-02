@@ -72,6 +72,20 @@
     globals = {
       mapleader = " ";
       maplocalleader = " ";
+
+      # OSC 52 clipboard — works over SSH and inside Zellij
+      # by encoding clipboard data as terminal escape sequences
+      clipboard = {
+        name = "OSC 52";
+        copy = {
+          "+".__raw = "require('vim.ui.clipboard.osc52').copy('+')";
+          "*".__raw = "require('vim.ui.clipboard.osc52').copy('*')";
+        };
+        paste = {
+          "+".__raw = "require('vim.ui.clipboard.osc52').paste('+')";
+          "*".__raw = "require('vim.ui.clipboard.osc52').paste('*')";
+        };
+      };
     };
 
     diagnostic.settings = {
@@ -79,7 +93,6 @@
     };
 
     opts = {
-      # Sync with system clipboard
       clipboard = "unnamedplus";
 
       # Line numbers

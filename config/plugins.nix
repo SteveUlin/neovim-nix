@@ -23,7 +23,7 @@
       })
 
       -- Jujutsu-native lualine components
-      local _jj_branch_cache = ""
+      _jj_branch_cache = ""
       local function _jj_update_branch()
         vim.system(
           { "jj", "--ignore-working-copy", "log", "-r", "@", "--no-graph", "-T",
@@ -35,7 +35,7 @@
         )
       end
 
-      local _jj_diff_cache = {}
+      _jj_diff_cache = {}
       local function _jj_update_diff(bufnr)
         local file = vim.api.nvim_buf_get_name(bufnr)
         if file == "" then return end
