@@ -186,7 +186,7 @@
         servers = {
           clangd = {
             enable = true;
-            package = pkgs.llvmPackages_19.clang-tools;
+            package = pkgs.llvmPackages_20.clang-tools;
             extraOptions = {
               capabilities = {__raw = "__clangdCaps";};
               init_options = {
