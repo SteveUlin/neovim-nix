@@ -2,7 +2,7 @@
   description = "sulin's Neovim Flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/master";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
@@ -32,11 +32,6 @@
 
     snacks-src = {
       url = "github:folke/snacks.nvim";
-      flake = false;
-    };
-
-    copilot-lua-src = {
-      url = "github:zbirenbaum/copilot.lua";
       flake = false;
     };
 
@@ -85,10 +80,6 @@
               src = inputs.snacks-src;
               doCheck = false;
             };
-            copilot-lua = final.vimUtils.buildVimPlugin {
-              name = "copilot-lua";
-              src = inputs.copilot-lua-src;
-            };
             vcsigns = final.vimUtils.buildVimPlugin {
               name = "vcsigns";
               src = inputs.vcsigns-src;
@@ -120,7 +111,7 @@
             stylua
             black
             alejandra
-            nodePackages.prettier
+            prettier
             # Linters for nvim-lint
             pylint
             markdownlint-cli
