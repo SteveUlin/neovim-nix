@@ -15,11 +15,9 @@
     "<space>sw grep for word under cursor instantly"
     "<space>su visual undo history - browse and restore"
 
-    # Git
-    "]h [h jump between git hunks"
-    "<space>gs git status picker"
-    "<space>gd git diff picker"
-    "<space>gl git log picker"
+    # Diff / VCS
+    "]h [h jump between diff hunks"
+    "<space>gs jujutsu status picker"
     "<space>gu undo current hunk"
     "<space>go toggle inline diff overlay"
 

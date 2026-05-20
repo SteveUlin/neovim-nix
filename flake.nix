@@ -44,6 +44,11 @@
       url = "github:algmyr/vclib.nvim";
       flake = false;
     };
+
+    async-src = {
+      url = "github:lewis6991/async.nvim";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -88,6 +93,11 @@
             vclib = final.vimUtils.buildVimPlugin {
               name = "vclib";
               src = inputs.vclib-src;
+              doCheck = false;
+            };
+            async-nvim = final.vimUtils.buildVimPlugin {
+              name = "async-nvim";
+              src = inputs.async-src;
               doCheck = false;
             };
           };

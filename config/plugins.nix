@@ -5,6 +5,7 @@
 }: {
   config = {
     extraPlugins = with pkgs.vimPlugins; [
+      async-nvim
       vclib
       vcsigns
     ];
@@ -101,8 +102,8 @@
 
       cmp-latex-symbols.enable = true;
       blink-compat.enable = true;
-      # Copilot — uncomment when subscription is active (e.g. work machine)
-      # blink-copilot.enable = true;
+      # To re-enable Copilot: enable blink-copilot, add "copilot" to sources.default,
+      # and register it as a provider with module = "blink-copilot".
       blink-cmp = {
         enable = true;
         settings = {
@@ -114,22 +115,11 @@
           sources = {
             default = [
               "lsp"
-              # "copilot"
               "latex_symbols"
               "path"
               "buffer"
             ];
             providers = {
-              # copilot = {
-              #   name = "copilot";
-              #   module = "blink-copilot";
-              #   score_offset = 100;
-              #   async = true;
-              #   opts = {
-              #     max_completions = 5;
-              #     max_attempts = 10;
-              #   };
-              # };
               latex_symbols = {
                 name = "latex_symbols";
                 module = "blink.compat.source";
@@ -138,24 +128,6 @@
           };
         };
       };
-
-      # copilot-lua = {
-      #   enable = true;
-      #   settings = {
-      #     panel.enabled = false;
-      #     suggestion.enabled = false;
-      #     filetypes.markdown = true;
-      #     copilot_model = "gpt-4o-copilot";
-      #
-      #     server_opts_overrides = {
-      #       settings = {
-      #         advanced = {
-      #           inlineSuggestCount = 10;
-      #         };
-      #       };
-      #     };
-      #   };
-      # };
 
       tiny-inline-diagnostic = {
         enable = true;
@@ -224,11 +196,11 @@
               }
               "diagnostics"
             ];
-            lualine_b = [""];
-            lualine_c = [""];
-            lualine_x = [""];
-            lualine_y = [""];
-            lualine_z = [""];
+            lualine_b = [];
+            lualine_c = [];
+            lualine_x = [];
+            lualine_y = [];
+            lualine_z = [];
           };
           winbar = {
             lualine_a = [
@@ -274,7 +246,6 @@
           };
           input.enabled = true;
           notifier.enabled = true;
-          # statuscolumn.enabled = true;
           picker = {
             enabled = true;
             sources.explorer = {
@@ -293,7 +264,6 @@
           indent.enable = true;
           highlight.enable = true;
         };
-        # folding = true;
         nixGrammars = true;
         nixvimInjections = true;
       };

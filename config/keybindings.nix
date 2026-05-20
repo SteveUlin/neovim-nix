@@ -174,7 +174,7 @@ in
     }
     {
       options.desc = "Notification History";
-      key = "<leader>n";
+      key = "<leader>sn";
       action.__raw = "function() Snacks.picker.notifications({focus='list'}) end";
     }
     {
