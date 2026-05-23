@@ -2,15 +2,43 @@
   pkgs,
   helpers,
   ...
-}: {
+}: let
+  clangdPkg = pkgs.llvmPackages_20.clang-tools;
+in {
   config = {
     extraPlugins = with pkgs.vimPlugins; [
       async-nvim
+      claudecode-nvim
+      friendly-snippets
       vclib
       vcsigns
     ];
 
     extraConfigLua = ''
+      -- Claude Code MCP server. :ClaudeCode opens claude in a new Zellij pane
+      -- to the right, with CLAUDE_CODE_SSE_PORT baked in so each claude is
+      -- bound 1:1 to its launching nvim (no auto-discovery free-for-all).
+      require('claudecode').setup({
+        terminal = {
+          provider = "external",
+          provider_opts = {
+            external_terminal_cmd = function(cmd, env)
+              local parts = { "zellij", "action", "new-pane",
+                              "--direction", "right",
+                              "--name", "claude",
+                              "--", "env" }
+              for k, v in pairs(env or {}) do
+                table.insert(parts, k .. "=" .. v)
+              end
+              for word in cmd:gmatch("%S+") do
+                table.insert(parts, word)
+              end
+              return parts
+            end,
+          },
+        },
+      })
+
       require('vcsigns').setup({
         target_commit = 0,
         signs = {
@@ -95,6 +123,15 @@
         callback = function(ev) _jj_diff_cache[ev.buf] = nil end,
       })
       _jj_update_branch()
+
+      -- Signature help toggle: mutates blink.cmp's runtime config so the
+      -- auto-trigger can be turned off mid-session when it's in the way.
+      function _toggle_blink_signature()
+        local cfg = require('blink.cmp.config').signature.trigger
+        cfg.enabled = not cfg.enabled
+        if not cfg.enabled then require('blink.cmp').hide() end
+        vim.notify("blink.cmp signature: " .. (cfg.enabled and "on" or "off"))
+      end
     '';
 
     plugins = {
@@ -111,10 +148,17 @@
             "<C-j>" = ["select_next" "fallback"];
             "<C-k>" = ["select_prev" "fallback"];
             "<CR>" = ["accept" "fallback"];
+            "<Tab>" = ["select_and_accept" "snippet_forward" "fallback"];
+            "<S-Tab>" = ["snippet_backward" "fallback"];
+          };
+          signature = {
+            enabled = true;
+            window.show_documentation = false;
           };
           sources = {
             default = [
               "lsp"
+              "snippets"
               "latex_symbols"
               "path"
               "buffer"
@@ -158,8 +202,19 @@
         servers = {
           clangd = {
             enable = true;
-            package = pkgs.llvmPackages_20.clang-tools;
+            package = clangdPkg;
             extraOptions = {
+              cmd = [
+                "${clangdPkg}/bin/clangd"
+                "--background-index"
+                "--clang-tidy"
+                "--header-insertion=iwyu"
+                "--completion-style=detailed"
+                "--all-scopes-completion"
+                "--function-arg-placeholders"
+                "--pch-storage=memory"
+                "--enable-config"
+              ];
               capabilities = {__raw = "__clangdCaps";};
               init_options = {
                 semanticHighlighting = true;
@@ -295,6 +350,50 @@
               "ic" = "@class.inner";
             };
           };
+        };
+      };
+
+      treesitter-context = {
+        enable = true;
+        settings = {
+          max_lines = 4;
+          min_window_height = 20;
+          multiline_threshold = 1;
+          mode = "cursor";
+        };
+      };
+
+      conform-nvim = {
+        enable = true;
+        settings = {
+          formatters_by_ft = {
+            c = ["clang-format"];
+            cpp = ["clang-format"];
+            cuda = ["clang-format"];
+            python = ["black"];
+            nix = ["alejandra"];
+            lua = ["stylua"];
+            javascript = ["prettier"];
+            typescript = ["prettier"];
+            javascriptreact = ["prettier"];
+            typescriptreact = ["prettier"];
+            json = ["prettier"];
+            yaml = ["prettier"];
+            markdown = ["prettier"];
+            html = ["prettier"];
+            css = ["prettier"];
+          };
+        };
+      };
+
+      lint = {
+        enable = true;
+        lintersByFt = {
+          python = ["pylint"];
+          markdown = ["markdownlint"];
+        };
+        autoCmd = {
+          event = ["BufWritePost" "BufReadPost" "InsertLeave"];
         };
       };
 

@@ -49,6 +49,11 @@
       url = "github:lewis6991/async.nvim";
       flake = false;
     };
+
+    claudecode-src = {
+      url = "github:coder/claudecode.nvim";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -98,6 +103,11 @@
             async-nvim = final.vimUtils.buildVimPlugin {
               name = "async-nvim";
               src = inputs.async-src;
+              doCheck = false;
+            };
+            claudecode-nvim = final.vimUtils.buildVimPlugin {
+              name = "claudecode-nvim";
+              src = inputs.claudecode-src;
               doCheck = false;
             };
           };

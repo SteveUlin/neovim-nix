@@ -2,6 +2,31 @@
 
 Press `q` to close this file.
 
+## Symbol Legend
+
+```
+␣        Space (also the leader key)
+⌃        Control
+⇧        Shift
+⏎        Enter / Return
+⎋        Escape
+⇥        Tab
+⇧⇥       Shift+Tab
+⌫        Backspace
+★        Highlighted tip
+→        Sequence / leads to
+```
+
+Emoji color-codes group actions by purpose:
+- 🟢 navigation / jumps
+- 🔧 actions (do something)
+- 📖 information displays
+- 🔘 toggles
+- 📁 files & buffers
+- 🪝 git / jujutsu
+- 🤖 Claude Code
+- 🪟 windows
+
 
 ## Essential Motions
 
@@ -19,7 +44,7 @@ ge        jump backward to end of previous word
 ### Line Navigation
 ```
 0         jump to column 0 (start of line)
-^         jump to first non-blank character  ⭐ USE THIS
+^         jump to first non-blank character    ★
 $         jump to end of line
 
 d^        delete to first non-blank
@@ -49,12 +74,12 @@ Tx        until previous 'x' (stops after it)
 ```
 
 
-## Text Objects - The Real Power
+## Text Objects — The Real Power
 
 ### The Concept
 ```
-i         "inside" - excludes delimiters
-a         "around" - includes delimiters
+i         "inside" — excludes delimiters
+a         "around" — includes delimiters
 
 Example:
     "hello world"
@@ -121,7 +146,7 @@ Examples:
 ```
 
 
-## Operators - Combine with Motions/Objects
+## Operators — Combine with Motions/Objects
 
 ### Core Operators
 ```
@@ -164,119 +189,167 @@ vif       visually select function body
 
 ## Your Custom Keybindings
 
-### File Navigation
+### 📁 File Navigation
 ```
-<space><space>    find file (smart picker)
-<space>/          live grep across project
-<space>,          switch between open buffers
-<space>e          file explorer
-<space>fr         recent files
-<space>fb         grep in open buffers
-<space>fs         save file
-<space>q          close window
-```
-
-### Code Navigation (LSP)
-```
-<space>cd         go to definition
-<space>cR         go to references
-<space>cI         go to implementation
-<space>cy         go to type definition
-<space>cs         LSP symbols in current file  ⭐ GREAT FOR C++
-<space>cS         workspace symbols (search all files)
-
-<space>ca         code action (quick fixes, refactoring)
-<space>cf         format code
-<space>ck         LSP hover (documentation)
-<space>ce         show line diagnostics
-
-]]                next reference of word under cursor
-[[                previous reference of word under cursor
-
-gd                go to definition (built-in)
-Ctrl-o            jump back to previous location
-Ctrl-i            jump forward
+␣␣      🔭  smart find files (frecency)
+␣/      🔍  live grep across project
+␣,      🗂️  buffer picker
+␣e      📁  file explorer
+␣ff     📂  find file
+␣fr     🕒  recent files
+␣fb     🔎  grep open buffers
+␣fs     💾  save file
+␣q      ✖️  close window
 ```
 
-### Search & Grep
+### 🟢 Code Navigation (LSP)
 ```
-/pattern          search forward
-?pattern          search backward
-n                 next match
-N                 previous match
-*                 search word under cursor forward
-#                 search word under cursor backward
+␣cd     🎯  go to definition
+␣cD     🪧  go to declaration
+␣cR     🔁  go to references
+␣cI     ⬇️  go to implementation
+␣cy     🏷️  go to type definition
+␣cs     📃  LSP symbols in current file       ★ great for C++
+␣cS     🌐  workspace symbols (all files)
 
-<space>sw         grep word under cursor (live grep prefilled)  ⭐
-<space>sb         search lines in current buffer
-<space>su         undo history picker
-<space>;          resume last picker  ⭐ HUGE TIME SAVER
+␣ca     🔧  code action (quick fixes, refactoring)
+␣cf     🪶  format buffer (conform → clang-format / black / …)
+␣ck     📖  LSP hover (documentation)
+␣ce     ⚠️  show line diagnostics
+␣ct     🔘  toggle inline diagnostic text
+␣ch     🪪  toggle signature help popup
 
-:noh              clear search highlight
-```
+]]      🔁  next reference of word under cursor
+[[      🔁  previous reference of word under cursor
 
-### Git Navigation
-```
-]h                next git hunk
-[h                previous git hunk
-
-<space>go         toggle inline diff overlay  ⭐ SELECTIVE UNDO
-                  (shows all changes inline, use gH to undo hunks)
-
-<space>gp         preview hunk (see change in popup)
-<space>gh         stage hunk
-<space>gu         undo stage hunk
-<space>gb         git blame line
-
-<space>gs         git status picker
-<space>gd         git diff picker
-<space>gl         git log picker
-<space>gv         open diffview
-<space>gc         close diffview
-<space>gf         diffview file history
+gd      🎯  go to definition (built-in)
+⌃o      ↩️  jump back to previous location
+⌃i      ↪️  jump forward
 ```
 
-### Inline Diff Overlay Commands (when overlay is active)
+### 🔍 Search & Grep
 ```
-gH                undo hunk under cursor (selective undo!)
-gh                stage hunk to git (like git add)
-gHip              undo hunks in paragraph
-vip then gH       undo hunks in visual selection
-]h / [h           navigate between hunks
-<space>go         close overlay
+/pat    🔍  search forward
+?pat    🔍  search backward
+n       ⏭️  next match
+N       ⏮️  previous match
+*       🔍  search word under cursor forward
+#       🔍  search word under cursor backward
+
+␣sw     🔎  grep word under cursor             ★
+␣sb     📃  search lines in current buffer
+␣su     ↩️  undo history picker
+␣;      🔁  resume last picker                 ★ huge time saver
+␣:      📜  command history
+␣sn     🔔  notification history
+
+:noh    🧹  clear search highlight
+```
+
+### 🪝 Git / Jujutsu
+```
+]h      ⏭️  next hunk
+[h      ⏮️  previous hunk
+
+␣go     👁️  toggle inline diff overlay         ★ selective undo
+            (use gH inside overlay to undo a hunk)
+␣gu     ↩️  undo hunk under cursor
+
+␣gs     📊  jujutsu status picker
+```
+
+### 👁️ Inline Diff Overlay (when ␣go overlay is active)
+```
+gH      ↩️  undo hunk under cursor             ★ selective undo
+gHip    ↩️  undo hunks in paragraph
+vip gH  ↩️  undo hunks in visual selection
+]h /[h  ⏭️  navigate between hunks
+␣go     ❌  close overlay
 
 Safety:
-  Typed gH by mistake?     →  u (vim undo)
-  Typed gh by mistake?     →  <space>gu (unstage), then gH
+  Typed gH by mistake?  →  u (vim undo)
 ```
 
-### Buffer Navigation
+### 🗂️ Buffer Navigation
 ```
-]b                next buffer
-[b                previous buffer
-<space>,          buffer picker
-```
-
-### Window Management
-```
-<space>wh         move to left window
-<space>wj         move to down window
-<space>wk         move to up window
-<space>wl         move to right window
-
-<space>ws         split horizontal
-<space>wv         split vertical
-<space>ww         cycle to next window
-
-Ctrl-w =          equalize window sizes
-Ctrl-w _          maximize height
-Ctrl-w |          maximize width
+]b      ▶️  next buffer
+[b      ◀️  previous buffer
+␣,      🗂️  buffer picker
 ```
 
-### Dashboard & Help
+### 🪟 Window Management
 ```
-<space>h          open dashboard
-<space>?          open this cheat sheet
+␣wh     ⬅️  move to left window
+␣wj     ⬇️  move to down window
+␣wk     ⬆️  move to up window
+␣wl     ➡️  move to right window
+
+␣ws     ➖  split horizontal
+␣wv     ➕  split vertical
+␣ww     🔁  cycle to next window
+
+⌃w =    📐  equalize window sizes
+⌃w _    📏  maximize height
+⌃w |    📏  maximize width
+```
+
+### 🤖 Claude Code (paired Zellij pane)
+```
+␣ac     🤖  spawn paired Claude pane
+␣as     📤  (visual) send selection to Claude
+␣ab     📥  add current buffer to Claude context
+␣aa     ✅  accept Claude diff
+␣ad     ❌  reject Claude diff
+␣a?     ❓  Claude connection status
+```
+
+### 📓 Notes
+```
+␣ne     📁  explore notes (~/notes)
+␣nt     ✏️  open todo
+␣yp     📋  copy current file path to clipboard
+```
+
+### 🏠 Dashboard & Help
+```
+␣h      🏠  open dashboard
+␣?      ❓  open this cheat sheet
+```
+
+
+## ⚡ Completion & Snippets (blink-cmp)
+
+### Completion menu (insert mode)
+```
+⌃j      ⬇️  next item in menu
+⌃k      ⬆️  previous item in menu
+⏎       ✅  accept selected item
+⇥       ✅  accept (or jump snippet placeholder if no menu)
+⇧⇥      ⬅️  previous snippet placeholder
+```
+
+### Snippet placeholders (after expanding a snippet)
+```
+⇥       ➡️  jump to next placeholder
+⇧⇥      ⬅️  jump to previous placeholder
+
+Tab past the last placeholder → snippet session ends, highlights clear.
+```
+
+### Useful C++ snippet prefixes (friendly-snippets)
+```
+st          starter template (#include <iostream> + main)
+for         indexed for-loop
+forr        reverse for-loop
+foreach     range-based for-loop (auto / var / collection)
+while       while-loop
+do          do-while loop
+if          if statement
+else        else / else-if blocks
+class       class with constructor/destructor + rule-of-five
+enum        enum block
+ns          namespace
+t           template<typename T>
 ```
 
 
@@ -284,99 +357,99 @@ Ctrl-w |          maximize width
 
 ### Entering Visual Mode
 ```
-v                 character-wise visual mode
-V                 line-wise visual mode
-Ctrl-v            block/column visual mode
+v         character-wise visual mode
+V         line-wise visual mode
+⌃v        block/column visual mode
 
-gv                reselect last visual selection
-o                 move to other end of selection
+gv        reselect last visual selection
+o         move to other end of selection
 ```
 
 ### Visual Mode Operations
 ```
-d                 delete selection
-c                 change selection
-y                 yank selection
->                 indent right
-<                 indent left
-=                 auto-indent
+d         delete selection
+c         change selection
+y         yank selection
+>         indent right
+<         indent left
+=         auto-indent
 
 Example workflow:
-    vip           select paragraph
-    >             indent it right
-    .             repeat (indent more)
+    vip   select paragraph
+    >     indent it right
+    .     repeat (indent more)
 ```
 
 
-## Registers - Copy/Paste System
+## Registers — Copy/Paste System
 
 ### Named Registers
 ```
-"a                use register 'a' (any letter a-z)
+"a        use register 'a' (any letter a–z)
 
-"ayy              yank line to register 'a'
-"ap               paste from register 'a'
-"Ayy              APPEND line to register 'a'
+"ayy      yank line to register 'a'
+"ap       paste from register 'a'
+"Ayy      APPEND line to register 'a'
 
-Use case: Save something before deleting other stuff
-    "ayiw         yank word to register 'a'
-    dd            delete lines (changes default register)
-    "ap           paste word from 'a' (still there!)
+Use case: save something before deleting other stuff
+    "ayiw   yank word to register 'a'
+    dd      delete lines (changes default register)
+    "ap     paste word from 'a' (still there!)
 ```
 
 ### Special Registers
 ```
-"0                last yank (NOT affected by deletes!)
-"+                system clipboard
-"_                black hole (delete without saving)
-".                last inserted text
-"%                current file path
-":                last command
+"0        last yank (NOT affected by deletes!)
+"+        system clipboard
+"_        black hole (delete without saving)
+".        last inserted text
+"%        current file path
+":        last command
 
 Example workflow:
-    yiw           yank word (goes to default register)
-    dd            delete line (overwrites default register)
-    "0p           paste word from yank register (still there!)
+    yiw   yank word (goes to default register)
+    dd    delete line (overwrites default register)
+    "0p   paste word from yank register (still there!)
 ```
 
 ### Your Custom Yank
 ```
-<space>yp         copy current file path to clipboard
-"+y               yank to system clipboard
-"+p               paste from system clipboard
+␣yp     📋  copy current file path to clipboard
+"+y     📋  yank to system clipboard
+"+p     📋  paste from system clipboard
 ```
 
 
-## Macros - Automate Repetitive Tasks
+## Macros — Automate Repetitive Tasks
 
 ### Recording & Playing
 ```
-qa                start recording to register 'a'
+qa        start recording to register 'a'
   ...do stuff...
-q                 stop recording
+q         stop recording
 
-@a                replay macro from register 'a'
-@@                replay last executed macro
-10@a              replay macro 10 times
+@a        replay macro from register 'a'
+@@        replay last executed macro
+10@a      replay macro 10 times
 ```
 
-### Example: Wrap Words in Quotes
+### Example: wrap words in quotes
 ```
-qa                start recording
-ciw"<Esc>pa"      change word, add quotes around it
-<Esc>j            go to next line
-q                 stop
+qa        start recording
+ciw"⎋pa"  change word, add quotes around it
+⎋j        go to next line
+q         stop
 
 Now on each line with a word:
-@a                applies macro once
-10@a              applies to next 10 lines
+@a        applies macro once
+10@a      applies to next 10 lines
 ```
 
 ### Pro Tip
 ```
-Record macros with relative motions (j, k, w, b)
-Not absolute motions (like search or line numbers)
-This makes them more reusable!
+★ Record macros with relative motions (j, k, w, b),
+  not absolute motions (search, line numbers).
+  Relative macros are reusable; absolute ones aren't.
 ```
 
 
@@ -384,15 +457,15 @@ This makes them more reusable!
 
 ### Basic Search
 ```
-/pattern          search forward
-?pattern          search backward
-n                 next match
-N                 previous match
-*                 search word under cursor
-#                 search word backward
+/pattern    search forward
+?pattern    search backward
+n           next match
+N           previous match
+*           search word under cursor
+#           search word backward
 
-/\cpattern        case-insensitive search
-/\Cpattern        case-sensitive search
+/\cpattern  case-insensitive search
+/\Cpattern  case-sensitive search
 ```
 
 ### Substitute (Replace)
@@ -403,7 +476,7 @@ N                 previous match
 :%s/old/new/gc    replace all with confirmation
 
 Visual mode substitute:
-    '<,'>s/old/new/g    (automatically added when you type :)
+    '<,'>s/old/new/g    (added automatically when you type :)
 ```
 
 ### Useful Flags
@@ -421,12 +494,12 @@ I     case sensitive
 ```
 .     repeat last change
 
-This is the MOST POWERFUL command in Vim!
+★ The single most powerful command in Vim.
 
 Example:
-    ciw"hello"<Esc>     change word to "hello"
-    w                    move to next word
-    .                    repeat change (changes next word too!)
+    ciw"hello"⎋   change word to "hello"
+    w             move to next word
+    .             repeat change (changes next word too!)
 ```
 
 ### Use Counts
@@ -455,12 +528,12 @@ zb        move cursor line to bottom
 ### Undo & Redo
 ```
 u         undo
-Ctrl-r    redo
+⌃r        redo
 U         undo all changes on current line
 ```
 
 
-## Quick Reference - Most Used
+## Quick Reference — Most Used
 
 **Movement:** `w` `b` `e` `^` `$` `{` `}` `f` `;`
 
@@ -468,15 +541,17 @@ U         undo all changes on current line
 
 **Operators:** `d` `c` `y` `v` `>` `<` `=`
 
-**Your Keys:** `<space><space>` `<space>/` `<space>,` `<space>;` `<space>e` `<space>sw`
+**Your Keys:** 🔭 `␣␣` · 🔍 `␣/` · 🗂️ `␣,` · 🔁 `␣;` · 📁 `␣e` · 🔎 `␣sw`
 
-**LSP:** `<space>cd` `<space>cs` `<space>cR` `<space>ca`
+**LSP:** 🎯 `␣cd` · 📃 `␣cs` · 🔁 `␣cR` · 🔧 `␣ca` · 🪪 `␣ch`
 
-**Git:** `]h` `[h` `<space>gp` `<space>gh` `<space>gs`
+**Git:** 🪝 `]h` `[h` · 👁️ `␣go` · ↩️ `␣gu` · 📊 `␣gs`
 
-**Remember:** `.` repeats your last change - use it constantly!
+**Snippets:** type prefix → ⏎ to accept → ⇥ through placeholders
+
+**Remember:** `.` repeats your last change — use it constantly!
 
 
 ---
 
-Press `q` to close • Press `<space>h` to see dashboard
+Press `q` to close • Press `␣h` to see dashboard
