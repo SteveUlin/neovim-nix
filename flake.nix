@@ -54,6 +54,14 @@
       url = "github:coder/claudecode.nvim";
       flake = false;
     };
+
+    # Blink source that surfaces Supermaven completions inside the blink.cmp
+    # menu. Optional: only wired into the `nvim-ai` package (see outputs), kept
+    # out of the default build so work machines never ship Supermaven.
+    blink-cmp-supermaven-src = {
+      url = "github:Huijiro/blink-cmp-supermaven";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -110,37 +118,62 @@
               src = inputs.claudecode-src;
               doCheck = false;
             };
+            blink-cmp-supermaven = final.vimUtils.buildVimPlugin {
+              name = "blink-cmp-supermaven";
+              src = inputs.blink-cmp-supermaven-src;
+              doCheck = false;
+            };
           };
         })
       ];
     };
 
     nixvim' = nixvim.legacyPackages.${system};
+
+    # Shared configuration. The `./plugins/supermaven.nix` module is always
+    # imported but inert unless `aiCompletion.enable` is set, so the default
+    # build carries no Supermaven code at all.
+    baseModule = {
+      imports = [ ./plugins ./config ];
+      extraPackages = with pkgs; [
+          clang-tools
+          delta
+          rustfmt
+          zig
+          zls
+          lynx
+          lua51Packages.tiktoken_core
+          sqlite  # Required for sqlite.lua and snacks.nvim frecency
+          # Formatters for conform-nvim
+          stylua
+          black
+          alejandra
+          prettier
+          # Linters for nvim-lint
+          pylint
+          markdownlint-cli
+      ];
+    };
+
+    # Work-safe default: no Supermaven, nothing leaves the machine.
     nvim = nixvim'.makeNixvimWithModule {
       inherit pkgs;
+      module = baseModule;
+    };
+
+    # Personal build: same config plus Supermaven wired into blink.cmp.
+    # Build/reference this one (`.#nvim-ai`) only on machines where sending
+    # buffer context to Supermaven's servers is acceptable.
+    nvim-ai = nixvim'.makeNixvimWithModule {
+      inherit pkgs;
       module = {
-        imports = [ ./plugins ./config ];
-        extraPackages = with pkgs; [
-            clang-tools
-            delta
-            rustfmt
-            lynx
-            lua51Packages.tiktoken_core
-            sqlite  # Required for sqlite.lua and snacks.nvim frecency
-            # Formatters for conform-nvim
-            stylua
-            black
-            alejandra
-            prettier
-            # Linters for nvim-lint
-            pylint
-            markdownlint-cli
-        ];
+        imports = [ baseModule ];
+        aiCompletion.enable = true;
       };
     };
     in {
       packages = {
-        inherit nvim;
+        inherit nvim nvim-ai;
         default = nvim;
       };
     });

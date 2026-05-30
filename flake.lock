@@ -16,6 +16,22 @@
         "type": "github"
       }
     },
+    "blink-cmp-supermaven-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1743533033,
+        "narHash": "sha256-pVu58uzakRdAr89I7e4xotBTr9sd5QWkQQlCs2PeFjg=",
+        "owner": "Huijiro",
+        "repo": "blink-cmp-supermaven",
+        "rev": "635ce12e9e2d2a5a483728ac764d0bc5b57af23b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Huijiro",
+        "repo": "blink-cmp-supermaven",
+        "type": "github"
+      }
+    },
     "bufsurf-src": {
       "flake": false,
       "locked": {
@@ -203,6 +219,7 @@
     "root": {
       "inputs": {
         "async-src": "async-src",
+        "blink-cmp-supermaven-src": "blink-cmp-supermaven-src",
         "bufsurf-src": "bufsurf-src",
         "claudecode-src": "claudecode-src",
         "everforest-src": "everforest-src",

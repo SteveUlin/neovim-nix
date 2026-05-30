@@ -1,6 +1,8 @@
 {
   pkgs,
   helpers,
+  lib,
+  config,
   ...
 }: let
   clangdPkg = pkgs.llvmPackages_20.clang-tools;
@@ -156,13 +158,17 @@ in {
             window.show_documentation = false;
           };
           sources = {
-            default = [
-              "lsp"
-              "snippets"
-              "latex_symbols"
-              "path"
-              "buffer"
-            ];
+            # "supermaven" is appended only when aiCompletion is enabled (the
+            # nvim-ai build); the provider itself is registered in supermaven.nix.
+            default =
+              [
+                "lsp"
+                "snippets"
+                "latex_symbols"
+                "path"
+                "buffer"
+              ]
+              ++ lib.optional config.aiCompletion.enable "supermaven";
             providers = {
               latex_symbols = {
                 name = "latex_symbols";
@@ -224,6 +230,7 @@ in {
           pyright.enable = true;
           nil_ls.enable = true;
           marksman.enable = true;
+          zls.enable = true;
           rust_analyzer = {
             enable = true;
             installCargo = true;
@@ -370,6 +377,7 @@ in {
             c = ["clang-format"];
             cpp = ["clang-format"];
             cuda = ["clang-format"];
+            zig = ["zigfmt"];
             python = ["black"];
             nix = ["alejandra"];
             lua = ["stylua"];
