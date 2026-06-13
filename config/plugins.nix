@@ -201,6 +201,11 @@ in {
 
       lsp = {
         enable = true;
+        onAttach = ''
+          if client.server_capabilities.inlayHintProvider then
+            vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+          end
+        '';
         preConfig = ''
           local __clangdCaps = require('blink.cmp').get_lsp_capabilities()
           __clangdCaps.offsetEncoding = { "utf-16" }
@@ -408,6 +413,66 @@ in {
       web-devicons.enable = true;
 
       which-key.enable = true;
+
+      zen-mode = {
+        enable = true;
+        settings = {
+          window = {
+            width = 100; # Match the colorcolumn
+            options = {
+              colorcolumn = "100";
+            };
+          };
+        };
+      };
+
+      markview = {
+        enable = true;
+        settings = {
+          preview = {
+            modes = [ "n" "i" "no" "c" ];
+            hybrid_modes = [ "n" "i" ];
+            debounce = 15; # Super fast updates for hybrid mode
+            linewise_hybrid_mode = true;
+          };
+          markdown = {
+            headings = {
+              shift_width = 1;
+              heading_1 = { style = "label"; icon = "◉ "; background = "DiffAdd"; };
+              heading_2 = { style = "label"; icon = "○ "; background = "DiffChange"; };
+              heading_3 = { style = "label"; icon = "◈ "; background = "DiffDelete"; };
+              heading_4 = { style = "label"; icon = "◇ "; background = "CursorLine"; };
+              heading_5 = { style = "label"; icon = "◆ "; background = "CursorLine"; };
+              heading_6 = { style = "label"; icon = "✦ "; background = "CursorLine"; };
+            };
+            code_blocks = {
+              style = "language";
+              hl = "CursorLine";
+              sign = true;
+              pad_char = " ";
+              pad_amount = 2;
+            };
+            block_quotes = {
+              default = { border = "▍"; hl = "DiagnosticInfo"; };
+              callouts = {
+                note = { title = " Note "; icon = "󰋽"; hl = "DiagnosticInfo"; };
+                warning = { title = " Warning "; icon = ""; hl = "DiagnosticWarn"; };
+                danger = { title = " Danger "; icon = "󰚌"; hl = "DiagnosticError"; };
+              };
+            };
+            list_items = {
+              marker_minus = { add_padding = false; text = "•"; hl = "DiagnosticWarn"; };
+              marker_plus = { add_padding = false; text = "‣"; hl = "DiagnosticInfo"; };
+              marker_star = { add_padding = false; text = "★"; hl = "DiagnosticWarn"; };
+            };
+            checkboxes = {
+              checked = { text = "✔"; hl = "DiagnosticOk"; };
+              unchecked = { text = "✗"; hl = "DiagnosticError"; };
+              pending = { text = "◐"; hl = "DiagnosticWarn"; };
+            };
+          };
+        };
+      };
     };
   };
 }

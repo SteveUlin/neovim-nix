@@ -42,6 +42,11 @@ in
       options.desc = "🪶 Format Buffer";
     }
     {
+      key = "<leader>ci";
+      action.__raw = "function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 }) end";
+      options.desc = "💡 Toggle Inlay Hints";
+    }
+    {
       key = "<leader>ct";
       action.__raw = "function() require('tiny-inline-diagnostic').toggle() end";
       options.desc = "🔘 Toggle Diagnostic Text";
@@ -369,6 +374,11 @@ in
       options.desc = "🌐 LSP Workspace Symbols";
       key = "<leader>cS";
       action.__raw = "function() Snacks.picker.lsp_workspace_symbols() end";
+    }
+    {
+      options.desc = "🧘 Toggle Zen Mode";
+      key = "<leader>z";
+      action = ":ZenMode<CR>";
     }
   ];
 }

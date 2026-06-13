@@ -73,7 +73,10 @@
     };
 
     opts = {
-      clipboard = "unnamedplus";
+      # No `clipboard = "unnamedplus"`: yanks stay in the unnamed register by
+      # default so no OSC 52 round-trip fires on every yank (which stalled under
+      # Zellij). Use "+y / "+p for explicit system-clipboard access via the
+      # OSC 52 provider defined in `globals.clipboard`. (2026-05-30)
 
       # Line numbers
       number = true;
