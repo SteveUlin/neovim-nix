@@ -39,6 +39,13 @@ in {
             end,
           },
         },
+        -- Diff suggestions open in their own full-screen tab instead of
+        -- splitting the working window (better on a smaller monitor); the
+        -- Claude terminal is kept out of that tab so it's just the diff.
+        diff_opts = {
+          open_in_new_tab = true,
+          hide_terminal_in_new_tab = true,
+        },
       })
 
       require('vcsigns').setup({
@@ -134,6 +141,106 @@ in {
         if not cfg.enabled then require('blink.cmp').hide() end
         vim.notify("blink.cmp signature: " .. (cfg.enabled and "on" or "off"))
       end
+
+      -- Repeatable treesitter moves: ; / , replay the last ]f/[f-style move and
+      -- also f/F/t/T. NOTE the hyphenated require path — this is the main-branch
+      -- rewrite, not the legacy dotted nvim-treesitter.textobjects path.
+      local _tsrepeat = require('nvim-treesitter-textobjects.repeatable_move')
+      vim.keymap.set({ 'n', 'x', 'o' }, ';', _tsrepeat.repeat_last_move_next)
+      vim.keymap.set({ 'n', 'x', 'o' }, ',', _tsrepeat.repeat_last_move_previous)
+      vim.keymap.set({ 'n', 'x', 'o' }, 'f', _tsrepeat.builtin_f_expr, { expr = true })
+      vim.keymap.set({ 'n', 'x', 'o' }, 'F', _tsrepeat.builtin_F_expr, { expr = true })
+      vim.keymap.set({ 'n', 'x', 'o' }, 't', _tsrepeat.builtin_t_expr, { expr = true })
+      vim.keymap.set({ 'n', 'x', 'o' }, 'T', _tsrepeat.builtin_T_expr, { expr = true })
+
+      -- Incremental selection — the nvim-treesitter rewrite removed the built-in
+      -- module, so drive it directly off vim.treesitter. <C-space> selects the
+      -- node under the cursor then grows to the next-larger node; <BS> shrinks
+      -- back down the stack. Stack-based like the original: only use these keys
+      -- to change the selection while growing/shrinking.
+      do
+        local _esc = vim.api.nvim_replace_termcodes('<Esc>', true, false, true)
+        local _sel = {}
+        local function _set_visual(node)
+          local sr, sc, er, ec = node:range()
+          if vim.fn.mode():match('[vV]') then vim.cmd('normal! ' .. _esc) end
+          vim.api.nvim_win_set_cursor(0, { sr + 1, sc })
+          vim.cmd('normal! v')
+          local eer, eec = er, ec
+          if eec > 0 then
+            eec = eec - 1
+          else
+            eer = er - 1
+            eec = math.max(vim.fn.col({ eer + 1, '$' }) - 2, 0)
+          end
+          vim.api.nvim_win_set_cursor(0, { eer + 1, eec })
+        end
+        local function _bigger_parent(node)
+          local sr, sc, er, ec = node:range()
+          local p = node:parent()
+          while p do
+            local a, b, c, d = p:range()
+            if a ~= sr or b ~= sc or c ~= er or d ~= ec then return p end
+            p = p:parent()
+          end
+          return nil
+        end
+        local function _grow()
+          local in_visual = vim.fn.mode():match('^[vV]')
+          if not in_visual or #_sel == 0 then
+            local ok, node = pcall(vim.treesitter.get_node)
+            if not ok or not node then return end
+            _sel = { node }
+            _set_visual(node)
+          else
+            local p = _bigger_parent(_sel[#_sel])
+            if p then
+              table.insert(_sel, p)
+              _set_visual(p)
+            end
+          end
+        end
+        local function _shrink()
+          table.remove(_sel)
+          local node = _sel[#_sel]
+          if node then _set_visual(node) else vim.cmd('normal! ' .. _esc) end
+        end
+        vim.keymap.set('n', '<C-space>', _grow, { desc = '🌳 Init/grow TS selection' })
+        vim.keymap.set('x', '<C-space>', _grow, { desc = '🌳 Grow TS selection' })
+        vim.keymap.set('x', '<BS>', _shrink, { desc = '🌳 Shrink TS selection' })
+      end
+
+      -- dial.nvim: context-aware increment/decrement (bool, dates, &&/||, semver).
+      -- Builders come from dial.augend; the registry (register_group) is the
+      -- separate dial.config.augends object.
+      local _augend = require('dial.augend')
+      require('dial.config').augends:register_group({
+        default = {
+          _augend.integer.alias.decimal,
+          _augend.integer.alias.hex,
+          _augend.date.alias['%Y/%m/%d'],
+          _augend.constant.alias.bool,
+          _augend.constant.new({ elements = { '&&', '||' }, word = false }),
+          _augend.constant.new({ elements = { 'and', 'or' } }),
+          _augend.semver.alias.semver,
+        },
+      })
+      local _dial = require('dial.map')
+      vim.keymap.set('n', '<C-a>', function() _dial.manipulate('increment', 'normal') end)
+      vim.keymap.set('n', '<C-x>', function() _dial.manipulate('decrement', 'normal') end)
+      vim.keymap.set('x', '<C-a>', function() _dial.manipulate('increment', 'visual') end)
+      vim.keymap.set('x', '<C-x>', function() _dial.manipulate('decrement', 'visual') end)
+      vim.keymap.set('x', 'g<C-a>', function() _dial.manipulate('increment', 'gvisual') end)
+      vim.keymap.set('x', 'g<C-x>', function() _dial.manipulate('decrement', 'gvisual') end)
+
+      -- Claude Code: focus the Zellij claude pane after a send/add — the
+      -- built-in focus_after_send is a no-op for the external provider.
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'ClaudeCodeSendComplete',
+        callback = function()
+          vim.system({ 'zellij', 'action', 'focus-next-pane' })
+        end,
+      })
     '';
 
     plugins = {
@@ -156,6 +263,14 @@ in {
           signature = {
             enabled = true;
             window.show_documentation = false;
+          };
+          completion = {
+            # Show the doc/signature popup on selection (default is off, so
+            # scrolling completions otherwise shows only the bare label).
+            documentation = {
+              auto_show = true;
+              auto_show_delay_ms = 250;
+            };
           };
           sources = {
             # "supermaven" is appended only when aiCompletion is enabled (the
@@ -185,9 +300,19 @@ in {
         settings = {
           preset = "modern";
           options = {
-            multilines.enabled = true;
+            # Errors stay pinned on every line of a multi-line diagnostic;
+            # warnings/info/hints collapse to the cursor line only — tames
+            # clangd's verbose C++ note chains without hiding real errors.
+            multilines = {
+              enabled = true;
+              always_show = true;
+              severity = [ { __raw = "vim.diagnostic.severity.ERROR"; } ];
+            };
             show_all_diags_on_cursorline = true;
             use_icons_from_diagnostic = true;
+            # Suppress the inline render while vim.diagnostic.open_float is up,
+            # so <leader>ce doesn't show the same message twice.
+            override_open_float = true;
           };
         };
       };
@@ -196,6 +321,9 @@ in {
         enable = true;
         settings = {
           highlight_on_key = true;
+          # Grey out the rest of the line on f/t so the highlighted target
+          # letter pops instead of being one cue among many.
+          dim = true;
         };
       };
 
@@ -229,10 +357,28 @@ in {
               capabilities = {__raw = "__clangdCaps";};
               init_options = {
                 semanticHighlighting = true;
+                # Offer symbols from not-yet-included headers and auto-add the
+                # #include on accept (pairs with --header-insertion=iwyu).
+                completeUnimported = true;
+                usePlaceholders = true;
+                clangdFileStatus = true;
               };
             };
           };
-          pyright.enable = true;
+          pyright = {
+            enable = true;
+            settings = {
+              python.analysis = {
+                # Infer types from installed packages that ship no stubs (most
+                # of the scientific stack) — real completions instead of Unknown.
+                useLibraryCodeForTypes = true;
+                autoSearchPaths = true;
+                typeCheckingMode = "basic";
+                # Don't scan the whole tree on every edit (SSH-friendly).
+                diagnosticMode = "openFilesOnly";
+              };
+            };
+          };
           nil_ls.enable = true;
           marksman.enable = true;
           zls.enable = true;
@@ -250,7 +396,13 @@ in {
       lualine = {
         enable = true;
         settings = {
-          globalstatus = true;
+          options = {
+            globalstatus = true;
+            # Snacks explorer/picker panes: no filename winbar, and never steal
+            # the "active" statusline from the code window.
+            disabled_filetypes.winbar = [ "snacks_picker_list" "snacks_picker_input" "snacks_dashboard" ];
+            ignore_focus = [ "snacks_picker_list" "snacks_picker_input" "snacks_explorer" ];
+          };
           sections = {
             lualine_a = [
               {
@@ -265,7 +417,9 @@ in {
             ];
             lualine_b = [];
             lualine_c = [];
-            lualine_x = [];
+            # Spinner while clangd background-indexes / rust_analyzer builds its
+            # crate graph, then settles — "still indexing or actually done?".
+            lualine_x = [ "lsp_status" ];
             lualine_y = [];
             lualine_z = [];
           };
@@ -288,6 +442,13 @@ in {
 
       rainbow-delimiters = {
         enable = true;
+        # Local strategy for deeply-nested C/C++: highlight only the cursor's
+        # subtree instead of re-highlighting the whole buffer (global default).
+        strategy = {
+          "" = "global";
+          c = "local";
+          cpp = "local";
+        };
         settings = {
           highlight = [
             "RainbowDelimiterYellow"
@@ -322,6 +483,31 @@ in {
           };
           scroll.enabled = true;
           words.enabled = true;
+          # Paint the buffer with treesitter highlighting before the plugin
+          # stack loads — biggest payoff over SSH/Zellij cold starts.
+          quickfile.enabled = true;
+          # Distraction-free mode (replaces the standalone zen-mode plugin).
+          # Strips numbers/cursorline/gutter; <leader>z calls Snacks.zen().
+          zen = {
+            toggles = { dim = false; git_signs = false; mini_diff_signs = false; };
+            # Keep the statusline (globalstatus is on) instead of a bare window.
+            show = { statusline = true; tabline = false; };
+            win = {
+              width = 100;
+              # Opaque backdrop coloured like Normal bg: the buffer below is fully
+              # hidden (not dimmed/see-through), so there's no distracting
+              # double-motion when scrolling, and the margins read as plain editor.
+              backdrop = { transparent = false; blend = 0; bg = "#191e21"; };
+              wo = {
+                # Keep normal chrome in zen: line numbers, jj/diagnostic gutter,
+                # and the column guide. Only centering + tabline-hiding differ.
+                number = true;
+                relativenumber = true;
+                signcolumn = "yes";
+                colorcolumn = "100";
+              };
+            };
+          };
         };
       };
 
@@ -330,6 +516,9 @@ in {
         settings = {
           indent.enable = true;
           highlight.enable = true;
+          # NOTE: incremental_selection is implemented in extraConfigLua, not
+          # here — the installed nvim-treesitter is the main-branch rewrite,
+          # whose setup() dropped the incremental_selection module.
         };
         nixGrammars = true;
         nixvimInjections = true;
@@ -360,7 +549,17 @@ in {
               "if" = "@function.inner";
               "ac" = "@class.outer";
               "ic" = "@class.inner";
+              # Argument/parameter object — dip/cip a single call argument.
+              "ap" = "@parameter.outer";
+              "ip" = "@parameter.inner";
             };
+          };
+          # Reorder an argument with the next/previous one, treesitter-correct
+          # (commas + whitespace handled) — no cut-and-paste.
+          swap = {
+            enable = true;
+            swap_next = { "<leader>na" = "@parameter.inner"; };
+            swap_previous = { "<leader>pa" = "@parameter.inner"; };
           };
         };
       };
@@ -378,6 +577,9 @@ in {
       conform-nvim = {
         enable = true;
         settings = {
+          # Single source of truth for format options (replaces the deprecated
+          # per-call lsp_fallback=true; <leader>cf inherits this).
+          default_format_opts.lsp_format = "fallback";
           formatters_by_ft = {
             c = ["clang-format"];
             cpp = ["clang-format"];
@@ -402,29 +604,74 @@ in {
       lint = {
         enable = true;
         lintersByFt = {
-          python = ["pylint"];
+          # ruff lints the whole repo in ~0.2s vs pylint cold-starting the
+          # interpreter on every run; purpose-built for editor-frequency linting.
+          python = ["ruff"];
           markdown = ["markdownlint"];
         };
         autoCmd = {
-          event = ["BufWritePost" "BufReadPost" "InsertLeave"];
+          # Dropped InsertLeave. Guard against special/scratch buffers so we
+          # don't spawn linters against snacks/help/terminal panes.
+          event = ["BufWritePost" "BufReadPost"];
+          callback.__raw = ''
+            function()
+              local b = vim.bo
+              if b.buftype ~= "" or not b.modifiable then return end
+              require("lint").try_lint()
+            end
+          '';
         };
       };
 
       web-devicons.enable = true;
 
-      which-key.enable = true;
-
-      zen-mode = {
+      which-key = {
         enable = true;
         settings = {
-          window = {
-            width = 100; # Match the colorcolumn
-            options = {
-              colorcolumn = "100";
+          # Stop which-key prepending its own guessed icon on top of the emoji
+          # already curated in each keymap's desc (otherwise every row double-icons).
+          icons.mappings = false;
+          # Name the leader-prefix namespaces (shown as bare "+" by default).
+          spec = [
+            { __unkeyed-1 = "<leader>c"; group = "Code / LSP"; }
+            { __unkeyed-1 = "<leader>a"; group = "AI / Claude"; }
+            { __unkeyed-1 = "<leader>n"; group = "Notes"; }
+            { __unkeyed-1 = "<leader>w"; group = "Windows"; }
+            { __unkeyed-1 = "<leader>f"; group = "Files"; }
+            { __unkeyed-1 = "<leader>s"; group = "Search"; }
+            { __unkeyed-1 = "<leader>g"; group = "VCS (jj)"; }
+            { __unkeyed-1 = "<leader>b"; group = "Buffers"; }
+          ];
+        };
+      };
+
+      # mini.nvim modules. surround uses a gs prefix so it never clobbers the
+      # builtin `s`; ai adds bracket/quote/call a/i objects treesitter lacks.
+      mini = {
+        enable = true;
+        modules = {
+          ai = { };
+          surround = {
+            mappings = {
+              add = "gsa";
+              delete = "gsd";
+              replace = "gsr";
+              find = "gsf";
+              find_left = "gsF";
+              highlight = "gsh";
+              update_n_lines = "gsn";
             };
           };
         };
       };
+
+      # Context-aware C-a/C-x (true⇄false, dates, &&⇄||, semver). Augends and
+      # keymaps are wired in extraConfigLua (the module has no setup function).
+      dial.enable = true;
+
+      # Inline highlighting of TODO/FIX/HACK/PERF/NOTE/WARN comments. The search
+      # half already exists as Snacks.picker.todo_comments.
+      todo-comments.enable = true;
 
       markview = {
         enable = true;
@@ -434,6 +681,14 @@ in {
             hybrid_modes = [ "n" "i" ];
             debounce = 15; # Super fast updates for hybrid mode
             linewise_hybrid_mode = true;
+          };
+          # Render inline ($..$) and block ($$..$$) math to Unicode in notes
+          # (needs the latex treesitter grammar, installed via nixGrammars).
+          latex = {
+            enable = true;
+            subscripts.enable = true;
+            superscripts.enable = true;
+            symbols.enable = true;
           };
           markdown = {
             headings = {

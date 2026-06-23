@@ -37,8 +37,13 @@ in
       options.desc = "📖 LSP Hover";
     }
     {
+      key = "<leader>cr";
+      action = ":lua vim.lsp.buf.rename()<CR>";
+      options.desc = "✏️  Rename Symbol";
+    }
+    {
       key = "<leader>cf";
-      action.__raw = "function() require('conform').format({ async = true, lsp_fallback = true }) end";
+      action.__raw = "function() require('conform').format({ async = true, lsp_format = 'fallback' }) end";
       options.desc = "🪶 Format Buffer";
     }
     {
@@ -66,6 +71,11 @@ in
       action.__raw = "function() Snacks.words.jump(-vim.v.count1) end";
       options.desc = "🔁 Previous Reference";
     }
+    {
+      key = "[x";
+      action.__raw = "function() require('treesitter-context').go_to_context(vim.v.count1) end";
+      options.desc = "⬆️  Jump to Context";
+    }
 
     # Claude Code (1:1 pairing: nvim spawns its claude in a Zellij pane)
     {
@@ -83,6 +93,51 @@ in
       key = "<leader>ab";
       action = ":ClaudeCodeAdd %<CR>";
       options.desc = "📥 Add Buffer to Claude";
+    }
+    {
+      key = "<leader>aL";
+      mode = ["v"];
+      action.__raw = ''
+        function()
+          local s = vim.fn.line("v")
+          local e = vim.fn.line(".")
+          if s > e then s, e = e, s end
+          vim.cmd(string.format("ClaudeCodeAdd %% %d %d", s, e))
+        end
+      '';
+      options.desc = "🔢 Add Line Range to Claude";
+    }
+    {
+      key = "<leader>am";
+      action = ":ClaudeCodeSelectModel<CR>";
+      options.desc = "🤖 Select Claude Model";
+    }
+    {
+      key = "<leader>ax";
+      # Toggle visibility of the nvim-live highlights by hiding/restoring their
+      # highlight groups — the extmarks stay put, so a re-toggle brings them all
+      # back (and reveals any drawn while hidden).
+      action.__raw = ''
+        (function()
+          local hidden, saved = false, nil
+          return function()
+            hidden = not hidden
+            if hidden then
+              saved = {
+                hl = vim.api.nvim_get_hl(0, { name = 'ClaudeLiveHL' }),
+                note = vim.api.nvim_get_hl(0, { name = 'ClaudeLiveNote' }),
+              }
+              vim.api.nvim_set_hl(0, 'ClaudeLiveHL', {})
+              vim.api.nvim_set_hl(0, 'ClaudeLiveNote', {})
+            else
+              vim.api.nvim_set_hl(0, 'ClaudeLiveHL', saved and saved.hl or {})
+              vim.api.nvim_set_hl(0, 'ClaudeLiveNote', saved and saved.note or {})
+            end
+            vim.notify('Claude highlights: ' .. (hidden and 'hidden' or 'shown'))
+          end
+        end)()
+      '';
+      options.desc = "🌓 Toggle Claude Highlights";
     }
     {
       key = "<leader>aa";
@@ -110,6 +165,11 @@ in
       key = "[b";
       action = ":BufSurfBack<CR>";
       options.desc = "◀️  Previous Buffer";
+    }
+    {
+      key = "<leader>bd";
+      action.__raw = "function() Snacks.bufdelete() end";
+      options.desc = "🗑️  Close Buffer";
     }
 
     # Notes
@@ -183,7 +243,7 @@ in
     # Dashboard & Help
     {
       key = "<leader>h";
-      action.__raw = "function() require('alpha').start(false) end";
+      action.__raw = "function() Snacks.dashboard() end";
       options.desc = "🏠 Open Dashboard";
     }
     {
@@ -314,6 +374,22 @@ in
       key = "<leader>go";
       action.__raw = "function() require('vcsigns.actions').toggle_hunk_diff(0) end";
     }
+    {
+      options.desc = "⤵️  Diff vs Newer Commit";
+      key = "]r";
+      action.__raw = "function() require('vcsigns.actions').target_newer_commit(0, vim.v.count1) end";
+    }
+    {
+      options.desc = "⤴️  Diff vs Older Commit";
+      key = "[r";
+      action.__raw = "function() require('vcsigns.actions').target_older_commit(0, vim.v.count1) end";
+    }
+    {
+      options.desc = "🎯 Inside Hunk";
+      key = "ih";
+      mode = ["o" "x"];
+      action.__raw = "function() require('vcsigns.textobj').select_hunk(0) end";
+    }
 
     # Grep
     {
@@ -330,6 +406,11 @@ in
       options.desc = "🔎 Grep Word Under Cursor";
       key = "<leader>sw";
       action.__raw = "function() Snacks.picker.grep({ search = vim.fn.expand('<cword>') }) end";
+    }
+    {
+      options.desc = "📌 Todo Comments";
+      key = "<leader>st";
+      action.__raw = "function() Snacks.picker.todo_comments() end";
     }
 
     # Search
@@ -378,7 +459,7 @@ in
     {
       options.desc = "🧘 Toggle Zen Mode";
       key = "<leader>z";
-      action = ":ZenMode<CR>";
+      action.__raw = "function() Snacks.zen() end";
     }
   ];
 }

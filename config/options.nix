@@ -3,6 +3,9 @@
     colorschemes.everforest-nvim = {
       enable = true;
       settings = {
+        # LineNr/Conceal/whitespace render in a brighter grey instead of bg5,
+        # so the relativenumber column and listchars dots stay legible.
+        ui_contrast = "high";
         on_highlights = ''
           function(hl, palette)
             hl["StorageClass"] = { fg = palette.red, italic = true}
@@ -27,11 +30,12 @@
 
             hl["@lsp.typemod.variable.static"] = { fg = palette.none }
 
-            -- Diff highlights (more visible than defaults)
-            hl["DiffAdd"] = { bg = "#3a5249" }
-            hl["DiffDelete"] = { bg = "#614248" }
-            hl["DiffChange"] = { bg = "#3a515d" }
-            hl["DiffText"] = { bg = "#5a7a8a", fg = palette.bg0 }
+            -- Diff highlights derived from the resolved palette so they stay
+            -- correct if `background` ever changes (bg_blue == the old #3a515d).
+            hl["DiffAdd"] = { bg = palette.bg_green }
+            hl["DiffDelete"] = { bg = palette.bg_red }
+            hl["DiffChange"] = { bg = palette.bg_blue }
+            hl["DiffText"] = { bg = palette.bg_visual, fg = palette.bg0, bold = true }
 
             -- VCSigns inline diff
             hl["VcsignsDiffAdd"] = { bg = "#3a5249" }
@@ -44,6 +48,26 @@
             hl["SignChange"] = { fg = palette.blue }
             hl["SignDelete"] = { fg = palette.red }
             hl["SignChangeDelete"] = { fg = palette.purple }
+
+            -- nvim-live skill: a muted background-only highlight (so treesitter
+            -- AND clangd semantic-token foregrounds show through), plus a
+            -- distinct aqua short-label badge that doesn't share that background.
+            hl["ClaudeLiveHL"] = { bg = palette.bg_red }
+            hl["ClaudeLiveNote"] = { fg = palette.aqua, bold = true }
+
+            -- clangd parameter-name inlay hints (f:/t:/fn:) — a visible blue
+            -- italic instead of the dim default that links to LineNr.
+            hl["LspInlayHint"] = { fg = palette.blue, italic = true }
+
+            -- Slightly darker gutter (sign/number/fold columns) so it reads as
+            -- a distinct band — in both normal and zen. Merge bg on the number
+            -- columns to preserve their ui_contrast foreground.
+            for _, _g in ipairs({ "LineNr", "LineNrAbove", "LineNrBelow", "CursorLineNr" }) do
+              hl[_g] = vim.tbl_extend("force", hl[_g] or {}, { bg = palette.bg_dim })
+            end
+            for _, _g in ipairs({ "SignColumn", "FoldColumn", "CursorLineSign", "CursorLineFold" }) do
+              hl[_g] = { bg = palette.bg_dim }
+            end
           end
         '';
       };
@@ -69,7 +93,21 @@
     };
 
     diagnostic.settings = {
+      # tiny-inline-diagnostic owns the inline render; native virtual_text off.
       virtual_text = false;
+      # Worst severity on a line wins the gutter sign (ERROR never hides behind
+      # a HINT) and orders the underline highlights by severity.
+      severity_sort = true;
+      # Glyphs instead of the default E/W/I/H sign letters. __rawKey__ emits the
+      # vim.diagnostic.severity.* enum as a raw Lua table key.
+      signs.text = {
+        "__rawKey__vim.diagnostic.severity.ERROR" = "";
+        "__rawKey__vim.diagnostic.severity.WARN" = "";
+        "__rawKey__vim.diagnostic.severity.INFO" = "";
+        "__rawKey__vim.diagnostic.severity.HINT" = "󰌵";
+      };
+      # Frame vim.diagnostic.open_float (the <leader>ce popup).
+      float.border = "rounded";
     };
 
     opts = {
@@ -132,8 +170,39 @@
 
       # Start with all folds open
       foldlevelstart = 99;
-      
+
+      # Treesitter-based folding for every filetype (grammars already installed
+      # via nixGrammars). foldlevelstart=99 keeps files open until you za.
+      foldmethod = "expr";
+      foldexpr = "v:lua.vim.treesitter.foldexpr()";
+      foldtext = "v:lua.vim.treesitter.foldtext()";
+
       conceallevel = 2;
+
+      # Reserve the sign column so the buffer never shifts sideways when a jj
+      # (vcsigns) or diagnostic sign appears/disappears.
+      signcolumn = "yes";
+
+      # Global float border (Neovim 0.11+): one setting frames every float —
+      # LSP hover, signature, diagnostics, blink docs, snacks previews.
+      winborder = "rounded";
+
+      # Snappier: leader chords (timeoutlen) and CursorHold/hover (updatetime)
+      # stop lagging the 1000ms/4000ms defaults.
+      timeoutlen = 300;
+      updatetime = 250;
+
+      # Calmer splits: keep existing text on the same screen row when a split
+      # opens, and place new splits where the eye is heading (down/right).
+      splitkeep = "screen";
+      splitbelow = true;
+      splitright = true;
+
+      # Cap the completion menu so clangd's verbose lists don't fill the screen.
+      pumheight = 10;
+
+      # Prompt to save instead of erroring on quit with unsaved changes.
+      confirm = true;
 
     };
 

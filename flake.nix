@@ -150,7 +150,7 @@
           alejandra
           prettier
           # Linters for nvim-lint
-          pylint
+          ruff
           markdownlint-cli
       ];
     };

@@ -17,12 +17,15 @@
 
     # Diff / VCS
     "]h [h jump between diff hunks"
+    "]r [r step the diff base through commits (jj new+squash)"
     "<space>gs jujutsu status picker"
     "<space>gu undo current hunk"
     "<space>go toggle inline diff overlay"
+    "dih operates on the hunk under the cursor"
 
     # LSP
     "<space>ca code actions - quick fixes and refactors"
+    "<space>cr rename symbol across the project"
     "<space>cf format current buffer"
     "<space>ck hover docs for symbol under cursor"
     "<space>cd go to definition"
@@ -30,10 +33,19 @@
     "<space>cs list all symbols in file"
     "<space>cS search symbols across workspace"
     "]]/[[ jump to next/prev LSP reference"
+    "[x jump up to the enclosing function/class"
+
+    # Editing
+    "<C-space> grow selection by syntax node, <BS> shrinks"
+    "gsa{motion} surround, gsd delete, gsr replace (mini.surround)"
+    "<space>na / <space>pa swap an argument with its neighbour"
+    "C-a / C-x increment dates, booleans, &&/|| (dial)"
+    "<space>st search TODO/FIX/HACK comments"
 
     # Files & Buffers
     "<space>fs save file"
     "<space>q close window"
+    "<space>bd close buffer without wrecking the split"
     "<space>yp copy current file's full path to clipboard"
     "]b [b navigate buffer history (not just list order)"
 
@@ -128,178 +140,51 @@ in {
       _G.random_tip = tips[math.random(#tips)]
     '';
 
-    plugins.alpha = {
-      enable = true;
-      settings.layout = [
+    # snacks.dashboard (replaces alpha). preset.keys are real, keybound buttons
+    # wired to the snacks pickers; the tip-of-the-day is a function section so it
+    # re-renders each open. The static motion/text-object reference is kept.
+    plugins.snacks-nvim.settings.dashboard = {
+      enabled = true;
+      preset = {
+        header = ''
+          ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
+          ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
+          ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
+          ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
+          ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
+          ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝'';
+        keys = [
+          { icon = " "; key = "f"; desc = "Find File"; action.__raw = "function() Snacks.picker.smart() end"; }
+          { icon = " "; key = "/"; desc = "Live Grep"; action.__raw = "function() Snacks.picker.grep() end"; }
+          { icon = " "; key = "r"; desc = "Recent Files"; action.__raw = "function() Snacks.picker.recent() end"; }
+          { icon = " "; key = "e"; desc = "Explorer"; action.__raw = "function() Snacks.explorer() end"; }
+          { icon = " "; key = "?"; desc = "Cheat Sheet"; action = ":e ~/neovim-nix/CHEATSHEET.md"; }
+          { icon = " "; key = "q"; desc = "Quit"; action = ":qa"; }
+        ];
+      };
+      sections = [
+        { section = "header"; }
         {
-          type = "padding";
-          val = 2;
+          __raw = "function() return { align = 'center', padding = 1, text = { { _G.random_tip or '', hl = 'String' } } } end";
         }
-
-        # Header
+        { section = "keys"; gap = 1; padding = 1; }
         {
-          type = "text";
-          val = [
-            "███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗"
-            "████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║"
-            "██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║"
-            "██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║"
-            "██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║"
-            "╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝"
-          ];
-          opts = {
-            position = "center";
-            hl = "Type";
-          };
-        }
-
-        {
-          type = "padding";
-          val = 2;
-        }
-
-        # Tip of the Day (at the top!)
-        {
-          type = "text";
-          val.__raw = "random_tip";
-          opts = {
-            position = "center";
-            hl = "String";
-          };
-        }
-
-        {
-          type = "padding";
-          val = 2;
-        }
-
-        # Quick Actions
-        {
-          type = "text";
-          val = "Quick Actions";
-          opts = {
-            position = "center";
-            hl = "SpecialComment";
-          };
+          align = "center";
+          text = [ { __unkeyed-1 = "Essential Motions"; hl = "SpecialComment"; } ];
         }
         {
-          type = "padding";
-          val = 1;
+          align = "center";
+          padding = 1;
+          text = [ { __unkeyed-1 = "w b e  words    ^ first non-blank    { } paragraph    f t ; , find"; hl = "Comment"; } ];
         }
         {
-          type = "text";
-          val = [
-            "  Find File              SPC SPC"
-            "  Live Grep              SPC /"
-            "  Recent Files           SPC f r"
-            "  Explorer               SPC e"
-            "  Cheat Sheet            SPC ?"
-          ];
-          opts = {
-            position = "center";
-            hl = "Keyword";
-          };
-        }
-
-        {
-          type = "padding";
-          val = 2;
-        }
-
-        # Essential Motions
-        {
-          type = "text";
-          val = "Essential Motions";
-          opts = {
-            position = "center";
-            hl = "SpecialComment";
-          };
+          align = "center";
+          text = [ { __unkeyed-1 = "Text Objects"; hl = "SpecialComment"; } ];
         }
         {
-          type = "padding";
-          val = 1;
-        }
-        {
-          type = "text";
-          val = [
-            "w b e          word motions"
-            "^              first non-blank"
-            "{ }            paragraph jumps"
-            "f t ; ,        find character"
-          ];
-          opts = {
-            position = "center";
-            hl = "Comment";
-          };
-        }
-
-        {
-          type = "padding";
-          val = 2;
-        }
-
-        # Text Objects
-        {
-          type = "text";
-          val = "Text Objects";
-          opts = {
-            position = "center";
-            hl = "SpecialComment";
-          };
-        }
-        {
-          type = "padding";
-          val = 1;
-        }
-        {
-          type = "text";
-          val = [
-            "ciw da\"        change/delete with objects"
-            "daf vif        function operations"
-            "cit cat        tag operations"
-            "dap            parameter operations"
-          ];
-          opts = {
-            position = "center";
-            hl = "Comment";
-          };
-        }
-
-        {
-          type = "padding";
-          val = 2;
-        }
-
-        # Navigation
-        {
-          type = "text";
-          val = "Quick Navigation";
-          opts = {
-            position = "center";
-            hl = "SpecialComment";
-          };
-        }
-        {
-          type = "padding";
-          val = 1;
-        }
-        {
-          type = "text";
-          val = [
-            "<space>,       buffers"
-            "<space>;       resume picker"
-            "]h [h          git hunks"
-            "<space>cs      symbols"
-          ];
-          opts = {
-            position = "center";
-            hl = "Comment";
-          };
-        }
-
-        {
-          type = "padding";
-          val = 1;
+          align = "center";
+          padding = 1;
+          text = [ { __unkeyed-1 = "ciw   da\"   daf vif   cit cat   dap   gsa (surround)"; hl = "Comment"; } ];
         }
       ];
     };
