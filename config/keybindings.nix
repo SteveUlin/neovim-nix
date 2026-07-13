@@ -71,10 +71,39 @@ in
       action.__raw = "function() Snacks.words.jump(-vim.v.count1) end";
       options.desc = "🔁 Previous Reference";
     }
+
+    # Toggle
     {
-      key = "[x";
-      action.__raw = "function() require('treesitter-context').go_to_context(vim.v.count1) end";
-      options.desc = "⬆️  Jump to Context";
+      # Jump between a C/C++ translation unit's implementation and its header,
+      # assuming they share a stem in the same directory. Try the user's primary
+      # .cpp/.h pairing first, then common companions (.cc/.cxx, .hpp/.hh/.hxx),
+      # and open the first that exists. Never create a file: report and bail if
+      # no counterpart is on disk.
+      key = "<leader>tt";
+      action.__raw = ''
+        function()
+          local ext = vim.fn.expand('%:e')
+          local stem = vim.fn.expand('%:p:r')
+          local targets
+          if ext == 'cpp' or ext == 'cc' or ext == 'cxx' then
+            targets = { 'h', 'hpp', 'hh', 'hxx' }
+          elseif ext == 'h' or ext == 'hpp' or ext == 'hh' or ext == 'hxx' then
+            targets = { 'cpp', 'cc', 'cxx' }
+          else
+            vim.notify('tt: not a C/C++ source or header file', vim.log.levels.WARN)
+            return
+          end
+          for _, e in ipairs(targets) do
+            local candidate = stem .. '.' .. e
+            if vim.fn.filereadable(candidate) == 1 then
+              vim.cmd.edit(vim.fn.fnameescape(candidate))
+              return
+            end
+          end
+          vim.notify('tt: no counterpart file for ' .. vim.fn.expand('%:t'), vim.log.levels.ERROR)
+        end
+      '';
+      options.desc = "🔀 Toggle Source/Header";
     }
 
     # Claude Code (1:1 pairing: nvim spawns its claude in a Zellij pane)

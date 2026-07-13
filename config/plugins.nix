@@ -481,7 +481,14 @@ in {
               auto_close = true;
             };
           };
-          scroll.enabled = true;
+          scroll = {
+            enabled = true;
+            # Snappier than the 200ms default: shorter total + outCubic momentum.
+            animate = {
+              duration = { step = 8; total = 120; };
+              easing = "outCubic";
+            };
+          };
           words.enabled = true;
           # Paint the buffer with treesitter highlighting before the plugin
           # stack loads — biggest payoff over SSH/Zellij cold starts.
@@ -564,16 +571,6 @@ in {
         };
       };
 
-      treesitter-context = {
-        enable = true;
-        settings = {
-          max_lines = 4;
-          min_window_height = 20;
-          multiline_threshold = 1;
-          mode = "cursor";
-        };
-      };
-
       conform-nvim = {
         enable = true;
         settings = {
@@ -641,6 +638,7 @@ in {
             { __unkeyed-1 = "<leader>s"; group = "Search"; }
             { __unkeyed-1 = "<leader>g"; group = "VCS (jj)"; }
             { __unkeyed-1 = "<leader>b"; group = "Buffers"; }
+            { __unkeyed-1 = "<leader>t"; group = "Toggle"; }
           ];
         };
       };

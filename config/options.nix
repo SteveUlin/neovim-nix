@@ -168,14 +168,10 @@
       autoread = true;
       swapfile = false;
 
-      # Start with all folds open
-      foldlevelstart = 99;
-
-      # Treesitter-based folding for every filetype (grammars already installed
-      # via nixGrammars). foldlevelstart=99 keeps files open until you za.
-      foldmethod = "expr";
-      foldexpr = "v:lua.vim.treesitter.foldexpr()";
-      foldtext = "v:lua.vim.treesitter.foldtext()";
+      # Folding off entirely. vim.treesitter.foldexpr() recomputes fold levels
+      # O(n) per motion/edit, the dominant large-file scroll/edit lag — and no
+      # method leaves that cost behind with folding disabled.
+      foldenable = false;
 
       conceallevel = 2;
 

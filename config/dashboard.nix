@@ -115,10 +115,6 @@
     "`a jumps to exact position of mark a"
     "'' jumps back to previous position"
 
-    # Folds
-    "zc close fold, zo open fold, za toggle"
-    "zR open all folds, zM close all folds"
-
     # Misc Power Tips
     "Ctrl-a increment number, Ctrl-x decrement"
     "~ toggles case of character"
