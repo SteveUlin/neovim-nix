@@ -1,0 +1,58 @@
+---
+title: Notebook
+jupyter: notebook
+---
+
+Symbolic and numerical derivatives of the same function, checked against each
+other. Attach the kernel with `<leader>ji`, then run a cell with `<leader>jr`.
+
+```{python}
+%matplotlib inline
+
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+import numpy as np
+import sympy as sp
+
+sp.init_printing(use_unicode=True)
+```
+
+`f(x) = e^{-x²} sin(3x)` — sympy differentiates it in closed form.
+
+```{python}
+x = sp.symbols("x")
+f = sp.exp(-(x**2)) * sp.sin(3 * x)
+df = sp.diff(f, x)
+df
+```
+
+JAX differentiates the same function by tracing it, with no closed form
+involved. `vmap` lifts the scalar derivative to the whole grid.
+
+```{python}
+def f_jax(x):
+    return jnp.exp(-(x**2)) * jnp.sin(3 * x)
+
+
+grid = jnp.linspace(-3, 3, 400)
+df_jax = jax.vmap(jax.grad(f_jax))(grid)
+```
+
+Agreement to floating-point tolerance is the real test that both paths describe
+the same function.
+
+```{python}
+df_sym = sp.lambdify(x, df, "numpy")(np.asarray(grid))
+np.max(np.abs(df_sym - np.asarray(df_jax)))
+```
+
+```{python}
+fig, ax = plt.subplots(figsize=(7, 3.5))
+ax.plot(grid, f_jax(grid), label="f")
+ax.plot(grid, df_jax, label="f′ (jax)")
+ax.plot(grid, df_sym, "--", label="f′ (sympy)")
+ax.legend()
+ax.grid(alpha=0.3)
+plt.show()
+```

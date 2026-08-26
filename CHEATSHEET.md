@@ -307,8 +307,39 @@ Safety:
 ```
 ␣ne     📁  explore notes (~/notes)
 ␣nt     ✏️  open todo
+␣ni     🖼️  paste image from clipboard → assets/
 ␣yp     📋  copy current file path to clipboard
 ```
+
+### 📔 Jupyter / Notebooks (.qmd, .ipynb)
+Run `nix develop` first — the kernel lives in the project shell.
+```
+␣ji     🔌  attach kernel (pick from list)
+␣jI     🔌  detach kernel
+
+␣jr     ▶️   run cell        (visual: run selection)
+␣jl     ▶️   run line
+␣ja     ▶️   run all
+␣jb     ▶️   run cell + below
+␣jA     ▶️   run above
+
+␣jo     📤  enter output window
+␣jh     🙈  hide output
+␣jv     👁️   toggle virtual output
+␣jm     🖼️  pop image out to external viewer
+
+␣jx     🛑  interrupt kernel
+␣jX     ♻️   restart kernel
+␣jd     🗑️   delete cell
+␣jn     ⬇️   next cell
+␣jp     ⬆️   previous cell
+␣jP     🌐  render + preview document
+```
+Output renders inline as virtual text, plots included. Inline images
+need Ghostty directly, or Zellij ≥ 0.45 for its graphics passthrough.
+
+Math in prose (`$..$`, `$$..$$`) is typeset by tectonic rather than
+approximated in Unicode; the first render downloads a TeX bundle.
 
 ### 🏠 Dashboard & Help
 ```

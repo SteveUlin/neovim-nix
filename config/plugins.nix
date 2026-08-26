@@ -5,7 +5,7 @@
   config,
   ...
 }: let
-  clangdPkg = pkgs.llvmPackages_20.clang-tools;
+  clangdPkg = pkgs.clang-tools;
 in {
   config = {
     extraPlugins = with pkgs.vimPlugins; [
@@ -639,6 +639,7 @@ in {
             { __unkeyed-1 = "<leader>g"; group = "VCS (jj)"; }
             { __unkeyed-1 = "<leader>b"; group = "Buffers"; }
             { __unkeyed-1 = "<leader>t"; group = "Toggle"; }
+            { __unkeyed-1 = "<leader>j"; group = "Jupyter"; }
           ];
         };
       };
@@ -680,14 +681,9 @@ in {
             debounce = 15; # Super fast updates for hybrid mode
             linewise_hybrid_mode = true;
           };
-          # Render inline ($..$) and block ($$..$$) math to Unicode in notes
-          # (needs the latex treesitter grammar, installed via nixGrammars).
-          latex = {
-            enable = true;
-            subscripts.enable = true;
-            superscripts.enable = true;
-            symbols.enable = true;
-          };
+          # snacks.image typesets $..$ and $$..$$ through tectonic; a Unicode
+          # approximation over the same nodes would double-render them.
+          latex.enable = false;
           markdown = {
             headings = {
               shift_width = 1;

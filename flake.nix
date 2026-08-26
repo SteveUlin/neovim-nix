@@ -171,11 +171,40 @@
         aiCompletion.enable = true;
       };
     };
+    # The nixpkgs wrapper generates its remote-plugin manifest before the python3
+    # host is wired up, so molten's commands are missing from it. Regenerating
+    # against the finished editor pins a manifest naming the same plugin paths;
+    # supermaven is not a remote plugin, so both builds share this one.
+    rpluginManifest = pkgs.runCommand "nvim-rplugin-manifest" {} ''
+      export HOME="$(mktemp -d)"
+      export NVIM_RPLUGIN_MANIFEST="$out"
+      ${nvim}/bin/nvim --headless -i NONE -n +UpdateRemotePlugins +qa!
+    '';
+
+    withRemotePlugins = name: pkg:
+      pkgs.symlinkJoin {
+        inherit name;
+        paths = [ pkg ];
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/nvim \
+            --set NVIM_RPLUGIN_MANIFEST ${rpluginManifest}
+        '';
+      };
+    wrappedNvim = withRemotePlugins "nixvim" nvim;
+    wrappedNvimAi = withRemotePlugins "nixvim-ai" nvim-ai;
     in {
       packages = {
-        inherit nvim nvim-ai;
-        default = nvim;
+        nvim = wrappedNvim;
+        nvim-ai = wrappedNvimAi;
+        default = wrappedNvim;
       };
-    });
+    })
+    // {
+      templates.notebook = {
+        path = ./templates/notebook;
+        description = "Quarto notebook with a store-resident Jupyter kernel";
+      };
+    };
 }
 
