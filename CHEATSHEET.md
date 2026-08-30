@@ -326,13 +326,14 @@ Run `nix develop` first — the kernel lives in the project shell.
 ␣jo     📤  enter output window
 ␣jh     🙈  hide output
 ␣jv     👁️   toggle virtual output
-␣jm     🖼️  pop image out to external viewer
 
 ␣jx     🛑  interrupt kernel
 ␣jX     ♻️   restart kernel
 ␣jd     🗑️   delete cell
-␣jn     ⬇️   next cell
-␣jp     ⬆️   previous cell
+␣jn     ⬇️   next cell (evaluated only)
+␣jp     ⬆️   previous cell (evaluated only)
+]m      ⬇️   next fence (run or not)
+[m      ⬆️   previous fence
 ␣jP     🌐  render + preview document
 ```
 Output renders inline as virtual text, plots included. Inline images

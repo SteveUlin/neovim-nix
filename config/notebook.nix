@@ -113,8 +113,18 @@ in {
 
     vim.api.nvim_create_autocmd("FileType", {
       pattern = "quarto",
-      callback = function()
+      callback = function(ev)
         require("quarto").activate()
+
+        -- molten only tracks cells it has run, so its next/prev skip fences
+        -- that have never been evaluated; match the fence itself instead.
+        local function fence(flags)
+          return function()
+            vim.fn.search("^```{", flags)
+          end
+        end
+        vim.keymap.set("n", "]m", fence("W"), { buffer = ev.buf, desc = "⬇️  Next Cell" })
+        vim.keymap.set("n", "[m", fence("bW"), { buffer = ev.buf, desc = "⬆️  Previous Cell" })
       end,
     })
 
@@ -146,14 +156,11 @@ in {
     (nmap "<leader>jo" "<cmd>noautocmd MoltenEnterOutput<CR>" "📤 Enter Output")
     (nmap "<leader>jh" "<cmd>MoltenHideOutput<CR>" "🙈 Hide Output")
     (nmap "<leader>jv" "<cmd>MoltenToggleVirtual<CR>" "👁️  Toggle Virtual Output")
-    # Escape hatch where inline images are unavailable: hand the plot to an
-    # external viewer.
-    (nmap "<leader>jm" "<cmd>MoltenImagePopup<CR>" "🖼️  Popout Image")
     (nmap "<leader>jx" "<cmd>MoltenInterrupt<CR>" "🛑 Interrupt Kernel")
     (nmap "<leader>jX" "<cmd>MoltenRestart!<CR>" "♻️  Restart Kernel")
     (nmap "<leader>jd" "<cmd>MoltenDelete<CR>" "🗑️  Delete Cell")
-    (nmap "<leader>jn" "<cmd>MoltenNext<CR>" "⬇️  Next Cell")
-    (nmap "<leader>jp" "<cmd>MoltenPrev<CR>" "⬆️  Previous Cell")
+    (nmap "<leader>jn" "<cmd>MoltenNext<CR>" "⬇️  Next Evaluated Cell")
+    (nmap "<leader>jp" "<cmd>MoltenPrev<CR>" "⬆️  Previous Evaluated Cell")
     (nmap "<leader>jP" "<cmd>QuartoPreview<CR>" "🌐 Preview Document")
     # Markup-wide, not notebook-specific: lives with the Notes prefix.
     (nmap "<leader>ni" "<cmd>PasteImage<CR>" "🖼️  Paste Image from Clipboard")
