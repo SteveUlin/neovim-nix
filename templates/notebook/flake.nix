@@ -50,6 +50,9 @@
         shellHook = ''
           export JUPYTER_DATA_DIR="''${XDG_RUNTIME_DIR:-/tmp}/jupyter"
           mkdir -p "$JUPYTER_DATA_DIR/runtime"
+          # matplotlib otherwise resolves ./matplotlibrc against the kernel's
+          # cwd, which is wherever nvim was launched.
+          export MATPLOTLIBRC="$PWD/matplotlibrc"
         '';
       };
     });

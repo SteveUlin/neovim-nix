@@ -1,0 +1,37 @@
+# Chrome: everforest dark, so the figure dissolves into the buffer.
+figure.facecolor:  2d353b
+axes.facecolor:    2d353b
+savefig.facecolor: 2d353b
+text.color:        d3c6aa
+axes.labelcolor:   d3c6aa
+axes.titlecolor:   d3c6aa
+axes.edgecolor:    56635f
+xtick.color:       859289
+ytick.color:       859289
+xtick.labelcolor:  859289
+ytick.labelcolor:  859289
+grid.color:        3d484d
+legend.facecolor:  343f44
+legend.edgecolor:  56635f
+
+# Data: validated categorical order, NOT the editor theme.
+axes.prop_cycle: cycler('color', ['3987e5','d95926','199e70','c98500','d55181','9085e9','e66767'])
+
+# Recessive furniture, thin marks.
+axes.grid:          True
+grid.alpha:         0.35
+grid.linewidth:     0.6
+axes.spines.top:    False
+axes.spines.right:  False
+axes.linewidth:     0.8
+lines.linewidth:    1.8
+lines.markersize:   5.5
+legend.frameon:     True
+legend.framealpha:  0.85
+
+# Sized for a ~100-col image box at hidpi.
+figure.figsize:   6.0, 3.2
+figure.dpi:       150
+savefig.dpi:      150
+figure.constrained_layout.use: True
+font.size:        10
